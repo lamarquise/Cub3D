@@ -1,0 +1,16 @@
+R 400 400
+NO ./textures/north
+SO ./textures/south
+WE ./textures/west
+EA ./textures/east
+
+S ./textures/sprite1
+F 220,100,0
+C 225,30,0
+
+11111111111
+10001001001
+10001001001
+10111001001
+10000000001
+11111111111
