@@ -1,5 +1,13 @@
 
 
+
+
+	// All the stuff before the map can be in any order ...
+
+
+
+
+
 #include "cub3d.h"
 
 	// how do i want to store file contents??? as a **str ???
@@ -88,8 +96,8 @@ int		ft_parse_file(int fd, t_map *file)
 	if (ft_strcmp(tab[0], rets[pos++]) == 0)	// Resolution
 	{
 		// somehow check that tab[1] and [2] are only numbers, and pos
-		file->resolution_x = ft_atoi(tab[1]);
-		file->resolution_y = ft_atoi(tab[2]);
+		file->res_x = ft_atoi(tab[1]);
+		file->res_y = ft_atoi(tab[2]);
 	}
 	else
 		return (-2);		// better way of doing this i think...
@@ -218,6 +226,7 @@ int		ft_parse_file(int fd, t_map *file)
 	int		wid;
 	int		hei;
 	int		n;
+	int		c;
 	t_nlist	*tmp;
 
 	if (!(level = (t_floorplan*)malloc(sizeof(t_floorplan))))
@@ -231,13 +240,27 @@ int		ft_parse_file(int fd, t_map *file)
 
 	while (tmp)
 	{
-		if ((n = ft_strlen((char*)tmp->content)) > wid)
-			wid = n;
+		c = 0;
+		while (((char*)tmp->content)[c])
+		{
+			if ((n = ft_findchar("NSEW", ((char*)tmp->content)[c])) != -1)
+			{
+				file->player->s_dir = ((char*)tmp->content)[c];
+				file->player->x = c;
+				file->player->y = hei;
+//				((char*)tmp->content)[c] = '0';
+			}
+			++c;
+		}
+		if (c > wid)
+			wid = c;
+//		if ((n = ft_strlen((char*)tmp->content)) > wid)
+//			wid = n;
 		++hei;
 		tmp = tmp->next;
 	}
-	level->width = wid;
-	level->height = hei;
+	level->x_boxes = wid;
+	level->y_boxes = hei;
 	level->floor = f_lines;
 
 	printf("wid: %d, hei: %d\n", wid, hei);

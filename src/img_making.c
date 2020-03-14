@@ -6,7 +6,7 @@
 	// for now assume wid and hei are / 10
 
 	// eventually an arg is func that determins how img is made....
-int			ft_create_img(t_img *pic, t_floorplan *level)
+int			ft_create_img(t_img *pic, t_floorplan *level, t_playerstate *player)
 {
 	int		y;
 	int		x;
@@ -26,9 +26,12 @@ int			ft_create_img(t_img *pic, t_floorplan *level)
 	tmp = level->floor;	// tmp is an nlist
 	pic->last_pix = pic->img_wid * pic->img_hei;
 	
-	pic->last_box = level->width * level->height;
+	pic->last_box = level->x_boxes * level->y_boxes;
+	
+		// maybe this isnt where i should be adding the payer part.
+	player->box = player->x + player->y * level->x_boxes;
 
-	printf("level wid: %d, level hei: %d\n", level->width, level->height);
+	printf("level wid: %d, level hei: %d\n", level->x_boxes, level->y_boxes);
 	printf("img wid:  %d, img hei: %d\n", pic->img_wid, pic->img_hei);
 	printf("x_step: %d, y_step: %d\n", x_step, y_step);
 	printf("last pix: %d, last box: %d\n", pic->last_pix, pic->last_box);
@@ -40,49 +43,30 @@ int			ft_create_img(t_img *pic, t_floorplan *level)
 			color = 0xEEEEEE;
 		else if (((char*)tmp->content)[x_step] == '0')
 			color = 0x666666;
+//		else if ((ft_findchar("NSEW", ((char*)tmp->content)[x_step])) != -1)
+//			color = 0xFF0000;	// orange square if player...
 		else
 			color = 0x000000;
 //		printf("color: %#lx\n", color);
 		y = 0;	// 1 to 10
-		while (y < 1)
+		while (y < U)
 		{
 			a = 0;
 //			printf("coloring a row\n");
-			x = 350;	// 1 to 10
-			while (x < 450)
+			x = 0;	// 1 to 10
+			while (x < U)
 			{
-//				printf("coloring a col\n");
-//				printf("x: %d, y: %d\n", x, y);
-
-//				pic->img_data[x + pic->img_wid * y] = color;
-
-				a = x;
-//				printf("a: %d\n", a);
-				pic->img_data[a] = 0xFF0000;
-
-//				a = x + pic->img_wid * y;
-//				printf("a: %d\n", a);
-//				pic->img_data[a] = color;
-/*				pic->img_data[0] = color;
-				pic->img_data[1] = color;
-				pic->img_data[400] = color;
-				pic->img_data[401] = color;
-				pic->img_data[800] = color;
-				pic->img_data[801] = color;
-*/
-//				pic->img_data[(x_step * U + x) + \
-//					(pic->img_wid * (U * y_step + y))] = color;
+				pic->img_data[(x_step * (U + G) + x) + \
+					(pic->img_wid * ((U + G) * y_step + y))] = color;
 //				printf("just colored\n");
 				++x;
 			}
-//			x = 0;
-//			while (x < 900)
-//				pic->img_data[x++] = 0x0000FF;
-//			printf("is this a problem ?\n");
 			++y;
 		}
+//		a = ft_coord_convert(mlx, file, x_step, y_step);
+
 //		printf("just colored\n");
-		if (x_step < level->width - 1)
+		if (x_step < level->x_boxes - 1)
 			++x_step;
 		else
 		{

@@ -31,27 +31,28 @@
 
 int		main(int ac, char **av)
 {
-	int		fd;
-	int		line_n;
+	int				fd;
+	int				line_n;
 
-	t_map	file1;
+	t_map			file1;
+	t_playerstate	player;
 
-	int		wid;
-	int		hei;
-	int		ret;
+	int				ret;
 	
 
 //	printf("main has happened\n");
 
 	fd = 0;
 	line_n = 0;
+	file1.player = &player;
 	if (!av)
 		return (0);
 
 	// testing:
-	t_mlx	mlx;
-	t_img	pic;
+	t_mlx			mlx;
+	t_img			pic;
 
+	mlx.pic = &pic;
 
 	pic.last_pix = 0;
 
@@ -87,44 +88,60 @@ int		main(int ac, char **av)
 //			return (0); // but free eventually
 
 		ret = ft_parse_file(fd, &file1);
-		printf("parse file ret: %d\n", ret);
+//		printf("parse file ret: %d\n", ret);
 		if (ret < 0)
 			return (0);
 
-		printf("and parsed it...\n");
+
+//		printf("and parsed it...\n");
+
+			// res_x = hei ???
+		mlx.win_wid = (file1.level->x_boxes * (U + G) + 2 * G > file1.res_x ? \
+				file1.level->x_boxes * (U + G) + 2 * G : file1.res_x);
+		mlx.win_hei = (file1.level->y_boxes * (U + G) + 2 * G > file1.res_y ? \
+				file1.level->y_boxes * (U + G) + 2 * G: file1.res_y);
+
+		// do this: ????
+//		file1.res_x = mlx.win_wid
+//		file1.res_y = mlx.win_hei
 
 
-		hei = (file1.level->width * U > file1.resolution_x ? \
-				file1.level->width * U : file1.resolution_x);
-		wid = (file1.level->height * U > file1.resolution_y ? \
-				file1.level->height * U : file1.resolution_y);
+			// gap only in between
+		pic.img_wid = file1.level->x_boxes * (U + G) - G;	// do this better for now...
+		pic.img_hei = file1.level->y_boxes * (U + G) - G;
 
-		pic.img_wid = wid;
-		pic.img_hei = hei;
-
-		printf("wid: %d, hei: %d\n", wid, hei);
+//		printf("wid: %d, hei: %d\n", wid, hei);
 
 
 		// for now just making bird's eye view map....
 		mlx.ptr = mlx_init();			// was wid, hei
-		mlx.win_ptr = mlx_new_window(mlx.ptr, 800, 800, "sup");
+		mlx.win_ptr = mlx_new_window(mlx.ptr, mlx.win_wid, mlx.win_hei, "sup");
 
-		printf("window made\n");
+//		printf("window made\n");
 
-		pic.img_ptr = mlx_new_image(mlx.ptr, 400, 400);
+		pic.img_ptr = mlx_new_image(mlx.ptr, pic.img_wid, pic.img_hei);
 
 		pic.img_data = (int*)mlx_get_data_addr(pic.img_ptr,\
 								&mlx.bpp, &mlx.s_l, &mlx.endian);
 
-		printf("image inited\n");
+//		printf("image inited\n");
 
 		ft_create_img(&pic, file1.level);
 
-		printf("created img\n");
+//		printf("created img\n");
 
-		mlx_put_image_to_window(mlx.ptr, mlx.win_ptr, pic.img_ptr, 50, 50);
+		int		x_disp;	//displacement
+		int		y_disp;
 
-		printf("put img to win\n");
+			// may need to take odd numbers and shit into account ???
+		x_disp = mlx.win_wid / 2 - pic.img_wid / 2;
+		y_disp = mlx.win_hei / 2 - pic.img_hei / 2;
+
+		mlx_put_image_to_window(mlx.ptr, mlx.win_ptr, pic.img_ptr, x_disp, y_disp);
+
+//		printf("put img to win\n");
+
+		ft_hooks_loop(&mlx);
 
 		mlx_loop(mlx.ptr);
 

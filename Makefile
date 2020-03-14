@@ -19,6 +19,9 @@ FILES =		main.c \
 			file_parser.c \
 			img_making.c \
 			list_things.c \
+			mlx_stuff.c \
+			keyhooks.c \
+			window_math.c \
 
 IFILES =	cub3d.h \
 # can add mlx.h if doing dynamic lib...			
@@ -33,9 +36,9 @@ SDIR = src/
 LIBFTDIR = new_lib/
 LIBFT = $(LIBFTDIR)libft.a
 LIBFTINC = $(LIBFTDIR)
+FRAME = -framework OpenGL -framework AppKit
 CFLAGS = -Wall -Wextra -Werror -I$(IDIR) -I$(LIBFTINC) -I$(MLXINC)
 
-FRAME = -framework OpenGL -framework AppKit
 
 SRCS = $(addprefix $(SDIR), $(FILES))
 INCS = $(addprefix $(IDIR), $(IFILES))
@@ -49,7 +52,6 @@ all: $(NAME)
 
 $(LIBFT):
 	make bonus -C $(LIBFTDIR) libft.a
-#	echo "$(_CYAN)\r\33[2K\rMaking Libft 🙄$(_END)"
 
 $(MLX):
 	make
@@ -57,10 +59,8 @@ $(MLX):
 
 # we removed $(LIBFT) which i think makes it not dependant...
 $(NAME): $(OBJS) $(LIBFT) $(MLX)
-#	cp $(LIBFT) $@
 	$(CC) -o $(NAME) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(FRAME)
-#	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT) -L$(MLX)
-	printf "$(_GREEN)\r\33[2K\r$(NAME) created  😎$(_END)"
+	printf "$(_GREEN)\r\33[2K\r$(NAME) created  😎\n$(_END)"
 
 $(ODIR)%.o: $(SDIR)%.c $(IDIR)
 	mkdir -p $(ODIR)
@@ -71,7 +71,10 @@ clean:
 	make -C $(LIBFTDIR) $@
 	rm -rf $(ODIR)
 
-fclean: clean
+oclean:
+	rm -rf $(ODIR)
+
+fclean: oclean
 	make -C $(LIBFTDIR) $@
 	rm -f $(NAME)
 	echo "$(_RED)$(NAME) Deleted  😱$(_END)"
