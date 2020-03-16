@@ -125,6 +125,7 @@ char			*ft_read_nlst_n(t_nlist *lst, size_t i);
 
 int				ft_free_strtab(char **tab);
 int				ft_print_strtab(char **tab);
+int				ft_error_msg(char *str);
 
 
 #endif

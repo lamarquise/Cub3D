@@ -3,10 +3,62 @@
 
 #include "cub3d.h"
 
-	// for now assume wid and hei are / 10
+int			ft_gen_bground(t_game *jeu)
+{
+	long	c_co;
+	long	f_co;
+	int		pix;
+	int		stop;
 
-	// eventually an arg is func that determins how img is made....
-int			ft_create_img(t_img *pic, t_floorplan *level, t_playerstate *player)
+	c_co = jeu->file->c->r * 65536 + jeu->file->c->g * 256 + jeu->file->c->b;
+	f_co = jeu->file->f->r * 65536 + jeu->file->f->g * 256 + jeu->file->f->b;
+	pix = 0;
+	stop = (jeu->file->res_x * jeu->file->res_y) / 2;
+	while (pix < stop)
+	{
+		jeu->hud->bground->img_data[pix] = c_co;
+		++pix;
+	}
+	stop = jeu->file->res_x * jeu->file->res_y;
+	while (pix < stop)
+	{
+		jeu->hud->bground->img_data[pix] = f_co;	// do i have to fill
+		++pix;										// 1 pix at a time ???
+	}
+	// cut screan in 2
+
+
+	return (1);
+}
+
+
+	// assuming fov is the size of the map window
+int			ft_make_map_fov(t_game *jeu)
+{
+	int		pos;
+
+	pos = ft_coord_convert(jeu->map->win, jeu->map->fov, \
+		jeu->me->x, jeu->me->y);
+
+	printf("mex: %d, mey: %d,pos: %d\n", jeu->me->x, jeu->me->y, pos);
+
+	jeu->map->fov->img_data[pos - jeu->map->floor->img_wid * 2] = 0xFF0000;
+	jeu->map->fov->img_data[pos - (jeu->map->floor->img_wid) * 2] = 0xFF0000;
+	jeu->map->fov->img_data[pos + (jeu->map->floor->img_wid)] = 0xFF0000;
+	jeu->map->fov->img_data[pos + (jeu->map->floor->img_wid) * 2] = 0xFF0000;
+
+	jeu->map->fov->img_data[pos - 2] = 0xFF0000;
+	jeu->map->fov->img_data[pos - 1] = 0xFF0000;
+	jeu->map->fov->img_data[pos + 1] = 0xFF0000;
+	jeu->map->fov->img_data[pos + 2] = 0xFF0000;
+
+	jeu->map->fov->img_data[pos] = 0xFF0000;
+
+	return (1);
+}
+
+
+int			ft_make_2D_floor_img(t_game *jeu)
 {
 	int		y;
 	int		x;
@@ -14,71 +66,54 @@ int			ft_create_img(t_img *pic, t_floorplan *level, t_playerstate *player)
 	int		x_step;
 	int		y_step;
 	long	color;
-	int		a;
 	t_nlist	*tmp;
-	int		s_cord;
+	int		last_box;
 
 	box = 0;
-	s_cord = 0;
 	x_step = 0;
 	y_step = 0;
 	color = 0;
-	tmp = level->floor;	// tmp is an nlist
-	pic->last_pix = pic->img_wid * pic->img_hei;
-	
-	pic->last_box = level->x_boxes * level->y_boxes;
-	
-		// maybe this isnt where i should be adding the payer part.
-	player->box = player->x + player->y * level->x_boxes;
+	tmp = jeu->floor;	
+	last_box = jeu->x_boxes * jeu->y_boxes;
 
-	printf("level wid: %d, level hei: %d\n", level->x_boxes, level->y_boxes);
-	printf("img wid:  %d, img hei: %d\n", pic->img_wid, pic->img_hei);
-	printf("x_step: %d, y_step: %d\n", x_step, y_step);
-	printf("last pix: %d, last box: %d\n", pic->last_pix, pic->last_box);
+//	printf("last box: %d\n", last_box);
 
-	while (box < pic->last_box)
+	while (box < last_box)
 	{
 //		printf("creat img loop test 1\n");
 		if (((char*)tmp->content)[x_step] == '1')
 			color = 0xEEEEEE;
 		else if (((char*)tmp->content)[x_step] == '0')
 			color = 0x666666;
-//		else if ((ft_findchar("NSEW", ((char*)tmp->content)[x_step])) != -1)
-//			color = 0xFF0000;	// orange square if player...
 		else
 			color = 0x000000;
 //		printf("color: %#lx\n", color);
-		y = 0;	// 1 to 10
+		y = 0;
 		while (y < U)
 		{
-			a = 0;
 //			printf("coloring a row\n");
-			x = 0;	// 1 to 10
+			x = 0;
 			while (x < U)
 			{
-				pic->img_data[(x_step * (U + G) + x) + \
-					(pic->img_wid * ((U + G) * y_step + y))] = color;
+				jeu->map->floor->img_data[(x_step * (U + G) + x) + \
+					(jeu->map->floor->img_wid * ((U + G) * \
+					y_step + y))] = color;
 //				printf("just colored\n");
 				++x;
 			}
 			++y;
 		}
-//		a = ft_coord_convert(mlx, file, x_step, y_step);
-
-//		printf("just colored\n");
-		if (x_step < level->x_boxes - 1)
+		if (x_step < jeu->x_boxes - 1)
 			++x_step;
 		else
 		{
 			x_step = 0;
 			++y_step;
 			tmp = tmp->next;
-		}		// find better way of using pos...
+		}
 		++box;
-//		pos = x_step * 10 + (y_step * level->width * 10);
-//		printf("creat img loop end, pos: %d\n", pos);
 	}
-	printf("creat img end\n");
+//	printf("creat img end\n");
 	
 	return (1);
 }

@@ -106,7 +106,7 @@ SRCS_BONUS	=	ft_lstnew.c \
 				ft_read_nlst_n.c \
 				ft_free_strtab.c \
 				ft_print_strtab.c \
-
+				ft_error_msg.c \
 
 ODIR = obj/
 OBJ_NAME = $(SRCS:.c=.o)

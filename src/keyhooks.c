@@ -9,11 +9,16 @@ void    ft_light_torch(t_key *torch)
 	torch[0].f = &ft_quit;
 
 
+	// W:126 A:123 S:125 D:124 
+
+	// arrow up: 116 down: 121
+
+
 
 }
 
 
-int     ft_keyhooks(int keycode, t_mlx *mlx)
+int     ft_keyhooks(int keycode, t_game *jeu)
 {
 	static t_key    torch[20] = {{42, NULL}};
 	int				i;
@@ -24,14 +29,14 @@ int     ft_keyhooks(int keycode, t_mlx *mlx)
 	while (i < 20)	// number of codes added
 	{
 		if (keycode == torch[i].keycode)
-			return (torch[i].f(mlx));
+			return (torch[i].f(jeu));
 		++i;
 	}
 	return (0);
 }
 
-void    ft_hooks_loop(t_mlx *mlx)
-{
-	mlx_hook(mlx->win_ptr, 2, 0, &ft_keyhooks, mlx);
-	mlx_hook(mlx->win_ptr, 17, 0, &ft_quit, mlx);
+void    ft_hooks_loop(t_game *jeu)
+{		//was mlx->win_ptr
+	mlx_hook(jeu->map->win->win_ptr, 2, 0, &ft_keyhooks, jeu);
+	mlx_hook(jeu->map->win->win_ptr, 17, 0, &ft_quit, jeu);
 }

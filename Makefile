@@ -17,7 +17,10 @@ CC = gcc
 
 FILES =		main.c \
 			file_parser.c \
+			line_parser.c \
+			master.c \
 			img_making.c \
+			img_stuff.c \
 			list_things.c \
 			mlx_stuff.c \
 			keyhooks.c \

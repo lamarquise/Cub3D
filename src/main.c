@@ -1,5 +1,7 @@
 
 
+		// parser.c is much better
+		// line_parser.c should work
 
 
 		// Should ft_scott_free() return (0) instead of (-1) ???
@@ -8,14 +10,12 @@
 
 // TO DO:
 
-	// start with getting mlx stuff from fractol and setting up new version
-	// then parser
 	// then game management...
 
 
+	// learn mark down for README.md
 	// fix ft_putendl and the likes in lib...
 	// double check new lib functions
-	// better Makefile for lib...
 	// put GNL in lib, along with printf
 
 
@@ -25,17 +25,120 @@
 
 #include "cub3d.h"
 
+	// put in dif folder ???
+int		ft_init_input(t_input *file)
+{
+	t_color		*celing;
+	t_color		*floor;
 
+	if (!(celing = malloc(sizeof(t_color))))
+		return (0);
+	if (!(floor = malloc(sizeof(t_color))))
+		return (0);
+	file->res_x = -1;
+	file->res_y = -1;
+	file->no_tex = NULL;
+	file->so_tex = NULL;
+	file->we_tex = NULL;
+	file->ea_tex = NULL;
+	file->sprite_tex = NULL;
+	celing->r = -1;
+	celing->g = -1;
+	celing->b = -1;
+//	celing->path = NULL;
+	floor->r = -1;
+	floor->g = -1;
+	floor->b = -1;
+//	floor->path = NULL;
+	file->c = celing;
+	file->f = floor;
+/*	file->f_r = -1;
+	file->f_g = -1;
+	file->f_b = -1;
+	file->c_r = -1;
+	file->c_g = -1;
+	file->c_b = -1;
+*/
+	return (0);
+}
 
+int		ft_cor_end(char *str, char *end)
+{
+	int		sl;
+	int		el;
+	int		a;
 
+	if (!str || !end)
+		return (0);
+	a = 0;
+	sl = ft_strlen(str) - 1;	// for the \0
+	el = ft_strlen(end) - 1;
+	while (el > 0)
+	{
+		if (str[sl] != end[el])
+			return (0);
+		--sl;
+		--el;
+	}
+	return (1);
+}
+
+	// assuming 1 file
 
 int		main(int ac, char **av)
 {
-	int				fd;
-	int				line_n;
+	int		fd;
+	t_game	jeu;
+	t_input	file;
+	int		ret;
 
-	t_map			file1;
-	t_playerstate	player;
+	ft_init_input(&file);
+	jeu.file = &file;
+
+	if (ac < 2)
+		return (ft_error_msg("usage: <file.cub> <--save>\n"));
+	else if (ac == 2 || ac == 3)	// 2 and 3 for now
+	{
+		if (!ft_cor_end(av[1], ".cub"))
+			return (ft_error_msg("usage: <file.cub>\n"));
+
+	//	printf("it is .cub\n");
+
+		fd = open(av[1], O_RDONLY);
+		
+		if (!ft_parse_file(fd, &jeu))
+			return (ft_error_msg("Bad .cub file\n"));
+
+		if (ac == 3)
+		{
+			// do the picture of first frame...
+		}
+//		else
+			// everything else
+
+		ret = ft_master_port(&jeu);
+		if (ret < 1)
+		{
+			printf("ret: %d\n", ret);
+			return (0);
+		}
+
+		// function that does all the game stuff...
+
+
+		close(fd);
+	}
+	return (1);
+}
+
+/*
+int		main(int ac, char **av)
+{
+	int			fd;
+	int			line_n;
+
+	t_map		file1;
+	t_player	me;
 
 	int				ret;
 	
@@ -59,7 +162,7 @@ int		main(int ac, char **av)
 	if (ac >= 2)		// if 3 or greater... look for '--save'
 	{
 //		printf("there is even an arg\n");
-/*		// this is a good amount of the mlxinit stuff..
+		// this is a good amount of the mlxinit stuff..
 		mlx.ptr = mlx_init();
 
 		look.win_ptr = mlx_new_window(mlx.ptr, 400, 400, "sup");
@@ -70,7 +173,7 @@ int		main(int ac, char **av)
 		mlx_put_image_to_window(mlx.ptr, look.win_ptr, look.img_ptr, 0, 0);
 
 		mlx_loop(mlx.ptr);	// necessary for window staying...
-*/
+
 
 		// im inclined to do the open here...
 		// start by assuming there will be 1 file...
@@ -163,3 +266,7 @@ int		main(int ac, char **av)
 	}
 	return (0);
 }
+
+*/
+
+
