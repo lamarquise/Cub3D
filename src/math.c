@@ -30,3 +30,6 @@ int		ft_2D_to_1D(int x, int y, int width)
 {
 	return (x + y * width);
 }
+
+
+// need an RGBtoInt()

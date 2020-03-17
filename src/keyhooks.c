@@ -18,7 +18,7 @@ void    ft_light_torch(t_key *torch)
 }
 
 
-int     ft_keyhooks(int keycode, t_game *jeu)
+int     ft_keyhooks(int keycode, t_screen *either)
 {
 	static t_key    torch[20] = {{42, NULL}};
 	int				i;
@@ -29,14 +29,20 @@ int     ft_keyhooks(int keycode, t_game *jeu)
 	while (i < 20)	// number of codes added
 	{
 		if (keycode == torch[i].keycode)
-			return (torch[i].f(jeu));
+			return (torch[i].f(either));
 		++i;
 	}
 	return (0);
 }
 
-void    ft_hooks_loop(t_game *jeu)
-{		//was mlx->win_ptr
-	mlx_hook(jeu->map->win->win_ptr, 2, 0, &ft_keyhooks, jeu);
-	mlx_hook(jeu->map->win->win_ptr, 17, 0, &ft_quit, jeu);
+	// no idea if this shit is gonna work...
+							// better name ?
+void    ft_hooks_loop(t_screen *either)
+{
+	mlx_hook(either->win->win_ptr, 2, 0, &ft_keyhooks, either);
+	mlx_hook(either->win->win_ptr, 17, 0, &ft_quit, either);
+
+	// add all the other hooks
+
+
 }

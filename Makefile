@@ -16,15 +16,16 @@ NAME = cub3d
 CC = gcc
 
 FILES =		main.c \
-			file_parser.c \
-			line_parser.c \
+			parse_file.c \
+			parse_line.c \
 			master.c \
-			img_making.c \
-			img_stuff.c \
-			list_things.c \
-			mlx_stuff.c \
+			master_init.c \
+			create_mlx_entities.c \
+			make_map.c \
+			make_hud.c \
 			keyhooks.c \
-			window_math.c \
+			math.c \
+			quit.c \
 
 IFILES =	cub3d.h \
 # can add mlx.h if doing dynamic lib...			

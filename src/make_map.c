@@ -2,7 +2,7 @@
 
 
 #include "cub3d.h"
-
+/*
 int			ft_gen_bground(t_game *jeu)
 {
 	long	c_co;
@@ -30,29 +30,29 @@ int			ft_gen_bground(t_game *jeu)
 
 	return (1);
 }
-
+*/
 
 	// assuming fov is the size of the map window
 int			ft_make_map_fov(t_game *jeu)
 {
 	int		pos;
 
-	pos = ft_coord_convert(jeu->map->win, jeu->map->fov, \
+	pos = ft_coord_convert(jeu->map->win, jeu->map->img, \
 		jeu->me->x, jeu->me->y);
 
 	printf("mex: %d, mey: %d,pos: %d\n", jeu->me->x, jeu->me->y, pos);
 
-	jeu->map->fov->img_data[pos - jeu->map->floor->img_wid * 2] = 0xFF0000;
-	jeu->map->fov->img_data[pos - (jeu->map->floor->img_wid) * 2] = 0xFF0000;
-	jeu->map->fov->img_data[pos + (jeu->map->floor->img_wid)] = 0xFF0000;
-	jeu->map->fov->img_data[pos + (jeu->map->floor->img_wid) * 2] = 0xFF0000;
+	jeu->map->img->img_data[pos - jeu->map->img->img_wid * 2] = 0xFF0000;
+	jeu->map->img->img_data[pos - (jeu->map->img->img_wid) * 2] = 0xFF0000;
+	jeu->map->img->img_data[pos + (jeu->map->img->img_wid)] = 0xFF0000;
+	jeu->map->img->img_data[pos + (jeu->map->img->img_wid) * 2] = 0xFF0000;
 
-	jeu->map->fov->img_data[pos - 2] = 0xFF0000;
-	jeu->map->fov->img_data[pos - 1] = 0xFF0000;
-	jeu->map->fov->img_data[pos + 1] = 0xFF0000;
-	jeu->map->fov->img_data[pos + 2] = 0xFF0000;
+	jeu->map->img->img_data[pos - 2] = 0xFF0000;
+	jeu->map->img->img_data[pos - 1] = 0xFF0000;
+	jeu->map->img->img_data[pos + 1] = 0xFF0000;
+	jeu->map->img->img_data[pos + 2] = 0xFF0000;
 
-	jeu->map->fov->img_data[pos] = 0xFF0000;
+	jeu->map->img->img_data[pos] = 0xFF0000;
 
 	return (1);
 }
@@ -95,8 +95,8 @@ int			ft_make_2D_floor_img(t_game *jeu)
 			x = 0;
 			while (x < U)
 			{
-				jeu->map->floor->img_data[(x_step * (U + G) + x) + \
-					(jeu->map->floor->img_wid * ((U + G) * \
+				jeu->map->img->img_data[(x_step * (U + G) + x) + \
+					(jeu->map->img->img_wid * ((U + G) * \
 					y_step + y))] = color;
 //				printf("just colored\n");
 				++x;
