@@ -1,13 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_mlx_entities.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/17 16:25:56 by ericlazo          #+#    #+#             */
+/*   Updated: 2020/09/22 03:55:15 by ericlazo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 
 #include "cub3d.h"
+
+
+	// not sure this one is useful
+t_imge		*ft_init_imge()
+{
+	t_imge	*new;
+
+	if (!(new = malloc(sizeof(t_imge))))
+		return (NULL);
+	new->img_ptr = NULL;
+	new->img_data = NULL;
+	new->img_wid = -1;
+	new->img_hei = -1;
+	return (new);
+}
 
 t_imge      *ft_create_imge(t_lmlx *mlx, int x, int y)
 {
 	t_imge	*new;
 
 	new = NULL;
-	if (!(new = malloc(sizeof(t_imge))))
+	if (!(new = malloc(sizeof(t_imge))))		// should't this be ft_init_imge?
 		return (NULL);
 	if (!(new->img_ptr = mlx_new_image(mlx->ptr, x, y)))
 		return (NULL);      // also free new...
@@ -28,7 +54,7 @@ t_wind	*ft_create_wind(t_lmlx *mlx, char *name, int x, int y)
 	if (!(new = malloc(sizeof(t_wind))))
 		return (NULL);
 	if (!(new->win_ptr = mlx_new_window(mlx->ptr, x, y, name)))
-		return (NULL);
+		return (NULL);	// and free new...
 	new->win_wid = x;
 	new->win_hei = y;
 	new->name = name;	// necessary ???

@@ -108,7 +108,7 @@ SRCS_BONUS	=	ft_lstnew.c \
 				ft_print_strtab.c \
 				ft_error_msg.c \
 				ft_print_nlst.c \
-
+				ft_str_isdigit.c \
 
 ODIR = obj/
 OBJ_NAME = $(SRCS:.c=.o)

@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erlazo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/11 18:49:14 by erlazo            #+#    #+#             */
-/*   Updated: 2018/11/11 18:53:50 by erlazo           ###   ########.fr       */
+/*   Created: 2018/11/09 17:54:13 by erlazo            #+#    #+#             */
+/*   Updated: 2019/11/16 17:18:48 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isdigit(int c)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	int		a;
+
+	if (!dst || !src)
+		return (NULL);	// a personal modification
+	a = 0;
+	while (src[a])
+	{
+		dst[a] = src[a];
+		++a;
+	}
+	dst[a] = '\0';
+	return (dst);
 }

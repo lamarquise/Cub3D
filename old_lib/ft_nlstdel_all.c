@@ -2,6 +2,8 @@
 
 #include "libft.h"
 
+	// we are assuming a char *
+
 int		ft_nlstdel_all(t_nlist **lst)
 {
 	t_nlist	*tmp;

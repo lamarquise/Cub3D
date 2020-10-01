@@ -1,0 +1,175 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game_engine.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/20 02:11:49 by ericlazo          #+#    #+#             */
+/*   Updated: 2020/10/01 05:57:44 by ericlazo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+int		ft_display_crosshair(t_game *jeu)
+{
+	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
+		jeu->crosshair->img_ptr, \
+		(jeu->file->res.x - jeu->crosshair->img_wid) / 2, \
+		(jeu->file->res.y - jeu->crosshair->img_hei) / 2);
+	return (1);
+}
+
+int		ft_display_minimap(t_game *jeu)
+{
+	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
+		jeu->minimap->img_ptr, 0, 0);		// secure ? how
+
+	if (!ft_generate_player(jeu))
+		return (0);
+
+	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
+		jeu->yah->img_ptr, jeu->grid_tl.x, jeu->grid_tl.y);
+/*	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
+		jeu->yah->img_ptr, jeu->grid_tl.x + (jeu->me->pos.x * jeu->grid_box_size) - 1, \
+		jeu->grid_tl.y + jeu->me->pos.y * jeu->grid_box_size - 1);
+*/
+	return (1);
+}
+
+	// Ok so might not end up being an init everything, but does create all the
+	// mlx elems	
+
+	// Not sure i love that this is where t_settings is malloced...
+	// the init, may rename for clarity
+int		ft_prime_engine(t_game *jeu)
+{
+	// i think this is the part where i generate an image var
+	// for generate minimap and generate fpv
+
+	t_settings	*set;
+
+	if (!(set = malloc(sizeof(t_settings))))
+		return (0);
+
+	if (!ft_init_settings(set))
+		return (0);
+//		return (ft_scott_free(&set, 0));	// can't scott_free set, it's not a string
+
+
+	jeu->set = set;
+	jeu->fog = 100;
+
+	// also make the window and shit here i think ?
+	if (!(jeu->win = ft_create_wind(jeu->mlx, "Map", jeu->file->res.x, jeu->file->res.y)))
+		return (0);
+//		return (ft_scott_free(&set, 0));
+
+	if (!(jeu->fpv = ft_create_imge(jeu->mlx, jeu->file->res.x, jeu->file->res.y)))
+		return (0);
+
+	if (!ft_generate_minimap(jeu))
+		return (ft_error_msg("Failed to generate minimap\n", 0));
+//		return (ft_scott_free(&set, 0));
+
+
+	if (!(jeu->yah = ft_create_imge(jeu->mlx, jeu->grid_pixs.x, jeu->grid_pixs.y)))
+		return (0);
+
+	if (!ft_generate_crosshair(jeu))
+		return (0);
+
+
+//		return (ft_scott_free(&set, 0));
+//	if (!(ft_draw_box(jeu->yah, 0, 3, ft_rgb_to_int(255, 0, 0, 0))))
+//		return (ft_error_msg("Failed to draw red player square in yah img\n", 0));
+	return (1);
+}
+
+int		ft_draw_imges(t_game *jeu)
+{
+	// Is this also where i do the time thing ? i think no.
+
+	if (!ft_generate_fpv(jeu))	// if just adding the minimap, don't need to redow the 
+		return (0); // and prolly free something	// raycasting again!!!!
+
+	// similarly do a display fpv ?
+
+
+		// make sure this is in the mlx loop...
+		// has to be after FPV i think, so is infront...
+
+	if (jeu->set->minimap == 1 && !ft_display_minimap(jeu))
+		return (ft_error_msg("Failed to display minimap\n", 0));// maybe free something...
+	if (jeu->set->minimap != 1 && !ft_display_crosshair(jeu))
+		return (ft_error_msg("Failed to display crosshair\n", 0));
+
+
+
+	// tmp test to fpv imge	
+/*	t_coords	cs;
+
+	cs.x1 = 20;
+	cs.y1 = 20;
+	cs.x2 = 50;
+	cs.y2 = 50;
+
+	if (!ft_bresenham(jeu->fpv, cs, ft_rgb_to_int(150, 150, 0, 0)))
+		return (0);
+
+	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
+		jeu->fpv->img_ptr, 0, 0);
+*/
+
+	return (1);
+}
+
+	// move this later
+int		ft_keycodes(t_game *jeu)
+{		// replace numbers with defines
+	if (jeu->torch[13] && !ft_move_forward(jeu))
+		return (0);
+	if (jeu->torch[1] && !ft_move_backward(jeu))
+		return (0);
+	if (jeu->torch[0] && !ft_move_left(jeu))
+		return (0);
+	if (jeu->torch[2] && !ft_move_right(jeu))
+		return (0);
+	if (jeu->torch[123] && !ft_rot_left(jeu))
+		return (0);
+	if (jeu->torch[124] && !ft_rot_right(jeu))
+		return (0);
+	if (jeu->torch[46] && !ft_map_or_not(jeu))		// change later so stays on
+		return (0);
+	if (jeu->torch[53] && !ft_quit(jeu))				// also change ???
+		return (0);
+
+	// more ???
+
+	return (1);
+}
+
+int		ft_game_engine(t_game *jeu)
+{
+	// don't call prime engine here so it doesn't get called every time ? seems right...
+
+	if (!ft_draw_imges(jeu))
+		return (0);
+
+
+	// sleep(5);	// makes sleep for 5 seconds !!! an eternity
+//	ft_hooks_loop(jeu);		// according to fractol this setup is fine...
+
+	// do 1L and 2L do anything ???
+
+	mlx_hook(jeu->win->win_ptr, 2, 1L, &ft_keypress, jeu);
+	mlx_hook(jeu->win->win_ptr, 3, 2L, &ft_keyrelease, jeu);
+	mlx_hook(jeu->win->win_ptr, 17, 0, &ft_quit, jeu);
+	mlx_loop_hook(jeu->mlx->ptr, ft_keycodes, jeu);
+	mlx_loop(jeu->mlx->ptr);	// will this work ???
+	return (1);
+}
+
+
+

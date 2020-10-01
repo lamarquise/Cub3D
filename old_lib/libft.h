@@ -6,7 +6,7 @@
 /*   By: erlazo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 14:05:41 by erlazo            #+#    #+#             */
-/*   Updated: 2019/11/21 17:13:15 by erlazo           ###   ########.fr       */
+/*   Updated: 2020/09/17 15:59:31 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ int				ft_free_strtab(char **tab);
 int				ft_print_strtab(char **tab);
 int				ft_error_msg(char *str);
 int				ft_print_nlst(t_nlist *lst);
+int				ft_str_isdigit(char *str);
 
 #endif
