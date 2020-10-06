@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:01:00 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/01 00:01:49 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/04 02:38:11 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	ft_generate_player(t_game *jeu)
 		size = 1;
 	if (!ft_fill_imge(jeu->yah, ft_rgb_to_int(0, 0, 0, jeu->fog)))
 		return (0);
-
 
 	// Absolutly needs to be (int) before multiply by img wid other wise small
 	// diffs add up
@@ -103,7 +102,6 @@ int	ft_generate_fpv(t_game *jeu)
 			jeu->fpv->img_ptr, 0, 0);
 	return (1);
 }
-
 
 	// will need to be broken up int multiple functions
 int		ft_generate_crosshair(t_game *jeu)

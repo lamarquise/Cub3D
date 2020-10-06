@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/09/29 17:08:16 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/05 16:50:54 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,10 @@ FILES	=	main.c \
 			minimap.c \
 			not_bresenham.c \
 			bresenham.c \
-			draw_bresenham_line.c
+			draw_bresenham_line.c \
+			toggle_buttons.c \
+			mouse_commands.c \
+			more_nlist.c \
 
 OFILES	=	init_master.c \
 			master.c \

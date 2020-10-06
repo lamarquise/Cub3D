@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:46:53 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/09/25 18:46:52 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/05 19:42:42 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int		ft_fill_tex_list(t_game *jeu)
 	// would need to add more for more sprites or whatever
 	// there must be a more efficient way...
 
+
+	// linked lists ???
 
 	return (1);
 }
@@ -94,8 +96,15 @@ int		ft_parse_file(int fd, t_game *jeu)
 		return (0);
 	me->life = 100;
 	jeu->me = me;
+
+//	ft_print_nlist(floor);
+
 	if (!ft_copy_floor(jeu, floor))
 		return (ft_error_msg("failed to copy floor\n", 0));
+
+	ft_print_strtab(jeu->floor);
+	printf("map dim x: %d, y: %d\n", jeu->boxes.x, jeu->boxes.y);
+
 	if (!ft_nlstdel_all(&floor))	// can i del_all in copy floor ?
 		return (ft_error_msg("failed to del nlst floor\n", 0));
 	if (!ft_check_floor(jeu))

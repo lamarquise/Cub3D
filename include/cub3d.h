@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/01 05:57:48 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/06 04:34:53 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,14 @@
 # define BLACK	0x000000
 
 
-# define ROT_SPEED 0.02
-# define STEP_SIZE 0.05
+# define ROT_SPEED 0.02		// was 0.04 in old keyhook system
+# define STEP_SIZE 0.05		// was 0.1 in old keyhook system
+
+# define S_MAP	0x01
+# define S_PAU	0x02
+# define S_BON	0x04
+
+
 
 typedef struct	s_vect_i
 {
@@ -119,14 +125,14 @@ typedef struct	s_input
 	// cealing color // idem	
 }				t_input;
 
+
 typedef struct	s_settings
 {
-	int		minimap;
-
-	// a single int bol for all settings ?
-	// other shit...
-
+	int		minimap;		// make all a single int bool ?
+	int		bonus;
+	int		pause;
 }				t_settings;
+
 
 typedef struct	s_texture
 {
@@ -158,22 +164,29 @@ typedef struct	s_game
 	t_imge		*minimap;	// not in seperate window for now
 	t_imge		*fpv;	// mal in master_init()	// First Person View
 
+
+				// more like keys that can be released torch			
 	int			torch[127];	// could be 126 but not sure...
 	int			bol;
 	t_nlist		*tex_list;	// list of all textures
 
 	t_player	*me;		// mal in file_parser()
 	t_settings	*set;		// mal in ? master() ?
-}				t_game;
+//	int			settings;	// sadly bitwise ops didnt work... :(
 
-// consider multiple level, multiple files...
+	// here for now...
+	t_vect_i	mouse;
+
+
+}				t_game;
 
 typedef struct	s_key
 {
 	int     keycode;
-	int     (*f)(t_game *jeu);
-	int		on;
+	int     (*f)(t_game *jeu);	// make this void, and cast it after ???
 }				t_key;
+
+// consider multiple level, multiple files...
 
 
 // inventory structure ???
@@ -234,6 +247,10 @@ int				ft_prime_engine(t_game *jeu);
 int				ft_display_minimap(t_game *jeu);
 int				ft_display_crosshair(t_game *jeu);
 
+	// dif name
+int				ft_keycodes(t_game *jeu);
+
+
 /*
 **	Generate
 */
@@ -292,8 +309,8 @@ int				ft_unpack_textures(t_game *jeu);
 
 //int				ft_map_redraw(t_game *jeu);
 int				ft_redraw(t_game *jeu);
-//void			ft_light_torch(t_key *torch);
-//void			ft_hooks_loop(t_game *jeu);
+void			ft_light_torch(t_key *torch);
+void			ft_hooks_loop(t_game *jeu);
 int				ft_keypress(int key, t_game *jeu);
 int				ft_keyrelease(int key, t_game *jeu);
 
@@ -307,11 +324,10 @@ int				ft_rgb_to_int(int r, int g, int b, int t);
 
 
 /*
-**	Player Commands
+**	Player Commands (new name, just movement ?
 */
 
-int				ft_map_or_not(t_game *jeu);
-
+	// move these to a seperate file
 int				ft_move_forward(t_game *jeu);
 int				ft_move_backward(t_game *jeu);
 int				ft_move_left(t_game *jeu);
@@ -319,6 +335,30 @@ int				ft_move_right(t_game *jeu);
 
 int				ft_rot_right(t_game *jeu);
 int				ft_rot_left(t_game *jeu);
+
+/*
+**	Toggle Buttons
+*/
+
+//int				ft_toggle_on(t_game *jeu, int shift);	// sadly bitwise
+//int				ft_toggle_off(t_game *jeu, int shift);	// didn't work...
+int				ft_toggle_on(int *button);
+int				ft_toggle_off(int *button);
+
+
+/*
+**	Mouse Commands
+*/
+
+int				ft_capture_mouse_pos(int x, int y, t_game *jeu);
+int				ft_mouse_move(int x, int y, t_game *jeu);
+
+
+// Move to lib later
+
+int				ft_print_nlist(t_nlist *lst);
+
+
 
 /*
 **	Quit

@@ -6,15 +6,18 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:31:38 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/01 05:00:21 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:14:51 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+
 int	ft_init_settings(t_settings *set)
 {
 	set->minimap = 0;
+	set->bonus = 0;	// 0 being no bonuses
+	set->pause = 0;
 	// more
 	return (1);
 }
@@ -86,6 +89,7 @@ int	ft_init_mlx(t_game *jeu)
 	return (1);
 }
 
+
 int	ft_init_torch(t_game *jeu)
 {
 	int		i;
@@ -96,6 +100,7 @@ int	ft_init_torch(t_game *jeu)
 		jeu->torch[i++] = 0;
 	return (1);
 }
+
 
 int	ft_init_game(t_game *jeu)
 {
@@ -121,8 +126,10 @@ int	ft_init_game(t_game *jeu)
 	jeu->tex_list = NULL;
 	jeu->me = NULL;
 	jeu->set = NULL;
-	if (!ft_init_torch(jeu))
-		return (0);
+//	jeu->settings = 0;
+	ft_init_torch(jeu);
+	jeu->mouse.x = 0;		
+	jeu->mouse.y = 0;
 	return (1);
 }
 

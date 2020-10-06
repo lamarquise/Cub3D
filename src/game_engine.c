@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 02:11:49 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/01 05:57:44 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/06 18:31:24 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,10 @@ int		ft_display_minimap(t_game *jeu)
 {
 	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
 		jeu->minimap->img_ptr, 0, 0);		// secure ? how
-
 	if (!ft_generate_player(jeu))
 		return (0);
-
 	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
 		jeu->yah->img_ptr, jeu->grid_tl.x, jeu->grid_tl.y);
-/*	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
-		jeu->yah->img_ptr, jeu->grid_tl.x + (jeu->me->pos.x * jeu->grid_box_size) - 1, \
-		jeu->grid_tl.y + jeu->me->pos.y * jeu->grid_box_size - 1);
-*/
 	return (1);
 }
 
@@ -45,9 +39,6 @@ int		ft_display_minimap(t_game *jeu)
 	// the init, may rename for clarity
 int		ft_prime_engine(t_game *jeu)
 {
-	// i think this is the part where i generate an image var
-	// for generate minimap and generate fpv
-
 	t_settings	*set;
 
 	if (!(set = malloc(sizeof(t_settings))))
@@ -56,7 +47,6 @@ int		ft_prime_engine(t_game *jeu)
 	if (!ft_init_settings(set))
 		return (0);
 //		return (ft_scott_free(&set, 0));	// can't scott_free set, it's not a string
-
 
 	jeu->set = set;
 	jeu->fog = 100;
@@ -72,18 +62,13 @@ int		ft_prime_engine(t_game *jeu)
 	if (!ft_generate_minimap(jeu))
 		return (ft_error_msg("Failed to generate minimap\n", 0));
 //		return (ft_scott_free(&set, 0));
-
-
 	if (!(jeu->yah = ft_create_imge(jeu->mlx, jeu->grid_pixs.x, jeu->grid_pixs.y)))
 		return (0);
-
 	if (!ft_generate_crosshair(jeu))
 		return (0);
 
+	mlx_hook(jeu->win->win_ptr, 6, 6L, &ft_capture_mouse_pos, jeu);
 
-//		return (ft_scott_free(&set, 0));
-//	if (!(ft_draw_box(jeu->yah, 0, 3, ft_rgb_to_int(255, 0, 0, 0))))
-//		return (ft_error_msg("Failed to draw red player square in yah img\n", 0));
 	return (1);
 }
 
@@ -96,38 +81,32 @@ int		ft_draw_imges(t_game *jeu)
 
 	// similarly do a display fpv ?
 
-
 		// make sure this is in the mlx loop...
 		// has to be after FPV i think, so is infront...
 
-	if (jeu->set->minimap == 1 && !ft_display_minimap(jeu))
+//	printf("settings: %d\n", jeu->settings);
+
+	if (jeu->set->bonus == 1 && jeu->set->minimap == 1 && !ft_display_minimap(jeu))
 		return (ft_error_msg("Failed to display minimap\n", 0));// maybe free something...
-	if (jeu->set->minimap != 1 && !ft_display_crosshair(jeu))
+	if (jeu->set->bonus == 1 && jeu->set->minimap != 1 && !ft_display_crosshair(jeu))
 		return (ft_error_msg("Failed to display crosshair\n", 0));
 
-
-
-	// tmp test to fpv imge	
-/*	t_coords	cs;
-
-	cs.x1 = 20;
-	cs.y1 = 20;
-	cs.x2 = 50;
-	cs.y2 = 50;
-
-	if (!ft_bresenham(jeu->fpv, cs, ft_rgb_to_int(150, 150, 0, 0)))
-		return (0);
-
-	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
-		jeu->fpv->img_ptr, 0, 0);
+/*	if (jeu->set->bonus == 1 && jeu->set->minimap == 1 && !ft_display_minimap(jeu))
+		return (ft_error_msg("Failed to display minimap\n", 0));// maybe free something...
+	if (jeu->set->bonus == 1 && jeu->set->minimap != 1 && !ft_display_crosshair(jeu))
+		return (ft_error_msg("Failed to display crosshair\n", 0));
 */
-
 	return (1);
 }
 
 	// move this later
 int		ft_keycodes(t_game *jeu)
 {		// replace numbers with defines
+
+	// would be so much nicer to do with a loop and a dedicated init func
+	// but still have the .h problem where can't have cross referencing
+	// structures...
+
 	if (jeu->torch[13] && !ft_move_forward(jeu))
 		return (0);
 	if (jeu->torch[1] && !ft_move_backward(jeu))
@@ -140,36 +119,64 @@ int		ft_keycodes(t_game *jeu)
 		return (0);
 	if (jeu->torch[124] && !ft_rot_right(jeu))
 		return (0);
-	if (jeu->torch[46] && !ft_map_or_not(jeu))		// change later so stays on
+
+						// keep this extra condition in mind for 
+						// future butons
+	if (jeu->torch[46] && jeu->set->bonus && !ft_toggle_on(&jeu->set->minimap))
 		return (0);
+	if (jeu->torch[45] && !ft_toggle_off(&jeu->set->minimap))
+		return (0);
+	if (jeu->torch[35] && !ft_toggle_on(&jeu->set->pause))
+		return (0);
+	if (jeu->torch[31] && !ft_toggle_off(&jeu->set->pause))
+		return (0);
+	if (jeu->torch[11] && !ft_toggle_on(&jeu->set->bonus))
+		return (0);
+	if (jeu->torch[9] && !ft_toggle_off(&jeu->set->bonus))
+		return (0);
+
 	if (jeu->torch[53] && !ft_quit(jeu))				// also change ???
 		return (0);
 
-	// more ???
+// do rather like the redraw here rather than at the end of player command funcs
 
-	return (1);
+	// reason redraw is after things happening is so don't constantly redraw
+	// only when something changes...
+	// but could be good if we put sprite logic in here too...
+	return (ft_redraw(jeu));
 }
+
 
 int		ft_game_engine(t_game *jeu)
 {
-	// don't call prime engine here so it doesn't get called every time ? seems right...
-
 	if (!ft_draw_imges(jeu))
 		return (0);
+
+	// if save we end it here
 
 
 	// sleep(5);	// makes sleep for 5 seconds !!! an eternity
 //	ft_hooks_loop(jeu);		// according to fractol this setup is fine...
 
 	// do 1L and 2L do anything ???
-
+	
+			// was 1L and 2L
+			// x_mask (1L and 2L and such) are not needed for MacOS but necessary for
+			// Linux, is 17L correct ???
+//	mlx_loop_hook(jeu->mlx->ptr, ft_redraw, jeu);
+//	usleep(20000);	// doesnt seem to do anything
+	// is there a way to record keypress length, if so use that to stabilize Map button
 	mlx_hook(jeu->win->win_ptr, 2, 1L, &ft_keypress, jeu);
 	mlx_hook(jeu->win->win_ptr, 3, 2L, &ft_keyrelease, jeu);
-	mlx_hook(jeu->win->win_ptr, 17, 0, &ft_quit, jeu);
+	mlx_hook(jeu->win->win_ptr, 6, 6L, &ft_mouse_move, jeu);
+	mlx_hook(jeu->win->win_ptr, 17, 17L, &ft_quit, jeu);
+//	ft_hooks_loop(jeu);	// one or the other, don't work at the same time...
+
+	// will need this shit to constantly be updating especially if want the sprites to
+	// keep moving even when player is still
 	mlx_loop_hook(jeu->mlx->ptr, ft_keycodes, jeu);
 	mlx_loop(jeu->mlx->ptr);	// will this work ???
 	return (1);
 }
-
 
 

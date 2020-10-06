@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 19:21:14 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/09/23 02:18:33 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/06 04:34:43 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,20 @@ int		ft_copy_floor(t_game *jeu, t_nlist *floor)
 
 	ft_get_floor_dimentions(jeu, floor);
 
+	// make sure dims are large as possible ...
+
 	if (!(new_floor = (char**)malloc(sizeof(char*) * (jeu->boxes.y + 1))))
 		return (0);
 	tmp = floor;
 	a = 0;
 	while (a < jeu->boxes.y)
 	{	// ft_memalloc might be overkill but better safe than sorry
-		if (!(new_floor[a] = (char*)ft_memalloc(sizeof(char) \
-							* (jeu->boxes.x + 1))))
+//		if (!(new_floor[a] = (char*)ft_memalloc(sizeof(char) \
+//							* (jeu->boxes.x + 1))))
+//			return (0);
+		if (!(new_floor[a] = ft_fill_with(' ', jeu->boxes.x)))
 			return (0);
-		new_floor[a] = ft_memset(new_floor[a], ' ', jeu->boxes.x);
+//		new_floor[a] = ft_memset(new_floor[a], ' ', jeu->boxes.x);
 		new_floor[a] = ft_strcpy(new_floor[a], (char*)tmp->content);
 		tmp = tmp->next;
 		++a;
@@ -77,6 +81,8 @@ int		ft_check_around(t_game *jeu, int x, int y)
 {
 	if (jeu->floor[y][x] == '1')
 		return (1);
+	if (jeu->floor[y][x] == ' ')
+		return (1);		// ???
 	if (x == 0 || x == jeu->boxes.x - 1 || y == 0 || y == jeu->boxes.y - 1 \
 		|| !ft_g(jeu->floor[y][x - 1]) || !ft_g(jeu->floor[y - 1][x]) \
 		|| !ft_g(jeu->floor[y][x + 1]) || !ft_g(jeu->floor[y + 1][x]) \
@@ -107,11 +113,14 @@ int		ft_check_floor(t_game *jeu)
 					jeu->floor[y][x] = '0';
 				}
 				else
+				{
+					printf("pos x: %d, y: %d, bad char: |%c|\n", x, y, jeu->floor[y][x]);
 					return (ft_error_msg("bad map char\n", 0));
+				}
 			}
 			if (!ft_check_around(jeu, x, y))
 			{
-				printf("x: %d, y: %d, char: %c\n", x, y, jeu->floor[y][x]);
+				printf("x: %d, y: %d, char: |%c|\n", x, y, jeu->floor[y][x]);
 				return (ft_error_msg("map not closed\n", 0));
 			}
 /*			if (jeu->floor[y][x] != '1')

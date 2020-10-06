@@ -26,6 +26,26 @@ West is grey stone bricks
 East is red bricks
 
 
+W: Move up
+S: Move down
+A: Move left
+D: Move right
+
+->: Rotate right
+<-: Rotate left
+
+
+M: Map on
+N: Map off
+
+P: Pause on
+O: Pause off
+
+B: Bonus mode on
+V: Bonus mode off
+
+ESC: Quit
+
 
 
 Explain the structures, like what contains what...

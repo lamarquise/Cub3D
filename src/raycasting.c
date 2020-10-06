@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 03:42:31 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/01 05:00:40 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/05 01:43:23 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,12 @@ int		ft_ray_dir(t_vect_i *step, t_vect_i *map_pos, t_vect_d *pos, \
 
 
 	// Digital Differencial Algorythm, DDA,
-
-int		ft_dda(t_game *jeu, t_vect_i *map_pos, t_vect_i *step, \
+/*			// just for testing elems of DDA individually
+int		ft_test_dda(t_vect_i *map_pos, t_vect_i *step, \
 					t_vect_d *side_dist, t_vect_d *delta_dist)
 {
-	int		hit;
 	int		side;
 
-	hit = 0;
-	while (hit == 0)
-	{
 		if (side_dist->x < side_dist->y)
 		{
 			side_dist->x += delta_dist->x;
@@ -94,8 +90,42 @@ int		ft_dda(t_game *jeu, t_vect_i *map_pos, t_vect_i *step, \
 			map_pos->y += step->y;
 			side = 1;
 		}
+	
+	return (side);
+}
+*/
+
+int		ft_dda(t_game *jeu, t_vect_i *map_pos, t_vect_i *step, \
+					t_vect_d *side_dist, t_vect_d *delta_dist)
+{
+	int		hit;
+	int		side;
+	int		i;
+
+//	side = 0;
+	hit = 0;
+	i = 0;			// i did not improve things...
+	while (hit == 0 && i < 100)
+	{
+//		side = ft_test_dda(map_pos, step, side_dist, delta_dist);
+
+
+		if (side_dist->x < side_dist->y)
+		{
+			side_dist->x += delta_dist->x;
+			map_pos->x += step->x;
+			side = 0;
+		}
+		else
+		{
+			side_dist->y += delta_dist->y;
+			map_pos->y += step->y;
+			side = 1;
+		}
+
 		if (jeu->floor[map_pos->y][map_pos->x] > '0')
 			hit = 1;
+		++i;
 	}
 	return (side);
 }
@@ -194,6 +224,15 @@ int		ft_raycasting(t_game *jeu)
 		
 
 //		printf("side distx: %f, y: %f\n", side_dist.x, side_dist.y);
+
+//int		ft_dda(t_game *jeu, t_vect_i *map_pos, t_vect_i *step, \
+//					t_vect_d *side_dist, t_vect_d *delta_dist)
+
+//		printf("map_pos x: %d, y: %d\n", map_pos.x, map_pos.y);
+//		printf("step x: %d, y: %d\n", step.x, step.y);
+//		printf("side_dist x: %f, y: %f\n", side_dist.x, side_dist.y);
+//		printf("delta_dist x: %f, y: %f\n", delta_dist.x, delta_dist.y);
+
 
 		// we call the DDA Algorythm
 		// Works

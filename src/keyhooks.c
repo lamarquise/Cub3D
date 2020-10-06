@@ -6,37 +6,15 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 23:45:11 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/01 04:59:07 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/04 02:43:19 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "cub3d.h"
 
-
-/*
 int		ft_redraw(t_game *jeu)
 {
-
-	mlx_destroy_image(jeu->mlx->ptr, jeu->minimap->img_ptr);
-	
-	if (!(either->img->img_ptr = mlx_new_image(either->jeu->mlx->ptr,\
-		either->img->img_wid, either->img->img_hei)))
-		return (0);
-	either->img->img_data = (int*)mlx_get_data_addr(either->img->img_ptr,\
-	&either->jeu->mlx->bpp, &either->jeu->mlx->s_l,\
-	&either->jeu->mlx->endian);
-
-	ft_map_port(either->jeu);
-	return (1);
-}
-*/
-
-int		ft_redraw(t_game *jeu)
-{
-//	if (jeu->minimap->img_ptr)
-//		mlx_destroy_image(jeu->mlx->ptr, jeu->minimap->img_ptr);	
+	// none of that gets done to player, maybe i don't need it for fpv ?	
 
 	if (jeu->fpv->img_ptr)
 		mlx_destroy_image(jeu->mlx->ptr, jeu->fpv->img_ptr);
@@ -54,37 +32,42 @@ int		ft_redraw(t_game *jeu)
 
 int		ft_keypress(int key, t_game *jeu)
 {
-	jeu->torch[key] = 1;
-	return (1);	// may end up returning 0
+//	usleep(1000);
+/*	if ((key == 46 || key == 53) && jeu->torch[key] == 1)
+		jeu->torch[key] = 0;
+	else
+*/		jeu->torch[key] = 1;
+	return (1);
 }
 
 int		ft_keyrelease(int key, t_game *jeu)
 {
-	jeu->torch[key] = 0;
+//	if (key != 46 && key != 53)	// definitly fucks things up for the map display (flikers)
+		jeu->torch[key] = 0;
 	return (1);	// may end up returning 0
 }
 
+
+
+	// all the rest is defunct
+
+
+
 /*
+	// move to init ???
 void    ft_light_torch(t_key *torch)
 {
 	torch[0].keycode = 53;
 	torch[0].f = ft_quit;
-	torch[1].keycode = 13;
-	torch[1].f = &ft_move_forward;
-	torch[2].keycode = 1;
-	torch[2].f = &ft_move_backward;
-	torch[3].keycode = 0;
-	torch[3].f = ft_move_left;
-	torch[4].keycode = 2;
-	torch[4].f = ft_move_right;
-	torch[5].keycode = 46;
-	torch[5].f = ft_map_or_not;
-	torch[6].keycode = 124;
-	torch[6].f = ft_rot_right;
-	torch[7].keycode = 123;
-	torch[7].f = ft_rot_left;
-}
+	torch[1].keycode = 46;
+	torch[1].f = ft_map;
+	torch[2].keycode = 45;
+	torch[3].f = ft_normal_or_not;
 
+//	jeu->torch = torch;
+}
+*/
+/*
 int     ft_keyhooks(int keycode, t_game *jeu)
 {
 	static t_key    torch[20] = {{42, NULL}};
@@ -107,8 +90,13 @@ void    ft_hooks_loop(t_game *jeu)
 	mlx_hook(jeu->win->win_ptr, 2, 0, &ft_keyhooks, jeu);
 	mlx_hook(jeu->win->win_ptr, 17, 0, &ft_quit, jeu);
 
+		// didn't work...
+//	mlx_loop_hook(jeu->mlx->ptr, ft_keycodes, jeu);
 	// add all the other hooks
-
 }
-
 */
+
+
+
+
+
