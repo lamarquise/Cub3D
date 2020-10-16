@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:57:12 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/05 16:42:53 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/16 03:49:32 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,107 +17,153 @@
 
 #include "cub3d.h"
 
-int     ft_expected_size(char **tab, int e)
+
+	// actually, very similar to ft_expected size...
+	// seems redundant
+	// put this in the lib
+int		ft_strtab_size(char **tab)
 {
 	int		i;
 
 	i = 0;
-	if (!tab)
-		return (0);
 	while (tab[i])
 		++i;
-	return (i == e ? 1 : 0);
+	return (i);
 }
 
-int		ft_parse_res(char **tab, t_input *file)
+int		ft_parse_optional_input(t_game *jeu, char **tab)
 {
-	int		x;
-	int		y;
-
-	if (!ft_expected_size(tab, 3))
-		return (ft_error_msg("res wrong tab size\n", 0));
-	if (file->res.x > 0 || file->res.y > 0)
-		return (ft_error_msg("res already inited\n", 0));
-	x = ft_atoi(tab[1]);	
-	y = ft_atoi(tab[2]);
-	if (x <= 0 || y <= 0)	// i think cor conditions...
-		return (ft_error_msg("res inputes negative\n", 0));
-	file->res.x = x;
-	file->res.y = y;
-	return (1);
-}
-
-int		ft_parse_path(char **tab, char **path)
-{
-	if (!ft_expected_size(tab, 2))
-		return (ft_error_msg("path wrong tab size\n", 0));
-	if (*path)
-		return (ft_error_msg("already a path\n", 0));
-	if (!ft_check_str_end(tab[1], ".xpm"))
-		return (ft_error_msg("not an .xpm file\n", 0));
-	if (!(*path = ft_strdup(tab[1])))
-		return (ft_error_msg("path dup failed\n", 0));
-	return (1);
-}
-
-int		ft_parse_colors(char **tab, int *color)
-{
-	char	**nums;
-	int		r;
-	int		g;
-	int		b;
-
-	if (!ft_expected_size(tab, 2))
-		return (ft_error_msg("floor or celing wrong tab size\n", 0));
-	nums = ft_split(tab[1], ",");
-	if (!ft_expected_size(nums, 3))
-		return (ft_error_msg("color wrong tab size\n", 0));
-	if (*color >= 0)
-		return (ft_error_msg("already colors\n", 0));
-	if (!ft_str_isdigit(nums[0]) || !ft_str_isdigit(nums[1]) \
-		|| !ft_str_isdigit(nums[2]))
-		return (ft_error_msg("color in file isn't a number\n", 0));
-	r = ft_atoi(nums[0]);
-	g = ft_atoi(nums[1]);
-	b = ft_atoi(nums[2]);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (ft_error_msg("color inputs not btw 0 and 255 inclusive\n", 0));
-	*color = ft_rgb_to_int(r, g, b, 0);
-	ft_free_strtab(nums);
-	return (1);
-}
-
-	// can i get rid of ternairs ?
-
-	// i hope my !(*bol ...) works...
-
-int		ft_parse_line(t_input *file, char *line, int *bol)
-{
-	char	**tab;
 	int		ret;
 
-	if (!line)	// or file or bol ???
-		return (ft_error_msg("no line\n", 0));
 	ret = 0;
-	tab = ft_split(line, " ");	// secure ???
-	if (!(*bol & RES) && ft_strcmp(tab[0], "R") == 0)
-		ret = (ft_parse_res(tab, file) > 0 ? 1 : 0);
-	else if (!(*bol & PNO) && ft_strcmp(tab[0], "NO") == 0)
-		ret = (ft_parse_path(tab, &file->no_path) > 0 ? 2 : 0);
-	else if (!(*bol & PSO) && ft_strcmp(tab[0], "SO") == 0)
-		ret = (ft_parse_path(tab, &file->so_path) > 0 ? 3 : 0);
-	else if (!(*bol & PWE) && ft_strcmp(tab[0], "WE") == 0)
-		ret = (ft_parse_path(tab, &file->we_path) > 0 ? 4 : 0);
-	else if (!(*bol & PEA) && ft_strcmp(tab[0], "EA") == 0)
-		ret = (ft_parse_path(tab, &file->ea_path) > 0 ? 5 : 0);
-	else if (!(*bol & PS1) && ft_strcmp(tab[0], "S") == 0)
-		ret = (ft_parse_path(tab, &file->sprite_path) > 0 ? 6 : 0);
-	else if (!(*bol & CFL) && ft_strcmp(tab[0], "F") == 0)
-		ret = (ft_parse_colors(tab, &file->f) > 0 ? 7 : 0);
-	else if (!(*bol & CCE) && ft_strcmp(tab[0], "C") == 0)
-		ret = (ft_parse_colors(tab, &file->c) > 0 ? 8 : 0);
-	ft_free_strtab(tab);
-	*bol |= (1 << ret);
+	if (!(jeu->bbol & BEX) && !ft_strcmp(tab[0], "X"))
+	{
+//		if (!jeu->set->bonus)	// do before func is called !!!
+//			return (ft_error_msg("Exit not allowed unless <--bonus>\n", 0));
+//		printf("exit found\n");
+		ret = (ft_parse_path_to_texture(tab, &jeu->b_file->exit) > 0 ? 1 : 0);
+
+	}
+	else if (!(jeu->bbol & BKE) && !ft_strcmp(tab[0], "Y"))
+	{
+		ret = (ft_parse_path_to_texture(tab, &jeu->b_file->key) > 0 ? 2 : 0);
+	}
+	else if (!(jeu->bbol & BOP) && !ft_strcmp(tab[0], "Z"))
+	{
+		ret = (ft_parse_path_to_texture(tab, &jeu->b_file->opener) > 0 ? 3 : 0);
+
+	}
+
+	jeu->bbol |= (1 << ret);
+	return (ret);
+}
+
+	// sbol
+
+			// can get rid of bol i think ? have the room now
+	// could replace jeu with file again???
+int		ft_parse_essencial_input(t_game *jeu, char **tab)
+{
+	int		ret;
+
+	if (!jeu || !tab)	// or file or bol ???
+		return (ft_error_msg("no jeu or no tab\n", 0));
+	ret = 0;
+//	tab = ft_split(line, " ");	// secure ???
+
+		// maybe...
+	if (ft_strlen(tab[0]) == 0)
+		return (1);
+
+	if (!(jeu->sbol & RES) && !ft_strcmp(tab[0], "R"))
+		ret = (ft_parse_res(tab, jeu->file) > 0 ? 1 : 0);
+	else if (!(jeu->sbol & TNO) && !ft_strcmp(tab[0], "NO"))
+		ret = (ft_parse_path_to_texture(tab, &jeu->file->no) > 0 ? 2 : 0);
+	else if (!(jeu->sbol & TSO) && !ft_strcmp(tab[0], "SO"))
+		ret = (ft_parse_path_to_texture(tab, &jeu->file->so) > 0 ? 3 : 0);
+	else if (!(jeu->sbol & TWE) && !ft_strcmp(tab[0], "WE"))
+		ret = (ft_parse_path_to_texture(tab, &jeu->file->we) > 0 ? 4 : 0);
+	else if (!(jeu->sbol & TEA) && !ft_strcmp(tab[0], "EA"))
+		ret = (ft_parse_path_to_texture(tab, &jeu->file->ea) > 0 ? 5 : 0);
+	else if (!ft_strcmp(tab[0], "S"))
+	{		// could have an int sep from bool for n of sprites
+		if (!jeu->set->bonus && jeu->sbol & TS1)
+			return (ft_error_msg("Too many Sprites\n", 0));
+		ret = (ft_parse_sprite_path(jeu->file, tab) > 0 ? 6 : 0);	// was 6, make 0 ?
+	}
+	else if (!(jeu->sbol & CFL) && ft_strcmp(tab[0], "F"))	// eventually floor texs
+		ret = (ft_parse_colors(tab, &jeu->file->ceiling) > 0 ? 7 : 0);
+	else if (!(jeu->sbol & CCE) && ft_strcmp(tab[0], "C"))
+		ret = (ft_parse_colors(tab, &jeu->file->ceiling) > 0 ? 8 : 0);
+
+//	ft_free_strtab(tab);
+//	if (ret != 17)
+		jeu->sbol |= (1 << ret);
+//	else
+//		ret = 1;
+//	printf("ret: %d, bol: %d\n", ret, *bol);
 //	printf("parse line ret: %d\n", ret);
 	return (ret);
 }
+
+	// goes through lines, divying out until
+
+
+int		ft_parse_line(t_game *jeu, char *line, t_nlist **floor, int *map)
+{
+	char	**tab;
+	int		tabsize;
+
+	if (!line)
+		return (ft_error_msg("no line\n", 0));
+	tab = ft_split(line, " ");	// secure ???	// rework split
+
+	// not my favorit algo, may need reworking...
+	tabsize = ft_strtab_size(tab);	// not gonna work cuz what if map has spaces in top
+	if (!*map && tabsize > 0)				// line ???
+	{
+		// do prev line parser things
+		// all non bonus stuff
+
+		// use X Y and Z for exit key and change room (cuz greater than other letters!)
+		if (tab[0][0] <= 'W' && tab[0][0] >= 'C')
+		{
+
+			if (!ft_parse_essencial_input(jeu, tab))
+				return (ft_error_msg("bad essencial input\n", 0));
+			// send to OG manager of things func with non bonus file !!!
+			// figure out how to do textured floors later
+			// i think sprite management is good tho
+		}
+		else if (tab[0][0] >= 'X' && tab[0][0] <= 'Z')
+		{
+			if (!ft_parse_optional_input(jeu, tab))
+				return (ft_error_msg("bad optional input\n", 0));
+			// a sort of equivalent func as above is called
+			// but just handles bonus file stuff
+		}
+		else
+			*map = 1;
+		
+	}
+
+		// only useful if map == 0
+//	if (ft_strlen(tab[0]) == 0)
+//		return (1);
+
+
+	// if can't be anything but a map, we do map
+	// has to be at the end
+	// everything before must rule out all other possibilities, valid and invalid
+
+//	printf("map = %d\n", *map);
+
+	if (*map && !ft_nlstadd_back(floor, ft_nlstnew(ft_strdup(line), 0)))
+			return (ft_error_msg("parse line failed\n", 0)); // also free everything
+
+	ft_free_strtab(tab);
+	return (1);
+}
+
+
+

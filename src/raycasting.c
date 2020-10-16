@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 03:42:31 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/05 01:43:23 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/16 04:05:40 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,18 @@ int		ft_dda(t_game *jeu, t_vect_i *map_pos, t_vect_i *step, \
 	int		side;
 	int		i;
 
-//	side = 0;
+//	printf("dda print tab\n");
+//	ft_print_strtab(jeu->lev->floor);
+
+	side = 0;
 	hit = 0;
 	i = 0;			// i did not improve things...
-	while (hit == 0 && i < 100)
+//	while (hit == 0 && i < 100)
+	while (hit == 0)
 	{
 //		side = ft_test_dda(map_pos, step, side_dist, delta_dist);
 
+//		printf("dda test 1, map pos x: %d, y: %d\n", map_pos->x, map_pos->y);
 
 		if (side_dist->x < side_dist->y)
 		{
@@ -122,13 +127,63 @@ int		ft_dda(t_game *jeu, t_vect_i *map_pos, t_vect_i *step, \
 			map_pos->y += step->y;
 			side = 1;
 		}
+//		printf("dda test 2\n");
 
-		if (jeu->floor[map_pos->y][map_pos->x] > '0')
+		if (((char**)jeu->lev->floor)[map_pos->y][map_pos->x] != '0')
 			hit = 1;
-		++i;
+//		printf("dda test 3\n");
+//		++i;
 	}
 	return (side);
 }
+
+/*				// may eventually be useful for sprite rendering...
+	// secure obvi
+t_imge		*ft_select_tex_nlist_elem(t_nlist *list, int value)
+{
+	t_nlist		*tmp;
+	t_texture	*tex;
+
+	tmp = list;
+	tex = NULL;
+	while (tmp)
+	{
+		tex = (t_texture*)tmp->content;
+		if (tex->value == value)
+			return (tex->img);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+
+t_imge		*ft_select_tex(t_game *jeu, int side, t_vect_d ray_dir, t_vect_i map_pos)
+{
+	if (((char**)jeu->lev->floor)[map_pos.y][map_pos.x] == '1')
+	{
+		if (side == 0)					// here we replace with linked list
+		{
+			if (ray_dir.x < 0)
+				return (ft_select_tex_nlist_elem(jeu->file->tex_list, 0));
+			else
+				return (ft_select_tex_nlist_elem(jeu->file->tex_list, 1));
+		}
+		else
+		{
+			if (ray_dir.y < 0)
+				return (ft_select_tex_nlist_elem(jeu->file->tex_list, 2));
+			else
+				return (ft_select_tex_nlist_elem(jeu->file->tex_list, 3));
+		}
+	}
+	else if (((char**)jeu->lev->floor)[map_pos.y][map_pos.x] == '2')	// need a way to expand easier
+	{
+		return (ft_select_tex_nlist_elem(jeu->file->tex_list, 4));
+	}
+	return (NULL);
+}
+*/
+
 
 int		ft_raycasting(t_game *jeu)
 {
@@ -137,9 +192,13 @@ int		ft_raycasting(t_game *jeu)
 	int		row;
 	int		r;
 
+
+	t_level *lev;
+
+	lev = (t_level*)jeu->level_list->content;
+
 	col = jeu->file->res.x;
 	row = jeu->file->res.y;
-
 
 		// Makes the Background
 	c = 0;
@@ -148,8 +207,13 @@ int		ft_raycasting(t_game *jeu)
 	int		floor_color;
 	int		ceiling_color;
 	wall = ft_rgb_to_int(255, 0, 0, 0);
-	floor_color = jeu->file->f;
-	ceiling_color = jeu->file->c;
+//	printf("getting floor colors\n");
+
+	// for some reason absolutely need to check if jeu->file->floor, not sure why
+	if (jeu->file->floor && jeu->file->floor->path == NULL)
+		floor_color = jeu->file->floor->value;
+	if (jeu->file->ceiling && jeu->file->ceiling->path == NULL)
+		ceiling_color = jeu->file->ceiling->value;
 	while (c < col)
 	{
 		if (!ft_draw_col_to_imge(jeu->fpv, 0, jeu->file->res.y / 2, c, \
@@ -196,7 +260,7 @@ int		ft_raycasting(t_game *jeu)
 	double	tex_pos;
 	int		y;
 
-	t_imge	*texture;
+	t_imge	*texture;		// rename later cuz an imge not a ttex
 
 
 	// Ideas as to where the problem could be coming from:
@@ -212,7 +276,12 @@ int		ft_raycasting(t_game *jeu)
 		cameraX = 2 * c / (double)col - 1;	// weird cast...
 		ray_dir.x = jeu->me->dir.x + jeu->me->plane.x * cameraX;
 		ray_dir.y = jeu->me->dir.y + jeu->me->plane.y * cameraX;
-		
+
+
+//		printf("me pos x: %f", jeu->me->pos.x);
+//		printf("raycasting test 1, map pos x: %d, y: %d\n", map_pos.x, map_pos.y);
+
+
 		// Not ideal, ternairs imbriques...
 		delta_dist.x = (ray_dir.y == 0) ? 0 : ((ray_dir.x == 0) ? 1 : fabs(1 / ray_dir.x));
 		delta_dist.y = (ray_dir.x == 0) ? 0 : ((ray_dir.y == 0) ? 1 : fabs(1 / ray_dir.y));
@@ -276,15 +345,25 @@ int		ft_raycasting(t_game *jeu)
 		wall_x -= floor(wall_x);
 
 	
+			// do this whole bit in a sep func
 		// could this map_pos math be the reason the textures fuck up sometimes ?	
 		texture = NULL;
-		if (jeu->floor[map_pos.y][map_pos.x] == '1')
+		if (((char**)jeu->lev->floor)[map_pos.y][map_pos.x] == '1')
 		{
-			if (side == 0)
-				texture = (ray_dir.x < 0 ? jeu->file->no_tex : jeu->file->so_tex);
+			if (side == 0)					// here we replace with linked list
+				texture = (ray_dir.x < 0 ? jeu->file->no->img : jeu->file->so->img);
 			else
-				texture = (ray_dir.y < 0 ? jeu->file->we_tex : jeu->file->ea_tex);
+				texture = (ray_dir.y < 0 ? jeu->file->we->img : jeu->file->ea->img);
 		}
+		else if (((char**)jeu->lev->floor)[map_pos.y][map_pos.x] == 'X')
+		{
+			texture = jeu->b_file->exit->img;
+		}
+
+
+
+//		if (!(texture = ft_select_tex(jeu, side, ray_dir, map_pos)))
+//			return (ft_error_msg("select texture failed\n", 0));
 
 		// This shit is the same thing twice, is that a mistake ???
 		// Doesn't seem like it, but still i don't understand this...
@@ -307,7 +386,7 @@ int		ft_raycasting(t_game *jeu)
 		{
 			tex_y = (int)tex_pos & (texture->img_hei - 1);// im assuming -1 cuz start at 0
 			tex_pos += pace;
-			if (jeu->floor[map_pos.y][map_pos.x] == '1')
+			if (((char**)jeu->lev->floor)[map_pos.y][map_pos.x] == '1')
 			{
 				color = texture->img_data[texture->img_hei * tex_y + tex_x];
 			}

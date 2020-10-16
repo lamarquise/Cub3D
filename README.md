@@ -18,6 +18,11 @@ strnew
 nlist stuff
 findchar
 
+New functions created that need to be added to the libft:
+
+contains only
+print nlist
+
 
 Wall Textures:
 North is different colored stone wall

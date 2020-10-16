@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 02:09:23 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/09/30 02:11:33 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/14 04:23:58 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 		// assuming htis is right, you can start from th middle
 		// s is the size of the grid squares in pixels
-int		ft_sizing_minimap_imge(t_game *jeu)
+int		ft_sizing_minimap_imge(t_game *jeu, t_level *lev)
 {
 	int		s;
 	int		fit;
@@ -33,13 +33,27 @@ int		ft_sizing_minimap_imge(t_game *jeu)
 	fit = 1;
 	while (fit)
 	{		// leave -10 for now...
-		if (jeu->boxes.x * s < jeu->file->res.x - 10
-			&& jeu->boxes.y * s < jeu->file->res.y - 10)
+		if (lev->dim.x * s < jeu->file->res.x - 10
+			&& lev->dim.y * s < jeu->file->res.y - 10)
 			fit = 0;
 		else
 			--s;
 	}
 	return (s);
+}
+
+	// secure obvi
+int		ft_fill_imge(t_imge *img, int color)
+{
+	int		i;
+
+	i = 0;
+	while (i < img->last_pix)
+	{
+		(img->img_data)[i] = color;
+		++i;
+	}
+	return (1);
 }
 
 	// where s_pos is the top left of the square, size is the leng of the square
@@ -48,7 +62,7 @@ int		ft_draw_box(t_imge *img, int s_pos, int size, int color)
 	int		x;
 	int		y;
 
-//	printf("s_pos: %d\n", s_pos);
+//	printf("s_pos: %d, img last pix: %d\n", s_pos, img->last_pix);
 
 	if (!img || s_pos < 0 || s_pos > img->last_pix - size * (img->img_wid))
 		return (ft_error_msg("Draw Box conditions not met\n", 0));
@@ -67,40 +81,29 @@ int		ft_draw_box(t_imge *img, int s_pos, int size, int color)
 	return (1);
 }
 
-	// secure obvi
-int		ft_fill_imge(t_imge *img, int color)
-{
-	int		i;
-
-	i = 0;
-	while (i < img->last_pix)
-	{
-		(img->img_data)[i] = color;
-		++i;
-	}
-	return (1);
-}
-
 		// do i need op if im already saying it based on the floor map ???
 		// keep int so is more generic
 		// yea so it's really not that generic, but could easily be so
-int		ft_draw_grid(t_game *jeu, t_imge *img, int t_left, int size)
+int		ft_draw_grid(t_game *jeu, t_level *lev, t_imge *img, int t_left, int size)
 {
 	int		x;
 	int		y;
 	int		pos;
 	int		color;
 
+
+	ft_print_strtab(lev->floor);
+
 	y = 0;
-	while (jeu->floor[y])
+	while (lev->floor[y])
 	{
 		x = 0;
-		while (jeu->floor[y][x])	// need to fix so will skip empty spaces...
+		while (lev->floor[y][x])	// need to fix so will skip empty spaces...
 		{
 			pos = t_left + size * (y * jeu->file->res.x + x);	// more efficient math
-			if (jeu->floor[y][x] == '1')						// if size * all
+			if (lev->floor[y][x] == '1')						// if size * all
 				color = ft_rgb_to_int(255, 255, 255, jeu->fog - 20);
-			else if (jeu->floor[y][x] == '0')
+			else if (lev->floor[y][x] == '0')
 				color = ft_rgb_to_int(180, 180, 180, jeu->fog - 20);
 			else							// - 20 so more contrast
 				color = -1;

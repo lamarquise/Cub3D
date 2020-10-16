@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:01:00 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/04 02:38:11 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/14 04:23:30 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ int	ft_generate_player(t_game *jeu)
 	if (!ft_fill_imge(jeu->yah, ft_rgb_to_int(0, 0, 0, jeu->fog)))
 		return (0);
 
+//	printf("size: %d\n", size);
+
 	// Absolutly needs to be (int) before multiply by img wid other wise small
 	// diffs add up
 	s_pos = ((jeu->me->pos.x * jeu->grid_box_size) - size / 2) + \
 		(int)(jeu->me->pos.y * jeu->grid_box_size - size / 2) * jeu->yah->img_wid;
-	//	printf("pos: x %f, y %f, s_pos: %d\n", jeu->me->pos.x, jeu->me->pos.y, s_pos);
+//		printf("pos: x %f, y %f, s_pos: %d\n", jeu->me->pos.x, jeu->me->pos.y, s_pos);
 
 	if (!(ft_draw_box(jeu->yah, s_pos, size, ft_rgb_to_int(255, 0, 0, 0))))
 		return (ft_error_msg("Failed to draw red player square in yah img\n", 0));	
@@ -67,14 +69,17 @@ int	ft_generate_player(t_game *jeu)
 }
 
 	// makes the minimap, only called once...
-int	ft_generate_minimap(t_game *jeu)
+int	ft_generate_minimap(t_game *jeu, t_level *lev)
 {
 	int	i;
 
-	jeu->grid_box_size = ft_sizing_minimap_imge(jeu);
+//	ft_print_strtab(lev->floor);
+
+
+	jeu->grid_box_size = ft_sizing_minimap_imge(jeu, lev);
 	//	printf("s: %d, boxes x: %d, y: %d\n", jeu->grid_box_size, jeu->boxes.x, jeu->boxes.y);
-	jeu->grid_pixs.x = jeu->grid_box_size * jeu->boxes.x;
-	jeu->grid_pixs.y = jeu->grid_box_size * jeu->boxes.y;
+	jeu->grid_pixs.x = jeu->grid_box_size * lev->dim.x;
+	jeu->grid_pixs.y = jeu->grid_box_size * lev->dim.y;
 		// no need to move by 5 cuz the 5 pix on all sides has already been factored in:)
 	jeu->grid_tl.x = (jeu->file->res.x - jeu->grid_pixs.x) / 2;
 	jeu->grid_tl.y = (jeu->file->res.y - jeu->grid_pixs.y) / 2;
@@ -89,11 +94,13 @@ int	ft_generate_minimap(t_game *jeu)
 			return (0);
 		++i;
 	}
-	if (!ft_draw_grid(jeu, jeu->minimap, jeu->grid_tl.x + jeu->grid_tl.y * jeu->file->res.x, jeu->grid_box_size))
+	if (!ft_draw_grid(jeu, lev, jeu->minimap, jeu->grid_tl.x + jeu->grid_tl.y * jeu->file->res.x, jeu->grid_box_size))
 		return (0);
 	return (1);
 }
 
+	// secure !?
+	// Also more like gen and display
 int	ft_generate_fpv(t_game *jeu)
 {
 	if (!ft_raycasting(jeu))

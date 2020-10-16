@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/05 16:50:54 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/16 03:35:17 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ FILES	=	main.c \
 			line_parser.c \
 			floor_management.c \
 			create_mlx_entities.c \
-			texture_management.c \
 			math.c \
 			quit.c \
 			game_engine.c \
@@ -34,6 +33,10 @@ FILES	=	main.c \
 			toggle_buttons.c \
 			mouse_commands.c \
 			more_nlist.c \
+			texture_management.c \
+			level_parser.c \
+			display_to_screen.c \
+			input_parser.c \
 
 OFILES	=	init_master.c \
 			master.c \
@@ -112,9 +115,9 @@ simple: ofclean all
 
 re: fclean all
 
-test: all
-	gcc $(CFLAGS) -L. -lftprintf ./main.c -o test
-	echo "$(_CYAN)Test ready  😬$(_END)"
+#test: all
+#	gcc $(CFLAGS) -L. -lftprintf ./main.c -o test
+#	echo "$(_CYAN)Test ready  😬$(_END)"
 
 testl: $(OBJS) $(LIBFT) $(MLX)
 	$(CC) -o $@ $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(FRAME) -g

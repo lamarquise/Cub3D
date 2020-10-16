@@ -6,9 +6,12 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:42:53 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/05 16:39:39 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/11 07:08:40 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+	// changed all the collision checks to be != 1, was == 0 before
+
 
 #include "cub3d.h"
 
@@ -29,17 +32,17 @@ int		ft_move_forward(t_game *jeu)
 
 //	printf("x: %f, y: %f\n", x, y);
 
-	if (jeu->floor[(int)jeu->me->pos.y] \
-		[(int)x] == '0')
+	if (((char**)jeu->lev->floor)[(int)jeu->me->pos.y] \
+		[(int)x] != '1')
 		jeu->me->pos.x += jeu->me->dir.x * STEP_SIZE;
-	if (jeu->floor[(int)y] \
-		[(int)jeu->me->pos.x] == '0')
+	if (((char**)jeu->lev->floor)[(int)y] \
+		[(int)jeu->me->pos.x] != '1')
 		jeu->me->pos.y += jeu->me->dir.y * STEP_SIZE;
 
-/*	if (jeu->floor[(int)jeu->me->pos.y] \
+/*	if (((char**)jeu->lev->floor)[(int)jeu->me->pos.y] \
 		[(int)(jeu->me->pos.x + jeu->me->dir.x * STEP_SIZE - 0.02)] == '0')
 		jeu->me->pos.x += jeu->me->dir.x * STEP_SIZE;
-	if (jeu->floor[(int)(jeu->me->pos.y + jeu->me->dir.y * STEP_SIZE - 0.02)] \
+	if (((char**)jeu->lev->floor)[(int)(jeu->me->pos.y + jeu->me->dir.y * STEP_SIZE - 0.02)] \
 		[(int)jeu->me->pos.x] == '0')
 	{
 		jeu->me->pos.y += jeu->me->dir.y * STEP_SIZE;
@@ -58,11 +61,11 @@ int		ft_move_forward(t_game *jeu)
 int		ft_move_backward(t_game *jeu)
 {				// was + 0.02  no parenthesies
 	
-	if (jeu->floor[(int)jeu->me->pos.y] \
-		[(int)(jeu->me->pos.x - jeu->me->dir.x * (STEP_SIZE + 0.02))] == '0')
+	if (((char**)jeu->lev->floor)[(int)jeu->me->pos.y] \
+		[(int)(jeu->me->pos.x - jeu->me->dir.x * (STEP_SIZE + 0.02))] != '1')
 		jeu->me->pos.x -= jeu->me->dir.x * STEP_SIZE;
-	if (jeu->floor[(int)(jeu->me->pos.y - jeu->me->dir.y * (STEP_SIZE + 0.02))] \
-		[(int)jeu->me->pos.x] == '0')
+	if (((char**)jeu->lev->floor)[(int)(jeu->me->pos.y - jeu->me->dir.y * (STEP_SIZE + 0.02))] \
+		[(int)jeu->me->pos.x] != '1')
 		jeu->me->pos.y -= jeu->me->dir.y * STEP_SIZE;
 
 //	return (ft_redraw(jeu));
@@ -73,11 +76,11 @@ int		ft_move_backward(t_game *jeu)
 	// back to normal -> left on top then right
 int		ft_move_left(t_game *jeu)
 {				// was + 0.02  no parenthesies
-	if (jeu->floor[(int)jeu->me->pos.y] \
-		[(int)(jeu->me->pos.x - jeu->me->plane.x * (STEP_SIZE + 0.02))] == '0')
+	if (((char**)jeu->lev->floor)[(int)jeu->me->pos.y] \
+		[(int)(jeu->me->pos.x - jeu->me->plane.x * (STEP_SIZE + 0.02))] != '1')
 		jeu->me->pos.x -= jeu->me->plane.x * STEP_SIZE;
-	if (jeu->floor[(int)(jeu->me->pos.y - jeu->me->plane.y * (STEP_SIZE + 0.02))] \
-		[(int)jeu->me->pos.x] == '0')
+	if (((char**)jeu->lev->floor)[(int)(jeu->me->pos.y - jeu->me->plane.y * (STEP_SIZE + 0.02))] \
+		[(int)jeu->me->pos.x] != '1')
 		jeu->me->pos.y -= jeu->me->plane.y * STEP_SIZE;
 
 //	return (ft_redraw(jeu));
@@ -86,11 +89,11 @@ int		ft_move_left(t_game *jeu)
 
 int		ft_move_right(t_game *jeu)
 {				// was - 0.02  no parenthesies
-	if (jeu->floor[(int)jeu->me->pos.y][(int)(jeu->me->pos.x + \
-		jeu->me->plane.x * (STEP_SIZE + 0.02))] == '0')
+	if (((char**)jeu->lev->floor)[(int)jeu->me->pos.y][(int)(jeu->me->pos.x + \
+		jeu->me->plane.x * (STEP_SIZE + 0.02))] != '1')
 		jeu->me->pos.x += jeu->me->plane.x * STEP_SIZE;
-	if (jeu->floor[(int)(jeu->me->pos.y + jeu->me->plane.y * (STEP_SIZE + 0.02))] \
-		[(int)jeu->me->pos.x] == '0')
+	if (((char**)jeu->lev->floor)[(int)(jeu->me->pos.y + jeu->me->plane.y * (STEP_SIZE + 0.02))] \
+		[(int)jeu->me->pos.x] != '1')
 		jeu->me->pos.y += jeu->me->plane.y * STEP_SIZE;
 
 //	return (ft_redraw(jeu));
