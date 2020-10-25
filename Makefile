@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/26 00:02:35 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/26 00:34:01 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ MLX_LINUX_INC = $(DIR_MLX_LINUX)
 
 # can easily be chaned to a local folder when submit
 #DIR_LIBFT	=	~/Programming/42/libft/
-DIR_LIBFT	=	../libft/
+DIR_LIBFT	=	./libft/
 LIBFT_INC	=	$(DIR_LIBFT)
 LIBFT_NAME	=	libft.a
 LIBFT		=	$(DIR_LIBFT)$(LIBFT_NAME)
