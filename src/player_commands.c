@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:42:53 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/11 07:08:40 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/24 03:30:25 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int		ft_move_right(t_game *jeu)
 
 	// we swaped from right first and left second
 
+
+	// ok so apparently we aren't even using the DEFINE ROT_SPEED...
 
 int		ft_rot_left(t_game *jeu)
 {

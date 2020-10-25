@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:01:00 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/14 04:23:30 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/25 22:38:01 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ int	ft_generate_player(t_game *jeu)
 	left.y1 = jeu->me->pos.y * jeu->grid_box_size;
 	// we are going to start by going out a dist of 1 box size
 	// if we replace * grid_box_size with the dist to wall we should get what we want
-	left.x2 = (jeu->me->pos.x + jeu->me->dir.x - jeu->me->plane.x) * jeu->grid_box_size;
-	left.y2 = (jeu->me->pos.y + jeu->me->dir.y - jeu->me->plane.y) * jeu->grid_box_size;
+	left.x2 = (jeu->me->pos.x + jeu->me->dir.x * jeu->me->zoom_factor - jeu->me->plane.x) * jeu->grid_box_size;
+	left.y2 = (jeu->me->pos.y + jeu->me->dir.y * jeu->me->zoom_factor - jeu->me->plane.y) * jeu->grid_box_size;
 
 	right.x1 = jeu->me->pos.x * jeu->grid_box_size;
 	right.y1 = jeu->me->pos.y * jeu->grid_box_size;
 
 	// we learned you can't just multiply it by 2 to make it the len of 2 gridboxes	
 	// also currently the rays are actually longer than a gridbox...
-	right.x2 = (jeu->me->pos.x + jeu->me->dir.x + jeu->me->plane.x) * jeu->grid_box_size;
-	right.y2 = (jeu->me->pos.y + jeu->me->dir.y + jeu->me->plane.y) * jeu->grid_box_size;
+	right.x2 = (jeu->me->pos.x + jeu->me->dir.x * jeu->me->zoom_factor + jeu->me->plane.x) * jeu->grid_box_size;
+	right.y2 = (jeu->me->pos.y + jeu->me->dir.y * jeu->me->zoom_factor + jeu->me->plane.y) * jeu->grid_box_size;
 
 
 	if (!ft_bresenham(jeu->yah, left, YELLOW))

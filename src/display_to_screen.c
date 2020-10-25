@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 01:00:17 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/14 04:23:44 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/25 20:16:51 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,28 @@ int		ft_display_minimap(t_game *jeu)
 	return (1);
 }
 
-int		ft_display_title_screen(t_game *jeu)
-{
-	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
-		jeu->title_screen->img_ptr, 0, 0);		// secure ? how
-	return (1);
-}
-
-
 int		ft_draw_imges(t_game *jeu)
 {
 	// Is this also where i do the time thing ? i think no.
 
+		// is this where this lives ?
+	// could do it differently, like with just set->zoom * 2 in the raycaster...
+	// bit if we wanted to do a dark circle scope, that would prolly be here...
+	if (jeu->set->bonus && jeu->set->zoom)
+		jeu->me->zoom_factor = 2;
+	else
+		jeu->me->zoom_factor = 1;
+		
+
+	if (jeu->lev->key_index != -1 && jeu->lev->key_exists && !ft_move_key(jeu->lev, jeu->lev->key_index))
+		return (ft_error_msg("Failed to move the key\n", 0));// free something
+
+
 	if (!ft_generate_fpv(jeu))
 		return (0); // and prolly free something	// raycasting again!!!!
+
+	// this is where you call sprite rendering
+
 
 	if (jeu->set->bonus && jeu->set->minimap && !ft_display_minimap(jeu))
 		return (ft_error_msg("Failed to display minimap\n", 0));// free something

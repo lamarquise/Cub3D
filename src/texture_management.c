@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:34:17 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/16 04:05:49 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/25 02:58:03 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_texture   *ft_new_ttexture(int value, char *path, t_imge *img)
 
 //	if (!path)
 //		return (NULL);
-	if (!(new = malloc(sizeof(t_texture))))
+	if (!(new = (t_texture*)malloc(sizeof(t_texture))))
 		return (NULL);
 	new->value = value;
 	new->path = path;
@@ -34,6 +34,7 @@ int         ft_add_tex_to_nlist(t_nlist **list, int value, char *path, t_imge *i
 {
 	t_texture   *new;
 
+	new = NULL;	// necessary ???
 	if (!list || !path)  // not img because may send NULL to start with
 		return (0);
 	if (!(new = ft_new_ttexture(value, path, img)))
@@ -104,7 +105,7 @@ int		ft_unpack_list_textures(t_game *jeu, t_nlist *list)
 	t_nlist		*tmp;
 	t_texture	*tex;
 
-	if (!jeu->mlx || !jeu->file->tex_list)
+	if (!jeu->mlx || !list)
 		return (0);
 	tmp = list;
 	while (tmp)

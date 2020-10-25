@@ -6,12 +6,9 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:37:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/16 04:00:21 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/25 03:56:20 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-		// parser.c is much better
-		// line_parser.c should work
 
 // TO DO:
 
@@ -60,21 +57,22 @@ int		ft_check_str_end(char *str, char *end)
 
 //	./cub3d game_files/something.cub --save OR --bonus
 
+	// add ret = and then ret that so know if have to use quit
+
+
 int		main(int ac, char **av)
 {
 	int			fd;
-	t_game		jeu;
+	t_game		jeu;	// maybe i can't free these, just need to free the contents
 	t_input		file;
-	t_binput	b_file;
 	t_settings	set;
 
 	if (ac < 2 || ac > 3 || !ft_check_str_end(av[1], ".cub"))
 		return (ft_error_msg("usage: <file.cub> <--save> OR <--bonus>\n", 0));
-	if (!ft_init_game(&jeu) || !ft_init_input(&file) || !ft_init_binput(&b_file) \
-		|| !ft_init_settings(&set) || !ft_init_mlx(&jeu))
+	if (!ft_init_game(&jeu) || !ft_init_input(&file) || !ft_init_settings(&set) \
+		|| !ft_init_mlx(&jeu))
 		return (ft_error_msg("initialization failed\n", 0));
 	jeu.file = &file;
-	jeu.b_file = &b_file;
 	jeu.set = &set;
 	if (ac == 3)
 	{
@@ -95,7 +93,16 @@ int		main(int ac, char **av)
 	if (!ft_start_game(&jeu))
 		return (ft_error_msg("failed to run\n", 0));
 	close(fd);
+
+	ft_quit(&jeu);
+
+//	system("leaks test");
+
 	return (1);
+
+	// a thing in main where ret = 0 if fails, (also displays msg) and free all each time
+
+	// return (ret);
 }
 
 

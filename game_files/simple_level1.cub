@@ -4,24 +4,25 @@ SO textures/wall_2.xpm
 WE textures/wall_3.xpm
 EA textures/wall_4.xpm
 
-X textures/sprite_1.xpm
+X textures/sprite_3.xpm
 S textures/sprite_2.xpm
-S textures/sprite_3.xpm
+S textures/sprite_1.xpm
 
+Y textures/sprite_3.xpm
 
-F 0,140,0
-C 0,0,140
+F textures/sky_1.xpm
+C textures/floor_1.xpm
 
 11111111111
-10001001001
-10001001001
+100010010Y1
+10301021001
 10111001001
-100E0000X01
+100E0003X01
 11111111111
 
 11111111111
-10X01001001
-10001001001
+10X010010Y1
+10001301221
 10111001001
 10000000W01
 11111111111

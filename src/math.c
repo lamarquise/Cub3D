@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 02:07:19 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/09/30 02:03:39 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/23 06:49:40 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,32 @@ int		ft_rgb_to_int(int r, int g, int b, int t)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
+	// ok so we're saying we've already done the math to translate x,y 2D coords to
+	// 1D table coords
+	// could do x and y rather than pos if wanted cuz have img wid & hei...
+	// leave for now
+int		ft_draw_pix_to_imge(t_imge *img, int pos, int color)
+{
+	if (!img || pos < 0 || pos >= img->last_pix)// last_pix + 1? + y ? not sure, best no
+		return (0);
+	(img->img_data)[pos] = color;
+	return (1);
+}
 
+int		ft_draw_col_to_imge(t_imge *img, int start_row, int end_row, int col, int color)
+{
+	int		pos;
 
+//	printf("s row: %d, e row: %d, col: %d, color: %d\n", start_row, end_row, col, color);
 
-
-
+	if (!img || start_row < 0 || end_row > img->img_hei)
+		return (ft_error_msg("bad draw col inputs\n", 0));
+	while (start_row < end_row)
+	{
+		pos = col + start_row * img->img_wid;
+		if (!ft_draw_pix_to_imge(img, pos, color))
+			return (0);
+		++start_row;
+	}
+	return (1);
+}

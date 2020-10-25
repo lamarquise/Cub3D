@@ -1,43 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mymlx.h                                            :+:      :+:    :+:   */
+/*   prime_engine_mac.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/26 01:33:03 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/25 22:50:19 by ericlazo         ###   ########.fr       */
+/*   Created: 2020/10/25 22:39:21 by ericlazo          #+#    #+#             */
+/*   Updated: 2020/10/25 22:42:06 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MYMLX_H
-# define MYMLX_H
+#include "cub3d.h"
 
-# include "mlx.h"
-
-typedef struct	s_imge
+int		ft_prime_engine(t_game *jeu)
 {
-	void		*img_ptr;
-	int			*img_data;
-	int			img_wid;
-	int			img_hei;
-	int			last_pix;
-}				t_imge;
-
-typedef struct	s_wind
-{
-	void		*win_ptr;
-	int			win_wid;
-	int			win_hei;
-	char		*name;
-}				t_wind;
-
-typedef struct	s_lmlx
-{
-	void		*ptr;
-	int			bpp;
-	int			s_l;
-	int			endian;
-}				t_lmlx;
-
-#endif
+	jeu->fog = 100;
+	if (!(jeu->win = ft_create_wind(jeu->mlx, "Cub3D", \
+		jeu->file->res.x, jeu->file->res.y)))
+		return (0);
+	return (1);
+}

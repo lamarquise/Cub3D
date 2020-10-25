@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 02:33:08 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/14 18:00:37 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/25 03:59:49 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ int		ft_get_floor_dimentions(t_level *lev, t_nlist *floor)
 //	tmp = floor;
 	if (!lev || !floor)
 		return (ft_error_msg("failed to send lev or floor\n", 0));
-/*	n = ft_strlen((char*)floor->content);		// more values ?
-	while (floor && (n == 0 || !ft_contains_only(" \n", (char*)floor->content)))
-	{		// fstrlen ?
-		n = ft_strlen((char*)floor->content);
-		floor = floor->next;
-	}
-*/
 //	while (floor && n != 0 /*&& ft_contains_only(" \n", (char*)floor->content)*/)
 	while (floor && (n = ft_strlen((char*)floor->content)) != 0)
 	{
@@ -105,28 +98,21 @@ int		ft_collect_levels(t_game *jeu, t_nlist *floor)
 	//go through whole thing looking for empty lines, copy floor between
 	t_nlist		*tmp;
 	t_level		*lev;
-	int			n;
 
 	tmp = floor;
 	lev = NULL;
 	while (tmp)
-	{				// may not need n
-//		n = ft_strlen((char*)tmp->content);		// more values ?
+	{
 //		if (n == 0 /*|| ft_contains_only(" \n", (char*)tmp->content)*/)
-
-//		printf("collect levels test 1\n");
-
-		if ((n = ft_strlen((char*)tmp->content)) == 0)
+		if (!ft_strlen((char*)tmp->content))
 			tmp = tmp->next;
 		else
 		{
 //			printf("collect levels test 2\n");
-				// also moves tmp along
 			if (!(lev = ft_create_level(&tmp)))
 				return (ft_error_msg("failed to create level\n", 0));
-			// could check level here...
 //			printf("collect levels test 3\n");
-			if (!ft_check_floor(lev))
+			if (!ft_check_floor(jeu, lev))
 				return (ft_error_msg("bad floor\n", 0));
 //			printf("collect levels test 4\n");
 			if (!ft_nlstadd_back(&jeu->level_list, \
@@ -141,7 +127,7 @@ int		ft_collect_levels(t_game *jeu, t_nlist *floor)
 	printf("levels collected\n");
 
 	if (!jeu->set->bonus && jeu->n_of_levels > 1)
-		return (ft_error_msg("bad file, too many levels\n", 0));
+		return (ft_error_msg("not bonus, bad file, too many levels\n", 0));
 	return (1);
 }
 

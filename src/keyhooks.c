@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 23:45:11 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/14 19:26:54 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/26 00:08:33 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ int		 ft_keycodes(t_game *jeu)
 	// structures...
 		// not sure this will work...
 		// this is how the player moves to the next level
+
+	if (jeu->lev->key_exists && (int)jeu->me->pos.x == (int)jeu->lev->spris_tab[jeu->lev->key_index].pos.x && (int)jeu->me->pos.y == (int)jeu->lev->spris_tab[jeu->lev->key_index].pos.y)
+	{
+//		jeu->me->key = 1;
+		// get sprite tab index based on id
+		// delete that sprite (the key)
+		// also in shooting, if it's the key you get the key
+		if (!ft_sprite_dies(jeu, jeu->lev->key_index))
+			return (ft_error_msg("failed to destroy sprite\n", 0));
+	}
+
+
+	if (jeu->lev->exit_exists && jeu->me->key == 1 && (int)jeu->me->pos.x == (int)jeu->lev->spris_tab[jeu->lev->exit_index].pos.x && (int)jeu->me->pos.y == (int)jeu->lev->spris_tab[jeu->lev->exit_index].pos.y)
+	{
+		++jeu->cur_level;
+		if (!ft_set_level(jeu))
+			return (0);
+	}
+/*
 	if (jeu->me->pos.x > jeu->lev->exit_pos.x && jeu->me->pos.x < jeu->lev->exit_pos.x + 1 \
 		&& jeu->me->pos.y > jeu->lev->exit_pos.y && jeu->me->pos.y < jeu->lev->exit_pos.y + 1)
 	{
@@ -46,35 +65,41 @@ int		 ft_keycodes(t_game *jeu)
 		if (!ft_set_level(jeu))
 		return (0);
 	}
+*/
+	if (jeu->torch[K_W] && !ft_move_forward(jeu))
+		return (0);
+	if (jeu->torch[K_S] && !ft_move_backward(jeu))
+		return (0);
+	if (jeu->torch[K_A] && !ft_move_left(jeu))
+		return (0);
+	if (jeu->torch[K_D] && !ft_move_right(jeu))
+		return (0);
+	if (jeu->torch[K_AR_L] && !ft_rot_left(jeu))
+		return (0);
+	if (jeu->torch[K_AR_R] && !ft_rot_right(jeu))
+		return (0);
 
-	if (jeu->torch[13] && !ft_move_forward(jeu))
-		return (0);
-	if (jeu->torch[1] && !ft_move_backward(jeu))
-		return (0);
-	if (jeu->torch[0] && !ft_move_left(jeu))
-		return (0);
-	if (jeu->torch[2] && !ft_move_right(jeu))
-		return (0);
-	if (jeu->torch[123] && !ft_rot_left(jeu))
-		return (0);
-	if (jeu->torch[124] && !ft_rot_right(jeu))
+		// not as satisfying....
+	if (jeu->torch[K_AR_U] && !ft_shoot_something(jeu))			// shoot with arrow key
 		return (0);
 						// keep this extra condition in mind for
 						// future butons
-	if (jeu->torch[46] && /*jeu->set->bonus &&*/ !ft_toggle_on(&jeu->set->minimap))
+	if (jeu->torch[K_M] && /*jeu->set->bonus &&*/ !ft_toggle_on(&jeu->set->minimap))
 		return (0);
-	if (jeu->torch[45] && !ft_toggle_off(&jeu->set->minimap))
+	if (jeu->torch[K_N] && !ft_toggle_off(&jeu->set->minimap))
 		return (0);
-	if (jeu->torch[35] && !ft_toggle_on(&jeu->set->pause))
+/*	if (jeu->torch[K_P] && !ft_toggle_on(&jeu->set->pause))
 		return (0);
-	if (jeu->torch[31] && !ft_toggle_off(&jeu->set->pause))
+	if (jeu->torch[K_O] && !ft_toggle_off(&jeu->set->pause))
 		return (0);
-//	if (jeu->torch[11] && !ft_toggle_on(&jeu->set->bonus))
-//		return (0);
-//	if (jeu->torch[9] && !ft_toggle_off(&jeu->set->bonus))
-//		return (0);
+*/
+	if (jeu->torch[K_Z] && !ft_toggle_on(&jeu->set->zoom))	// Z: Zoom in
+		return (0);
+	if (jeu->torch[K_X] && !ft_toggle_off(&jeu->set->zoom))	// X: Zoom out
+		return (0);
+	
 
-	if (jeu->torch[53] && !ft_quit(jeu))				// also change ???
+	if (jeu->torch[K_ESC] && !ft_quit(jeu))				// also change ???
 		return (0);
 
 // do rather like the redraw here rather than at the end of player command funcs
