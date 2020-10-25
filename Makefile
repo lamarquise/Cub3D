@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/26 00:56:01 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/26 00:58:29 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,7 @@ INCS = $(addprefix $(DIR_INC),$(IFILES))
 #celia has -02 -g for all of them...
 FRAME = -framework OpenGL -framework AppKit
 MAC_FLAGS	= -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_MAC_INC) $(FRAME)
-LINUX_FLAGS	= -Wall -Wextra -Werror -O2 -g -lm -lXext -lX11 -lbsd -I$(INC) -I$(LIBFT_INC) -I$(MLX_LINUX_INC)
+LINUX_FLAGS	= -Wall -Wextra -Werror -O2 -g -I$(INC) -I$(LIBFT_INC) -I$(MLX_LINUX_INC)
 #CFLAGS = -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_INC)
 SAN = -g3 -fsanitize=address
 
