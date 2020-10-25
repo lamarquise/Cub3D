@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/26 00:34:01 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/26 00:49:00 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,11 +60,11 @@ IFILES =	cub3d.h \
 # can add mlx.h if doing dynamic lib...			
 
 #put in a lib folder ???
-DIR_MLX_MAC = minilibx_mac/
+DIR_MLX_MAC = ./minilibx_mac/
 MLX_MAC = $(DIR_MLX_MAC)libmlx.a
 MLX_MAC_INC = $(DIR_MLX_MAC)
 
-DIR_MLX_LINUX = minilibx_linux/
+DIR_MLX_LINUX = ./minilibx_linux/
 MLX_LINUX = $(DIR_MLX_LINUX)libmlx.a
 MLX_LINUX_INC = $(DIR_MLX_LINUX)
 
@@ -82,7 +82,7 @@ DIR_OBJ_LINUX =	obj/
 
 
 
-DIR_INC	=	include/
+DIR_INC	=	./include/
 INC		=	$(DIR_INC)
 OBJ_NAME = $(FILES:.c=.o)
 MAC_OBJ_NAME = $(MFILES:.c=.o)
@@ -99,7 +99,7 @@ INCS = $(addprefix $(DIR_INC),$(IFILES))
 #celia has -02 -g for all of them...
 FRAME = -framework OpenGL -framework AppKit
 MAC_FLAGS	= -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_MAC_INC) $(FRAME)
-LINUX_FLAGS	= -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_LINUX_INC)
+LINUX_FLAGS	= -Wall -Wextra -Werror -lm -lXext -lX11 -lbsd -I$(INC) -I$(LIBFT_INC) -I$(MLX_LINUX_INC)
 #CFLAGS = -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_INC)
 SAN = -g3 -fsanitize=address
 
