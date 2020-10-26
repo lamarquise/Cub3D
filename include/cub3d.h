@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 00:18:05 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/26 01:00:52 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # include "bresenham.h"
 # include "mymlx.h"
 # include "libft.h"
-# include "mlx.h"
+# include <mlx.h>
 
 // include math stuff...
 

@@ -6,14 +6,14 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 01:33:03 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/25 22:50:19 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/26 01:00:36 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MYMLX_H
 # define MYMLX_H
 
-# include "mlx.h"
+# include <mlx.h>
 
 typedef struct	s_imge
 {
