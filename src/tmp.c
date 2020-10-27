@@ -6,11 +6,29 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 03:42:31 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/18 17:48:53 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/26 04:19:12 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+    // add to lib   // if it works lol
+ /*
+ int         ft_contains_only(char *src, char *this)
+ {
+ 
+     printf("contains only: %s\n", src);
+ 
+     while (src)
+     {
+         if (ft_findchar(this, *src) == -1)
+             return (0);
+          ++src;
+     }
+     return (1);
+}
+ */
+
 
 /*
 int		ft_ray_dir(t_vect_i *step, t_vect_i *map_pos, t_vect_d *pos, \

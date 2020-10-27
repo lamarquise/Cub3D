@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 19:21:47 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/25 03:16:18 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/26 22:10:25 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,9 @@ int			ft_quit(t_game *jeu)
 		jeu->lev = NULL;
 	}
 	if (jeu->me)
-	{
-		free(jeu->me);
 		jeu->me = NULL;
-	}
 	if (jeu->set)
-	{
-//		free(jeu->set);		// never malloced
-		jeu->set = NULL;	// do both ???
-	}
+		jeu->set = NULL;
 
 	if (jeu->yah && !ft_free_timge(jeu, jeu->yah))
 		return (ft_error_msg("failed to free yah in jeu\n", 0));

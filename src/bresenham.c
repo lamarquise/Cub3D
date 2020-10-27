@@ -6,15 +6,9 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 00:10:32 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/09/30 03:48:03 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/26 01:19:34 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-	// consider usign wu xiao's line algorythim ???
-	// purely from one point to another...
-
-
 
 #include "bresenham.h"
 

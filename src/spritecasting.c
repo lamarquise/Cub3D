@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 15:23:54 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/24 20:15:06 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 03:03:02 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ int		*ft_calc_sprite_order(t_game *jeu)
 	while (i < jeu->lev->n_spris)
 	{
 		spri_ord[i] = i;
-		spri_dist[i] = ((jeu->me->pos.x - jeu->lev->spris_tab[i].pos.x) \
-						* (jeu->me->pos.x - jeu->lev->spris_tab[i].pos.x) \
-						+ (jeu->me->pos.y - jeu->lev->spris_tab[i].pos.y) \
-						* (jeu->me->pos.y - jeu->lev->spris_tab[i].pos.y));
+		spri_dist[i] = ((jeu->me->pos.x - jeu->lev->spris_tab[i]->pos.x) \
+						* (jeu->me->pos.x - jeu->lev->spris_tab[i]->pos.x) \
+						+ (jeu->me->pos.y - jeu->lev->spris_tab[i]->pos.y) \
+						* (jeu->me->pos.y - jeu->lev->spris_tab[i]->pos.y));
 		++i;
 	}
 
@@ -83,8 +83,8 @@ t_vect_d	ft_calc_sprite_transform(t_game *jeu, int i, int *spri_ord)
 	t_vect_d	sprite_cp;	// sprite pos relative to camera
 	double		inv_det;	// value require for matrix multiplication
 
-	sprite_cp.x = jeu->lev->spris_tab[spri_ord[i]].pos.x - jeu->me->pos.x;
-	sprite_cp.y = jeu->lev->spris_tab[spri_ord[i]].pos.y - jeu->me->pos.y;
+	sprite_cp.x = jeu->lev->spris_tab[spri_ord[i]]->pos.x - jeu->me->pos.x;
+	sprite_cp.y = jeu->lev->spris_tab[spri_ord[i]]->pos.y - jeu->me->pos.y;
 
 	// Have to multiply all dir.'s by zoom factor, regardless of where they are
 
@@ -156,6 +156,9 @@ int			ft_spritecaster(t_game *jeu, double *z_buffer)
 //	int			sliver;		stripe will become sliver...
 
 
+	if (!jeu || !z_buffer)
+		return (0);
+
 	spri_ord = NULL;
 		// from this we get a table of ints coresponding to indexes of spris
 		// in the spri table
@@ -199,7 +202,7 @@ int			ft_spritecaster(t_game *jeu, double *z_buffer)
 
 		t_imge	*tex_img;
 
-		tex_img = jeu->lev->spris_tab[spri_ord[i]].tex->img;
+		tex_img = jeu->lev->spris_tab[spri_ord[i]]->tex->img;
 
 
 		int 		stripe;
@@ -230,15 +233,15 @@ int			ft_spritecaster(t_game *jeu, double *z_buffer)
 					if ((color & 0x00FFFFFF) != 0)
 					{
 						ft_draw_pix_to_imge(jeu->fpv, y * jeu->fpv->img_wid \
-				+ stripe, color | jeu->lev->spris_tab[spri_ord[i]].anim_color << 16);
+				+ stripe, color | jeu->lev->spris_tab[spri_ord[i]]->anim_color << 16);
 					}
 					++y;
 				}
 			}
 			++stripe;
 		}
-		if (jeu->lev->spris_tab[spri_ord[i]].anim_color > 0)
-			jeu->lev->spris_tab[spri_ord[i]].anim_color -= 10;
+		if (jeu->lev->spris_tab[spri_ord[i]]->anim_color > 0)
+			jeu->lev->spris_tab[spri_ord[i]]->anim_color -= 10;
 
 //		ft_draw_sprite(jeu, spri_screen_x, );
 

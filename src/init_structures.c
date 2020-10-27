@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:31:38 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/25 23:55:07 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 00:29:33 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,11 @@ int	ft_init_level(t_level *lev)
 	lev->spris_tab = NULL;
 	lev->n_spris = 0;
 
-		// remove later cuz its a sprite
-	lev->exit_pos.x = -4;
-	lev->exit_pos.y = -4;
-
 	lev->exit_exists = 0;
 	lev->exit_index = -1;
 	lev->key_exists = 0;
 	lev->key_index = -1;
 
-//	lev->exit_t = NULL;
 	return (1);
 }
 
@@ -69,6 +64,7 @@ int	ft_init_player(t_game *jeu, t_level *lev)
 	jeu->me->pos.x = lev->player_spos.x;
 	jeu->me->pos.y = lev->player_spos.y;
 	jeu->me->zoom_factor = 1;
+	jeu->me->life = 100;
 
 	if (lev->key_exists)
 		jeu->me->key = 0;

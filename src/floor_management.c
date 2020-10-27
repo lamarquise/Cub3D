@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 19:21:14 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/25 04:10:26 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 01:01:22 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int		ft_check_floor(t_game *jeu, t_level *lev)
 	int			y;
 	int			s;	// char ?
 
+	if (!jeu || !lev)
+		return (0);
+	jeu->lev = lev;		// need this for add sprite instance
 	s = jeu->file->n_spri_types + 49;
 	y = 0;
 	while (y < lev->dim.y)
@@ -75,17 +78,15 @@ int		ft_check_floor(t_game *jeu, t_level *lev)
 						|| (lev->floor[y][x] == 'Y' && !(jeu->bbol & BKE)))
 						return (ft_error_msg("No tex corresponding to this sprite type\n", 0));
 					// make a new 
-					if (!ft_lstadd_sprite_instance(jeu, lev, x, y, lev->floor[y][x]))
+					if (!ft_lstadd_sprite_instance(jeu, x, y, lev->floor[y][x]))
 						return (ft_error_msg("bad sprite char in map\n", 0));
 
-					if (lev->floor[y][x] == 'X')
-					{
+					if (lev->floor[y][x] == 'X' && lev->exit_exists == 0)
 						lev->exit_exists = 1;
-//						lev->exit_pos.x = x;	// do this like the key pos
-//						lev->exit_pos.y = y;
-					}
-					else if (lev->floor[y][x] == 'Y')
+					else if (lev->floor[y][x] == 'Y' && lev->key_exists == 0)
 						lev->key_exists = 1;
+					else if (lev->floor[y][x] == 'X' || lev->floor[y][x] == 'Y')
+						return (ft_error_msg("Too many doors or keys\n", 0));
 					lev->floor[y][x] = '0'; //???
 					++lev->n_spris;
 				}
@@ -104,48 +105,11 @@ int		ft_check_floor(t_game *jeu, t_level *lev)
 		}
 		++y;
 	}
-
-//	printf("floor manage, n spris: %d\n", lev->n_spris);
-
-
-	// This is where i turn the linked list of sprites into a table of spris
-	// but it's more like a table of pointers to the linked list elems...
-
 	if (!ft_create_spris_tab(lev))
 		return (ft_error_msg("failed to create 1st spris tab\n", 0));
-//	printf("floor manage testing spris tab: %d\n", lev->spris_tab[1].id);
 
+// DO THIS !!!!!!!!!!
 	// what is the largest number on the map, there need to be that many sprite textures
-
+	jeu->lev = NULL;
 	return (1);
 }
-
-int		ft_create_spris_tab(t_level *lev)
-{
-	t_nlist	*tmp;
-	int		i;
-
-	tmp = lev->spris_list;	// using tmp for now to be safe
-//	lev->spris_tab = NULL;
-	i = 0;
-	if (!(lev->spris_tab = malloc(sizeof(t_sprite) * (lev->n_spris + 1))))
-		return (0);
-	while (i < lev->n_spris && tmp)
-	{
-//		printf("spris list i: %d, index: %d, pos.x: %f, y: %f\n", i, tmp->index, (*(t_sprite*)tmp->content).pos.x,(*(t_sprite*)tmp->content).pos.y);
-		lev->spris_tab[i] = *(t_sprite*)tmp->content;
-//		printf("spris tab[%d]: pos x: %f, y: %f\n", i, lev->spris_tab[i].pos.x, lev->spris_tab[i].pos.y);
-		if ((*(t_sprite*)tmp->content).id == 'Y')
-			lev->key_index = i;
-		else if ((*(t_sprite*)tmp->content).id == 'X')
-			lev->exit_index = i;
-		++i;
-		tmp = tmp->next;
-	}
-//	lev->spris_tab[i] = NULL;	// would need a **spris_tab...
-
-	return (1);
-}
-
-
-

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 01:00:52 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 03:03:00 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 	// NAMED VAR HAS 1 FEWER LETER
 
 
-
 #ifndef CUB3D_H
 # define CUB3D_H
 
 # include <unistd.h>
+# include <stdlib.h>
+
 # include <stdio.h>
+
 # include <fcntl.h>
 
 # include <math.h>
@@ -73,7 +75,7 @@
 # define BLACK	0x000000
 
 
-# define ROT_SPEED 0.02		// was 0.04 in old keyhook system
+# define ROT_SPEED 0.04		// was 0.04 in old keyhook system
 # define STEP_SIZE 0.05		// was 0.1 in old keyhook system
 
 
@@ -82,6 +84,12 @@ typedef struct	s_vect_i
 	int		x;
 	int		y;
 }				t_vect_i;
+
+typedef	struct	s_vect_t
+{
+	t_vect_i	a;
+	t_vect_i	b;
+}				t_vect_t;
 
 typedef struct	s_vect_d
 {
@@ -161,12 +169,9 @@ typedef struct	s_level
 	char		player_sorient;
 
 	t_nlist		*spris_list;	// linked list sprites
-	t_sprite	*spris_tab;		// table of sprites, yes we need both...
+	t_sprite	**spris_tab;		// table pointer to sprites, yes we need both...
 	int			n_spris;	// number of sprites on this level
 
-
-	t_vect_i	exit_pos;	// move this later, it's just a sprite
-//	t_texture	*exit_t;	// don't need this here
 
 	// could add other things too, like enemy strength, other shit ?
 
@@ -305,15 +310,13 @@ int				ft_check_floor(t_game *jeu, t_level *lev);
 //int				ft_check_around(t_game *jeu, int x, int y);
 //int				ft_check_floor(t_game *jeu);
 
-	// move later ?
-int				ft_create_spris_tab(t_level *lev);
 
 
 /*
 **	Level Parsing
 */
 				// move to lib
-//int				ft_contains_only(char *src, char *this);
+int				ft_contains_only(char *src, char *this);
 int				ft_get_floor_dimentions(t_level *lev, t_nlist *floor);
 t_level			*ft_create_level(t_nlist **floor);
 int				ft_collect_levels(t_game *jeu, t_nlist *floor);
@@ -322,8 +325,7 @@ int				ft_collect_levels(t_game *jeu, t_nlist *floor);
 **	Game Engine
 */
 
-int				ft_prime_level(t_game *jeu, t_level *lev);
-//int				ft_prime_engine(t_game *jeu);
+int				ft_prime_level(t_game *jeu);
 int				ft_set_level(t_game *jeu);
 int				ft_game_engine(t_game *jeu);
 int				ft_start_game(t_game *jeu);
@@ -353,9 +355,15 @@ int				ft_screenshot(t_game *jeu);
 */
 
 int				ft_generate_fpv(t_game *jeu);
-int				ft_generate_minimap(t_game *jeu, t_level *lev);
-int				ft_generate_player(t_game *jeu);
 int				ft_generate_crosshair(t_game *jeu);
+
+/*
+**	Generate Minimap
+*/
+
+int				ft_generate_sight_lines(t_game *jeu);
+int				ft_generate_player(t_game *jeu);
+int				ft_generate_minimap(t_game *jeu, t_level *lev);
 
 /*
 **	Raycasting
@@ -420,7 +428,7 @@ t_imge			*ft_select_tex(t_game *jeu, int side_seen, t_vect_d ray, \
 int				ft_sizing_minimap_imge(t_game *jeu, t_level *lev);
 int				ft_draw_box(t_imge *img, int s_pos, int size, int color);
 int				ft_fill_imge(t_imge *img, int color);
-int				ft_draw_grid(t_game *jeu, t_level *lev, t_imge *img, int t_left, int size);
+int				ft_draw_grid(t_game *jeu, t_level *lev, t_imge *img, int t_left);
 int				ft_fill_rect(t_imge *img, int s_pos, int dimx, int dimy, int color);
 
 /*
@@ -451,8 +459,8 @@ int				ft_unpack_wall_textures(t_game *jeu);
 */
 
 t_sprite		*ft_new_tsprite(t_texture *tex, int x, int y, char c);
-int				ft_lstadd_sprite_instance(t_game *jeu, t_level *lev, int x, \
-				int y, char c);
+int				ft_lstadd_sprite_instance(t_game *jeu, int x, int y, char c);
+int				ft_create_spris_tab(t_level *lev);
 
 
 /*
@@ -461,10 +469,8 @@ int				ft_lstadd_sprite_instance(t_game *jeu, t_level *lev, int x, \
 
 int				ft_keypress(int key, t_game *jeu);
 int				ft_keyrelease(int key, t_game *jeu);
+int				ft_more_keycodes(t_game *jeu, t_level *lev);
 int				ft_keycodes(t_game *jeu);
-
-//void			ft_light_torch(t_key *torch);
-//void			ft_hooks_loop(t_game *jeu);
 
 /*
 **	Math
@@ -477,20 +483,22 @@ int				ft_draw_col_to_imge(t_imge *img, int start_row, \
 					int end_row, int col, int color);
 
 
-
-
 /*
-**	Player Commands (new name, just movement ?
+**	Player Movement
 */
 
-	// move these to a seperate file
 int				ft_move_forward(t_game *jeu);
 int				ft_move_backward(t_game *jeu);
 int				ft_move_left(t_game *jeu);
 int				ft_move_right(t_game *jeu);
 
-int				ft_rot_right(t_game *jeu);
-int				ft_rot_left(t_game *jeu);
+
+/*
+**	Player Rotation
+*/
+
+int				ft_rot_right(t_game *jeu, double rot_speed);
+int				ft_rot_left(t_game *jeu, double rot_speed);
 
 /*
 **	Toggle Buttons
@@ -506,21 +514,19 @@ int				ft_toggle_off(int *button);
 **	Mouse Commands
 */
 
-int				ft_capture_mouse_pos(int x, int y, t_game *jeu);
 int				ft_mouse_move(int x, int y, t_game *jeu);
-
 int				ft_mouse_press(int button, int x, int y, t_game *jeu);
-
-	// move later
+int     		ft_fire(t_game *jeu, t_vect_t map_step, t_vect_d delta_dist, \
+				t_vect_d side_dist);
 int				ft_shoot_something(t_game *jeu);
-int				ft_sprite_dies(t_game *jeu, int index);
 
 /*
-**	Sprite Movement
+**	Sprite Behavior
 */
 
-int				ft_rot_key(t_level *lev, int i);
-int				ft_move_key(t_level *lev, int i);
+int				ft_rot_sprite(t_level *lev, int i);
+int				ft_move_sprite(t_level *lev, int i);
+int				ft_kill_sprite(t_game *jeu, int index);
 
 
 /*
@@ -547,7 +553,7 @@ int				ft_free_tlmlx(t_game *jeu);
 
 int				ft_free_ttexture_contents(t_game *jeu, t_texture *tex);
 int				ft_free_tsprite_contents(t_sprite *spri);
-int				ft_free_tsprite_tab(t_sprite *spris, int n);
+int				ft_free_tsprite_tab(t_sprite **spris, int n);
 
 /*
 **	Free Lists

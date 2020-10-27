@@ -43,14 +43,17 @@ D: Move right
 M: Map on
 N: Map off
 
-P: Pause on
-O: Pause off
-
-B: Bonus mode on
-V: Bonus mode off
+Z: Zoom in
+X: Zoom out
 
 ESC: Quit
 
+
+#### Explanation of shooting
+It's very similar to the raycaster, a ray is shot strait forward from the player
+if ever it encounters a cell where a sprite is, that sprite is hit.
+
+Can only be one Key or one Door
 
 
 Explain the structures, like what contains what...
@@ -239,14 +242,22 @@ in progress, which is more efficient.
 #### Minimap.c
 These functions exist to help create the minimap.
 
+if # x boxes even and res x even, spacing even
+if # x boxes even and res x odd, spacing odd
+same for y
+
+
 ##### Ft Sizing Minimap Imge
 Calculates the size of the minimap grid depending on the resolution and the map
 proportions.
+leaves a buffer of 5 pix at least on all sides.
 
 ##### Ft Draw Box
 Draws a single filled in squar of pixels at a specified location in an image. The
 location is specified with a 1D system not a 2D coordinate system, this fits right
 into the way pixels are addressed by the images.
+Starts drawing from top left of box
+
 
 ##### Ft Fill Imge
 Fills every pixel of an imge with a specified color, by iterating through the

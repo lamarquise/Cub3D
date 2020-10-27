@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:37:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/25 03:56:20 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/26 23:06:12 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ int		ft_check_str_end(char *str, char *end)
 int		main(int ac, char **av)
 {
 	int			fd;
-	t_game		jeu;	// maybe i can't free these, just need to free the contents
+	t_game		jeu;
 	t_input		file;
 	t_settings	set;
+	t_player	me;
 
 	if (ac < 2 || ac > 3 || !ft_check_str_end(av[1], ".cub"))
 		return (ft_error_msg("usage: <file.cub> <--save> OR <--bonus>\n", 0));
@@ -74,6 +75,7 @@ int		main(int ac, char **av)
 		return (ft_error_msg("initialization failed\n", 0));
 	jeu.file = &file;
 	jeu.set = &set;
+	jeu.me = &me;
 	if (ac == 3)
 	{
 		if (ft_strcmp(av[2], "--save") == 0)
@@ -86,23 +88,16 @@ int		main(int ac, char **av)
 		else
 			return (ft_error_msg("usage: <file.cub> <--save> OR <--bonus>\n", 0));
 	}
-	fd = open(av[1], O_RDONLY);		// put this in Start Game ?
-	if (fd == -1 || !ft_parse_file(fd, &jeu))
+	if ((fd = open(av[1], O_RDONLY)) == -1 || !ft_parse_file(fd, &jeu))
 		return (ft_error_msg("Bad .cub file\n", 0));
 	printf("file parsed\n");
 	if (!ft_start_game(&jeu))
 		return (ft_error_msg("failed to run\n", 0));
 	close(fd);
-
 	ft_quit(&jeu);
 
-//	system("leaks test");
-
+//	system("leaks Cub3D");
 	return (1);
-
-	// a thing in main where ret = 0 if fails, (also displays msg) and free all each time
-
-	// return (ret);
 }
 
 

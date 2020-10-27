@@ -6,16 +6,16 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 01:00:17 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/25 20:16:51 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/26 21:25:50 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-	// secure all this shit !?
 
 #include "cub3d.h"
 
 int		ft_display_crosshair(t_game *jeu)
 {
+	if (!jeu)
+		return (0);
 	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
 		jeu->crosshair->img_ptr, \
 		(jeu->file->res.x - jeu->crosshair->img_wid) / 2, \
@@ -25,7 +25,7 @@ int		ft_display_crosshair(t_game *jeu)
 
 int		ft_display_minimap(t_game *jeu)
 {
-	if (!ft_generate_player(jeu))
+	if (!jeu || !ft_generate_player(jeu))
 		return (0);
 	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
 		jeu->minimap->img_ptr, 0, 0);		// secure ? how
@@ -36,46 +36,28 @@ int		ft_display_minimap(t_game *jeu)
 
 int		ft_draw_imges(t_game *jeu)
 {
-	// Is this also where i do the time thing ? i think no.
-
-		// is this where this lives ?
-	// could do it differently, like with just set->zoom * 2 in the raycaster...
-	// bit if we wanted to do a dark circle scope, that would prolly be here...
+	if (!jeu)
+		return (0);
 	if (jeu->set->bonus && jeu->set->zoom)
 		jeu->me->zoom_factor = 2;
 	else
 		jeu->me->zoom_factor = 1;
-		
-
-	if (jeu->lev->key_index != -1 && jeu->lev->key_exists && !ft_move_key(jeu->lev, jeu->lev->key_index))
-		return (ft_error_msg("Failed to move the key\n", 0));// free something
-
-
+	if (jeu->lev->key_index != -1 && jeu->lev->key_exists
+		&& !ft_move_sprite(jeu->lev, jeu->lev->key_index))
+		return (ft_error_msg("Failed to move the key\n", 0));
 	if (!ft_generate_fpv(jeu))
-		return (0); // and prolly free something	// raycasting again!!!!
-
-	// this is where you call sprite rendering
-
-
+		return (0);
 	if (jeu->set->bonus && jeu->set->minimap && !ft_display_minimap(jeu))
-		return (ft_error_msg("Failed to display minimap\n", 0));// free something
+		return (ft_error_msg("Failed to display minimap\n", 0));
 	if (jeu->set->bonus && !jeu->set->minimap && !ft_display_crosshair(jeu))
 		return (ft_error_msg("Failed to display crosshair\n", 0));
-
-//	if (jeu->set->bonus && !ft_display_title_screen(jeu))
-//		return (ft_error_msg("Failed to display title screen\n", 0));
-
-//	mlx_string_put(jeu->mlx->ptr, jeu->win->win_ptr, 0, 0, ft_rgb_to_int(255, 0, 0, 0), "Testing");
-//	sleep(1);
-
-
 	return (1);
 }
 
 int		ft_redraw(t_game *jeu)
 {
-	// none of that gets done to player, maybe i don't need it for fpv ?
-
+	if (!jeu)
+		return (0);
 	if (jeu->fpv->img_ptr)
 		mlx_destroy_image(jeu->mlx->ptr, jeu->fpv->img_ptr);
 	if (!(jeu->fpv->img_ptr = mlx_new_image(jeu->mlx->ptr,\
@@ -83,8 +65,7 @@ int		ft_redraw(t_game *jeu)
 		return (0);
 	jeu->fpv->img_data = (int*)mlx_get_data_addr(jeu->fpv->img_ptr,\
 		&jeu->mlx->bpp, &jeu->mlx->s_l, &jeu->mlx->endian);
-
-	mlx_clear_window(jeu->mlx->ptr, jeu->win->win_ptr);		 // secure ???
+	mlx_clear_window(jeu->mlx->ptr, jeu->win->win_ptr);
 	if (!ft_draw_imges(jeu))
 		return (0);
 	return (1);

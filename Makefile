@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/26 00:58:29 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/26 23:53:02 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ FILES	=	main.c \
 			save.c \
 			game_engine.c \
 			generate.c \
+			generate_minimap.c \
 			minimap.c \
 			keyhooks.c \
 			display_to_screen.c \
@@ -33,8 +34,9 @@ FILES	=	main.c \
 			floorcasting.c \
 			spritecasting.c \
 			sprite_management.c \
-			sprite_movement.c \
-			player_commands.c \
+			sprite_behavior.c \
+			player_rotation.c \
+			player_movement.c \
 			toggle_buttons.c \
 			mouse_commands.c \
 			not_bresenham.c \
@@ -79,7 +81,6 @@ DIR_SRC =	src/
 DIR_OBJ =	obj/
 DIR_OBJ_MAC =	obj/
 DIR_OBJ_LINUX =	obj/
-
 
 
 DIR_INC	=	./include/
@@ -174,12 +175,12 @@ re: fclean all
 #	gcc $(CFLAGS) -L. -lftprintf ./main.c -o test
 #	echo "$(_CYAN)Test ready  😬$(_END)"
 
-testl: $(OBJS) $(LIBFT) $(MLX)
-	$(CC) -o $@ $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(FRAME) -g
+testl: $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC)
+	$(CC) -o $@ $(MAC_FLAGS) $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC) -g
 	echo "$(_CYAN)Valgrind Test ready  😬$(_END)"
 
-tests: $(OBJS) $(LIBFT) $(MLX)
-	$(CC) -o $@ $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(FRAME) $(SAN)
+tests: $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC)
+	$(CC) -o $@ $(MAC_FLAGS) $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC) $(SAN)
 	echo "$(_CYAN)Fsanitize Test ready  😬$(_END)"
 
 tclean: ofclean

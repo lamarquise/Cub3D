@@ -6,15 +6,12 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:25:56 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/25 19:58:07 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/26 18:40:54 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub3d.h"
 
-
-	// not sure this one is useful
 t_imge		*ft_init_imge()
 {
 	t_imge	*new;
@@ -32,14 +29,18 @@ t_imge      *ft_create_imge(t_lmlx *mlx, int x, int y)
 {
 	t_imge	*new;
 
-	new = NULL;
-	if (!(new = malloc(sizeof(t_imge))))		// should't this be ft_init_imge?
+	if (!mlx)
 		return (NULL);
-	if (!(new->img_ptr = mlx_new_image(mlx->ptr, x, y)))
-		return (NULL);      // also free new...
-	if (!(new->img_data = (int*)mlx_get_data_addr(new->img_ptr, \
+	new = NULL;
+	if (!(new = malloc(sizeof(t_imge))))
+		return (NULL);
+	if (!(new->img_ptr = mlx_new_image(mlx->ptr, x, y)) \
+		|| !(new->img_data = (int*)mlx_get_data_addr(new->img_ptr, \
 		&mlx->bpp, &mlx->s_l, &mlx->endian)))
-		return (NULL);      // also free...
+	{
+		free(new);
+		return (NULL);
+	}
 	new->img_wid = x;
 	new->img_hei = y;
 	new->last_pix = x * y;
@@ -50,13 +51,18 @@ t_wind	*ft_create_wind(t_lmlx *mlx, char *name, int x, int y)
 {
 	t_wind	*new;
 
+	if (!mlx || !name)
+		return (NULL);
 	new = NULL;
 	if (!(new = malloc(sizeof(t_wind))))
 		return (NULL);
 	if (!(new->win_ptr = mlx_new_window(mlx->ptr, x, y, name)))
-		return (NULL);	// and free new...
+	{
+		free(new);
+		return (NULL);
+	}
 	new->win_wid = x;
 	new->win_hei = y;
-	new->name = name;	// necessary ???
+	new->name = name;
 	return (new);
 }
