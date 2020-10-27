@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 03:23:37 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 16:02:45 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ typedef struct	s_player
 
 typedef struct	s_sprite
 {
-	t_texture	*tex;
+	t_texture	tex;
 
 	t_vect_d	pos;
 	t_vect_d	dir;
@@ -223,7 +223,7 @@ typedef struct	s_game
 	t_vect_i	grid_pixs;	// minimap stuff	// could put in t_level
 	t_vect_i	grid_tl;	//top left			// also this
 	int			grid_box_size;					// also this
-
+	int			side;
 	// things for save
 	char		pad[4];		// not necessary ???
 
@@ -338,6 +338,7 @@ int				ft_display_minimap(t_game *jeu);
 int				ft_display_crosshair(t_game *jeu);
 int				ft_draw_imges(t_game *jeu);
 int				ft_redraw(t_game *jeu);
+int				ft_casting(t_game *jeu);
 
 /*
 **	Save
@@ -371,10 +372,11 @@ int				ft_generate_minimap(t_game *jeu, t_level *lev);
 
 
 t_vect_i		ft_get_wall_texture(t_game *jeu, t_imge *tex_img, double pwd, \
-				t_vect_d ray, int side);
+				t_vect_d ray);
 t_vect_i		ft_calc_sliver_limits(t_game *jeu, int sliver_hei);
 int				ft_generate_wall_sliver(t_game *jeu, int x, double *pwd, t_vect_d ray);
-int				ft_raycasting(t_game *jeu);
+int				ft_draw_fc(t_game *jeu, t_vect_i sliver_limits, int x);
+int				ft_raycasting(t_game *jeu, double *z_buffer);
 
 /*
 **	Rayshooting
@@ -402,7 +404,9 @@ int				ft_floorcasting(t_game *jeu);
 */
 
 int				ft_sort_sprites(int *spri_ord, double *spri_dist, int n_spris);
-int				*ft_calc_sprite_order(t_game *jeu);
+//int				*ft_calc_sprite_order(t_game *jeu, int *spri_ord);
+//int				ft_calc_sprite_order(t_game *jeu, int **spri_ord);
+int				ft_calc_sprite_order(t_game *jeu, int *spri_ord);
 t_vect_d		ft_calc_sprite_transform(t_game *jeu, int i, int *spri_ord);
 t_vect_i		ft_calc_sprite_dimentions(t_game *jeu, t_vect_d transform);
 int				ft_calc_sprite_screen_x(t_game *jeu, t_vect_d transform);

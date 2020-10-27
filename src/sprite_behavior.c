@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/24 02:09:19 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 03:23:34 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 03:29:39 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			ft_kill_sprite(t_game *jeu, int index)
 	if (index == jeu->lev->exit_index)
 		jeu->lev->exit_index = -1;
 
-		// this is suppoesed to be free tsprite tab
+		// this is suppoesed to be free tsprite tab, shit is uncessesary tho...
 	i = -1;
 	while (++i < jeu->lev->n_spris)
 	{
@@ -79,7 +79,7 @@ int			ft_kill_sprite(t_game *jeu, int index)
 //		printf("kill sprite test 2tab id: %c\n", jeu->lev->spris_tab[i].id);
 //		jeu->lev->spris_tab[i] = NULL;
 	}
-	free(jeu->lev->spris_tab);	// crashes the whole thing
+	free(jeu->lev->spris_tab);
 	jeu->lev->spris_tab = NULL;
 	if (!ft_nlstdel_n_sprite(&jeu->lev->spris_list, index))
 		return (ft_error_msg("failed to del dead sprite\n", 0));

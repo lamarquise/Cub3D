@@ -48,6 +48,16 @@ X: Zoom out
 
 ESC: Quit
 
+#### raycasting vars
+double      wall_x; // the exact pos in map box where ray hit wall, x coord of wall
+t_vect_i    w_texture;  // the int/pix coord where ray hit texture
+
+#### floorcasting
+OK i think i get the algo
+You go row by row down, and for each row you want to know the dist btw the camera
+and the floor or ceiling, so further across the middle of the screen and closer
+at the bottom and top
+
 
 #### Explanation of shooting
 It's very similar to the raycaster, a ray is shot strait forward from the player

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:01:00 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 18:24:30 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 03:54:30 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int		ft_generate_fpv(t_game *jeu)
 {
 	if (!jeu)
 		return (0);
-	if (!ft_raycasting(jeu))
-		return (ft_error_msg("raycasting failed\n", 0));
+	if (!ft_casting(jeu))
+		return (ft_error_msg("casting failed\n", 0));
 	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
 			jeu->fpv->img_ptr, 0, 0);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:31:38 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 00:29:33 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 16:02:43 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	ft_init_player(t_game *jeu, t_level *lev)
 	// kinda unnecessary
 int	ft_init_sprite(t_sprite *spri)
 {
-	spri->tex = NULL;
+//	spri->tex = NULL;
 	spri->pos.x = -1;
 	spri->pos.y = -1;
 	spri->dir.x = -1;
@@ -189,8 +189,7 @@ int	ft_init_game(t_game *jeu)
 	jeu->grid_tl.x = -1;
 	jeu->grid_tl.y = -1;
 	jeu->grid_box_size = -1;
-
-//	jeu->hud = NULL;
+	jeu->side = 0;	// don't even really need this
 	return (1);
 }
 

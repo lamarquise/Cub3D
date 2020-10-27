@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 15:23:54 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 03:16:37 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 16:02:41 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,20 @@ int		ft_sort_sprites(int *spri_ord, double *spri_dist, int n_spris)
 	}
 	return (1);
 }
-	// we create and then calculate the order
-int		*ft_calc_sprite_order(t_game *jeu)
+
+int		ft_calc_sprite_order(t_game *jeu, int *spri_ord)
 {
 	int		i;
-	int		*spri_ord;	// index of the sprite in the spri tab
-	double	*spri_dist;	// distance of that sprite from camera? player?
+//	int		*spri_ord;
+	double	spri_dist[jeu->lev->n_spris];
 
-	if (!(spri_ord = (int*)malloc(sizeof(int) * jeu->lev->n_spris)))
-		return ((int*)ft_error_msg("failed to allocate spri ord tab\n", 0));
-	if (!(spri_dist = malloc(sizeof(double) * jeu->lev->n_spris)))
-		return ((int*)ft_error_msg("failed to allocate spri dist tab\n", 0));
-
+//	if (!(*spri_ord = (int*)malloc(sizeof(int) * jeu->lev->n_spris)))
+//		return (ft_error_msg("failed to allocate spri ord tab\n", 0));
+//	if (!(spri_dist = malloc(sizeof(double) * jeu->lev->n_spris)))
+//	{
+	//		free(spri_ord);
+//		return (ft_error_msg("failed to allocate spri dist tab\n", 0));
+//	}
 	i = 0;
 	while (i < jeu->lev->n_spris)
 	{
@@ -64,24 +66,22 @@ int		*ft_calc_sprite_order(t_game *jeu)
 						* (jeu->me->pos.y - jeu->lev->spris_tab[i].pos.y));
 		++i;
 	}
-
 	if (!(ft_sort_sprites(spri_ord, spri_dist, jeu->lev->n_spris)))
-		return (NULL);
-	return (spri_ord);
+	{
+//		free(spri_ord);
+//		free(spri_dist);
+		return (0);
+	}
+//	free(spri_dist);
+//	return (spri_ord);
+	return (1);
 }
-
-
-	// don't entirely (or at all) understand what transform does
-	// but it's where the zoom factor needs to be for the sprites
-	// to render properly...
-	// wait no it's not...
 
 t_vect_d	ft_calc_sprite_transform(t_game *jeu, int i, int *spri_ord)
 {
-	t_vect_d	transform;	// transform sprite with inverse camera matrix
-				// gets us a vector representing the depth inside the screen
-	t_vect_d	sprite_cp;	// sprite pos relative to camera
-	double		inv_det;	// value require for matrix multiplication
+	t_vect_d	transform;
+	t_vect_d	sprite_cp;
+	double		inv_det;
 
 	sprite_cp.x = jeu->lev->spris_tab[spri_ord[i]].pos.x - jeu->me->pos.x;
 	sprite_cp.y = jeu->lev->spris_tab[spri_ord[i]].pos.y - jeu->me->pos.y;
@@ -131,20 +131,12 @@ int			ft_calc_sprite_screen_x(t_game *jeu, t_vect_d transform)
 	return (spri_screen_x);
 }
 
-/*
-int			ft_draw_sprite(t_game *jeu, t_vect_i spri_d, int spri_screen_x, int spri_hei)
-{
-
-
-
-}
-
-*/
+	// see calc sliver limits
 
 int			ft_spritecaster(t_game *jeu, double *z_buffer)
 {
 	int			i;
-	int			*spri_ord;
+	int			spri_ord[jeu->lev->n_spris];
 	t_vect_d	transform;
 	t_vect_i	spri_d;			// what is this ??? what does it represent
 	int			spri_screen_x;	// what does this mean ???
@@ -159,21 +151,15 @@ int			ft_spritecaster(t_game *jeu, double *z_buffer)
 	if (!jeu || !z_buffer)
 		return (0);
 
-	spri_ord = NULL;
+//	spri_ord = NULL;
 		// from this we get a table of ints coresponding to indexes of spris
 		// in the spri table
-	if (!(spri_ord = ft_calc_sprite_order(jeu)))
-		return (ft_error_msg("failed to calc sprite order\n", 0));
-
-/*	i = 0;
-	while (i < jeu->lev->n_spris)
+//	if (!(spri_ord = ft_calc_sprite_order(jeu)))
+	if (!(ft_calc_sprite_order(jeu, spri_ord)))
 	{
-		printf("spri ord [i]: %d\n", spri_ord[i]);
-		++i;
+//		free(spri_ord);
+		return (ft_error_msg("failed to calc sprite order\n", 0));
 	}
-	printf("\n\n");
-*/
-
 	i = 0;
 	while (i < jeu->lev->n_spris)
 	{
@@ -251,6 +237,16 @@ int			ft_spritecaster(t_game *jeu, double *z_buffer)
 }
 
 
+
+/*
+int			ft_draw_sprite(t_game *jeu, t_vect_i spri_d, int spri_screen_x, int spri_hei)
+{
+
+
+
+}
+
+*/
 
 
 

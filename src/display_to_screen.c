@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 01:00:17 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 21:25:50 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 15:42:09 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,36 @@ int		ft_redraw(t_game *jeu)
 		return (0);
 	return (1);
 }
+
+int		ft_casting(t_game *jeu)
+{
+	double	z_buffer[jeu->file->res.x];
+
+	if (!jeu)
+		return (0);
+	if (jeu->set->bonus && jeu->file->floor->img && jeu->file->ceiling->img \
+		&& !ft_floorcasting(jeu))
+		return (ft_error_msg("failed to floorcast\n", 0));
+//	if (!(z_buffer = malloc(sizeof(double) * jeu->file->res.x)))
+//		return (0);
+	if (!ft_raycasting(jeu, z_buffer))
+	{
+//		free(z_buffer);
+		return (ft_error_msg("failed to raycast\n", 0));
+	}
+	if (!ft_spritecaster(jeu, z_buffer))
+	{
+//		free(z_buffer);
+		return (ft_error_msg("failed to spritecast\n", 0));
+	}
+//	free(z_buffer);
+	return (1);
+}
+
+
+
+
+
+
 
 

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 19:21:47 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 03:23:32 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 03:42:28 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,9 @@ int		ft_free_ttexture_contents(t_game *jeu, t_texture *tex)
 	return (1);
 }
 
-	// kinda useless
+	// used buy free tlevel contents
 int		ft_free_tsprite_contents(t_sprite *spri)
 {
-	// ttexture tex
-	// pos.
-	// dir.
-
-	// id
-	// anim color
-	// life
-
-// ok we have an issue, the textures in the sprite tex are pointers to textures in a
-// linked list, 
-// for now, don't del the texture, just set pointer to it to null
 
 	if (spri->tex)
 		spri->tex = NULL;
@@ -61,7 +50,7 @@ int		ft_free_tsprite_contents(t_sprite *spri)
 	return (1);
 }
 
-
+	// useful for free tlevel contents
 	// calling this calls free tsprite which does not free the OG textures
 int		ft_free_tsprite_tab(t_sprite *spris, int n)
 {
@@ -70,7 +59,7 @@ int		ft_free_tsprite_tab(t_sprite *spris, int n)
 	if (!spris || n < 1)
 		return (1);	// 1 ?
 	i = 0;
-	while (i < n)	// would while (spris[i]) work ???
+	while (i < n)
 	{
 		if (!ft_free_tsprite_contents(&spris[i]))
 			return (ft_error_msg("failed to free spri in spris tab\n", 0));
