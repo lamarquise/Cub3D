@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 00:56:31 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 03:02:46 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 03:16:50 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,20 @@ int		ft_create_spris_tab(t_level *lev)
 		return (1);
 	tmp = lev->spris_list;
 	lev->spris_tab = NULL;
-	if (!(lev->spris_tab = malloc(sizeof(t_sprite*) * (lev->n_spris + 1))))
+	if (!(lev->spris_tab = malloc(sizeof(t_sprite) * (lev->n_spris))))
 		return (0);
 	i = -1;
 	while (++i < lev->n_spris && tmp)
 	{
-		lev->spris_tab[i] = (t_sprite*)tmp->content;// a pointer to the sprite in sprilist
+		lev->spris_tab[i] = *(t_sprite*)tmp->content;// copy of sprite in sprilist
 		if ((*(t_sprite*)tmp->content).id == 'Y')
 			lev->key_index = i;
 		else if ((*(t_sprite*)tmp->content).id == 'X')
 			lev->exit_index = i;
-		printf("create tab, id: %c\n", lev->spris_tab[i]->id);
+		printf("create tab, id: %c\n", lev->spris_tab[i].id);
 		tmp = tmp->next;
 	}
-	lev->spris_tab[i] = NULL;	// would need a **spris_tab...
+//	lev->spris_tab[i] = NULL;	// would need a **spris_tab...
 
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 03:03:00 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 03:23:37 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ typedef struct	s_level
 	char		player_sorient;
 
 	t_nlist		*spris_list;	// linked list sprites
-	t_sprite	**spris_tab;		// table pointer to sprites, yes we need both...
+	t_sprite	*spris_tab;		// table of copies of linked list sprites
 	int			n_spris;	// number of sprites on this level
 
 
@@ -553,7 +553,7 @@ int				ft_free_tlmlx(t_game *jeu);
 
 int				ft_free_ttexture_contents(t_game *jeu, t_texture *tex);
 int				ft_free_tsprite_contents(t_sprite *spri);
-int				ft_free_tsprite_tab(t_sprite **spris, int n);
+int				ft_free_tsprite_tab(t_sprite *spris, int n);
 
 /*
 **	Free Lists

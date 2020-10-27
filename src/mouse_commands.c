@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 23:37:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 02:39:38 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 03:21:25 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ int		ft_fire(t_game *jeu, t_vect_t map_step, t_vect_d delta_dist, \
 		i = -1;
 		while (nhit && ++i < jeu->lev->n_spris)
 		{
-			if (jeu->lev->spris_tab[i]->tex \
-				&& map_step.a.x == (int)jeu->lev->spris_tab[i]->pos.x \
-				&& map_step.a.y == (int)jeu->lev->spris_tab[i]->pos.y)
+			if (jeu->lev->spris_tab[i].tex \
+				&& map_step.a.x == (int)jeu->lev->spris_tab[i].pos.x \
+				&& map_step.a.y == (int)jeu->lev->spris_tab[i].pos.y)
 			{
 				nhit = 0;
-				jeu->lev->spris_tab[i]->anim_color = 220;
-				jeu->lev->spris_tab[i]->life -= 50;
-				if (jeu->lev->spris_tab[i]->life == 0 && !ft_kill_sprite(jeu, i))
+				jeu->lev->spris_tab[i].anim_color = 220;
+				jeu->lev->spris_tab[i].life -= 50;
+				if (jeu->lev->spris_tab[i].life == 0 && !ft_kill_sprite(jeu, i))
 					return (ft_error_msg("failed to kill sprite\n", 0));
 			}
 		}

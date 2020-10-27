@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 19:21:47 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 02:54:01 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 03:23:32 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		ft_free_tsprite_contents(t_sprite *spri)
 
 
 	// calling this calls free tsprite which does not free the OG textures
-int		ft_free_tsprite_tab(t_sprite **spris, int n)
+int		ft_free_tsprite_tab(t_sprite *spris, int n)
 {
 	int		i;
 
@@ -72,7 +72,7 @@ int		ft_free_tsprite_tab(t_sprite **spris, int n)
 	i = 0;
 	while (i < n)	// would while (spris[i]) work ???
 	{
-		if (!ft_free_tsprite_contents(spris[i]))
+		if (!ft_free_tsprite_contents(&spris[i]))
 			return (ft_error_msg("failed to free spri in spris tab\n", 0));
 		++i;
 	}
