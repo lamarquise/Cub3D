@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 03:42:31 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 23:15:16 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 14:17:03 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			ft_draw_fc(t_game *jeu, t_vect_i sliver_limits, int x)
 	row.y = sliver_limits.x;
 	if (!ft_draw_col_to_imge(jeu->fpv, row, x, jeu->file->ceiling->value))
 		return (ft_error_msg("failed to draw ceiling col to img\n", 0));
-	row.x = sliver_limits.y;
+	row.x = sliver_limits.x;
 	row.y = jeu->file->res.y;
 	if (!ft_draw_col_to_imge(jeu->fpv, row, x, jeu->file->floor->value))
 		return (ft_error_msg("failed to draw flo or cei col to img\n", 0));
@@ -107,10 +107,7 @@ int			ft_raycasting(t_game *jeu, double *z_buffer)
 		ray.y = jeu->me->dir.y * jeu->me->zoom_factor + jeu->me->plane.y \
 				* (2 * x / (double)jeu->file->res.x - 1);
 		if (!ft_generate_wall_sliver(jeu, x, &perp_wall_dist, ray))
-		{
-			free(z_buffer);
 			return (ft_error_msg("failed to generate wall sliver\n", 0));
-		}
 		z_buffer[x] = perp_wall_dist;
 		x++;
 	}

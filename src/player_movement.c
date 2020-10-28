@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 20:24:04 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 01:37:28 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 14:17:05 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int		ft_move_forward(t_game *jeu)
 	if (!jeu)
 		return (0);
 	if (((char**)jeu->lev->floor)[(int)jeu->me->pos.y]\
-		[(int)(jeu->me->pos.x + jeu->me->dir.x * STEP_SIZE - 0.02)] == '0')
+		[(int)(jeu->me->pos.x + jeu->me->dir.x * (STEP_SIZE + 0.02))] == '0')
 		jeu->me->pos.x += jeu->me->dir.x * STEP_SIZE;
 	if (((char**)jeu->lev->floor)[(int)(jeu->me->pos.y + jeu->me->dir.y \
-		* STEP_SIZE - 0.02)][(int)jeu->me->pos.x] == '0')
+		* (STEP_SIZE + 0.02))][(int)jeu->me->pos.x] == '0')
 		jeu->me->pos.y += jeu->me->dir.y * STEP_SIZE;
 	return (1);
 }

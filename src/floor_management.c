@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 19:21:14 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 05:02:04 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 19:30:58 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ int		ft_check_floor(t_game *jeu, t_level *lev)
 		while (lev->floor[y][++x])
 		{
 			if ((ft_findchar("01 ", lev->floor[y][x])) == -1 \
-				&& !ft_found_not_wall(jeu, lev, ft_fill_vect_i(x, y), \
+				&& (!ft_found_not_wall(jeu, lev, ft_fill_vect_i(x, y), \
 				jeu->file->n_spri_types + 49)
-				&& !ft_check_around(lev, x, y, jeu->file->n_spri_types + 49))
+				|| !ft_check_around(lev, x, y, jeu->file->n_spri_types + 49)))
 				return (0);
 		}
 	}

@@ -6,15 +6,9 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 05:02:43 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 20:13:59 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
-	// NEW CONVENTION, IF STRUCT TYPE SAME AS NAME FOR VAR OF THAT TYPE
-	// NAMED VAR HAS 1 FEWER LETER
-
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -22,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+	// REMOVE !!!!!
 # include <stdio.h>
 
 # include <fcntl.h>
@@ -39,32 +34,20 @@
 # include "bresenham.h"
 # include "mymlx.h"
 # include "libft.h"
-# include <mlx.h>
+# include <mlx.h>		// or "mlx.h" ?
 
-// include math stuff...
-
-	// Essencial Input file bol values
-
-# define RES	0x02	// ie the second pos in bin number // 10
+# define RES	0x02
 # define TNO    0x04
 # define TSO    0x08
 # define TWE    0x10
 # define TEA    0x20
-# define TS1    0x40	// may need to change...
+# define TS1    0x40
 # define CFL    0x80
 # define CCE    0x100
-
-	// Optional Input file bol values
 
 # define BEX	0x02
 # define BKE	0x04
 # define BOP	0x08
-# define BFL	0x10	// not sure i need the floor and ceiling ones...
-# define BCE	0x20
-
-
-
-// can add more sprites here, PS2 and such
 
 # define WHITE	0xFFFFFF
 # define RED	0xD62727
@@ -74,10 +57,8 @@
 # define PURPLE	0x925CC3
 # define BLACK	0x000000
 # define NO		0x00FFFFFF
-
-# define ROT_SPEED 0.04		// was 0.04 in old keyhook system
-# define STEP_SIZE 0.05		// was 0.1 in old keyhook system
-
+# define ROT_SPEED 0.04
+# define STEP_SIZE 0.05
 
 typedef struct	s_vect_i
 {
@@ -99,7 +80,7 @@ typedef struct	s_vect_d
 
 typedef struct	s_texture
 {
-	int		value;		// has to be an int cuz could also be that of simple color floor
+	int		value;
 	char	*path;
 	t_imge	*img;
 }				t_texture;
@@ -109,26 +90,16 @@ typedef struct	s_player
 	t_vect_d	pos;
 	t_vect_d	dir;
 	t_vect_d	plane;
-
 	int			zoom_factor;
-
-
-//	int			box;	// the index of the box you're in
-//	char		s_dir;	// a char i guess...
 	int			life;
 	int			key;
-	// respaun point/location
-	// hitbox ???
-	// weapon and or inventory linked list
 }				t_player;
 
 typedef struct	s_sprite
 {
 	t_texture	*tex;
-
 	t_vect_d	pos;
 	t_vect_d	dir;
-
 	char		id;
 	int			anim_color;
 	int			life;
@@ -138,14 +109,12 @@ typedef struct	s_sprite
 typedef struct	s_input
 {
 	t_vect_i		res;
-	
 	t_texture		*no;
 	t_texture		*so;
 	t_texture		*ea;
 	t_texture		*we;
 	t_nlist			*spri_type_texs;
 	int				n_spri_types;
-
 	t_texture		*floor;
 	t_texture		*ceiling;
 }				t_input;
@@ -155,14 +124,11 @@ typedef struct	s_level
 	char		**floor;
 	t_vect_i	dim;
 	int			last_box;
-
 	t_vect_d	player_spos;
 	char		player_sorient;
-
-	t_nlist		*spris_list;	// linked list sprites, tex points to types of spri tex
-	t_sprite	*spris_tab;		// table of copies of linked list sprites
-	int			n_spris;	// number of sprites on this level
-
+	t_nlist		*spris_list;
+	t_sprite	*spris_tab;
+	int			n_spris;
 	int			exit_exists;
 	int			exit_index;
 	int			key_exists;
@@ -188,21 +154,17 @@ typedef struct	s_game
 	int			cur_level;
 	t_player	*me;
 	t_settings	*set;
-
 	t_lmlx		*mlx;
 	t_wind		*win;
-
 	t_imge		*yah;
 	t_imge		*crosshair;
 	t_imge		*minimap;
 	t_imge		*fpv;
-
-	int			sbol;	// standard file bol // put in file ???
-	int			bbol;	// bonus file bol // put in b_file ?
-	int			fog;	// pertains to the map display
-	int			torch[127];	// could be 126 but not sure...
-	t_vect_i	mouse;		// here for now...
-
+	int			sbol;
+	int			bbol;
+	int			fog;
+	int			torch[127];
+	t_vect_i	mouse;
 	t_vect_i	grid_pixs;
 	t_vect_i	grid_tl;
 	int			grid_box_size;
@@ -210,23 +172,11 @@ typedef struct	s_game
 }				t_game;
 
 /*
-typedef struct	s_key
-
-{
-	int     keycode;
-	int     (*f)(t_game *jeu);	// make this void, and cast it after ???
-}				t_key;
-*/
-
-// inventory structure ???
-// weapons structure, like damage etc, armor ???
-
-
-/*
 **	Main
 */
 
 int				ft_check_str_end(char *str, char *end);
+int				ft_run(t_game *jeu, int ac, char **av);
 
 /*
 **	Init More Structures
@@ -251,10 +201,6 @@ int				ft_init_game(t_game *jeu);
 */
 
 int				ft_get_file_lines(int fd, t_game *jeu, t_nlist **floor);
-//int				ft_get_file_contents(int fd, t_game *jeu, t_input *file, \
-//				t_nlist **floor, int *bol);
-//int				ft_get_file_contents(int fd, t_input *file,\
-//				t_nlist **floor, int *bol);
 int				ft_parse_file(int fd, t_game *jeu);
 
 /*
@@ -320,12 +266,9 @@ int             ft_casting(t_game *jeu);
 **	Save
 */
 
-void			ft_create_file_header(unsigned char *file_header, t_game *jeu, int pad_size);
+void			ft_create_file_header(unsigned char *file_header, \
+				t_game *jeu, int pad_size);
 int				ft_screenshot(t_game *jeu);
-
-	// don't like it much...
-//int				ft_save_bmp(t_game *jeu);
-
 
 /*
 **	Generate
@@ -346,7 +289,6 @@ int				ft_generate_minimap(t_game *jeu, t_level *lev);
 **	Raycasting
 */
 
-
 t_vect_i		ft_get_wall_texture(t_game *jeu, t_imge *tex_img, double pwd, \
 				t_vect_d ray);
 t_vect_i		ft_calc_sliver_limits(t_game *jeu, int sliver_hei);
@@ -363,51 +305,34 @@ int				ft_dda(t_vect_i *map, t_vect_i *step, t_vect_d *side_dist, \
 				t_vect_d *delta_dist);
 int				ft_shoot_ray(t_game *jeu, t_vect_d p_pos, t_vect_d ray, double *pwd);
 
-
-// tmp
-int				ft_ray_dir(t_vect_i *step, t_vect_i *map_pos, t_vect_d *pos, \
-				t_vect_d *side_dist, t_vect_d *ray_dir, t_vect_d *delta_dist);
-
 /*
 **	Floorcasting
 */
 
+int				ft_draw_floor(t_game *jeu, int x, int y, t_vect_i tex);
+int				ft_draw_ceiling(t_game *jeu, int x, int y, t_vect_i tex);
+t_vect_i		ft_get_floor_tex(t_imge *img, t_vect_d *floor, t_vect_i *cell);
+int				ft_shoot_floor_ray(t_game *jeu, t_vect_d *floor, \
+				t_vect_d *floor_step, double row_dist);
 int				ft_floorcasting(t_game *jeu);
 
+/*
+**	Sprite Order
+*/
+
+int				ft_sort_sprites(int *spri_ord, double *spri_dist, int n_spris);
+int				ft_calc_sprite_order(t_game *jeu, int *spri_ord);
 
 /*
 **	Spritecasting
 */
 
-int				ft_sort_sprites(int *spri_ord, double *spri_dist, int n_spris);
-//int				*ft_calc_sprite_order(t_game *jeu);
-int				ft_calc_sprite_order(t_game *jeu, int *spri_ord);
 t_vect_d		ft_calc_sprite_transform(t_game *jeu, int i, int *spri_ord);
-t_vect_i		ft_calc_sprite_dimentions(t_game *jeu, t_vect_d *transform);
 int				ft_calc_sprite_screen_x(t_game *jeu, t_vect_d *tran);
-
 t_vect_t        ft_calc_draw_dims(t_game *jeu, t_vect_t *spri_dims, t_vect_d *tran);
-int				ft_spritecaster(t_game *jeu, double *z_buffer);
-
-//int             ft_draw_sprite(t_game *jeu, t_vect_t *draw, t_vect_i *spri_dims, \
-//				double *z_buffer, int *spri_ord);
-
-//int				ft_draw_sprite(t_game *jeu, t_vect_t *draw, t_vect_i *spri_dims, \
-//				double *z_buffer, int spri_ord, t_vect_d *transform);
 void			ft_draw_sprite(t_game *jeu, t_vect_t *spri_dims, \
 				double *z_buffer, t_vect_d *transform);
-
-
-/*
-t_vect_d		ft_calc_dbs(t_vect_d ray);
-
-int				ft_ray(t_vect_i *rsd, t_vect_i *rpim, t_vect_d *pos, \
-				t_vect_d *dts, t_vect_d *ray, t_vect_d *dbs);
-int				ft_dda(t_vect_i *rpim, t_vect_i *step, t_vect_d *dts, \
-				t_vect_d *dbs);
-t_imge			*ft_select_tex(t_game *jeu, int side_seen, t_vect_d ray, \
-				t_vect_i rpim);
-*/
+int				ft_spritecaster(t_game *jeu, double *z_buffer);
 
 /*
 **	Minimap
@@ -433,7 +358,7 @@ t_wind			*ft_create_wind(t_lmlx *mlx, char *name, int x, int y);
 
 t_texture		*ft_new_ttexture(int value, char *path, t_imge *img);
 int				ft_add_tex_to_nlist(t_nlist **list, int value, char *path, \
-					t_imge *img);
+				t_imge *img);
 
 /*
 **	Unpacking
@@ -481,7 +406,6 @@ int				ft_move_backward(t_game *jeu);
 int				ft_move_left(t_game *jeu);
 int				ft_move_right(t_game *jeu);
 
-
 /*
 **	Player Rotation
 */
@@ -493,11 +417,8 @@ int				ft_rot_left(t_game *jeu, double rot_speed);
 **	Toggle Buttons
 */
 
-//int				ft_toggle_on(t_game *jeu, int shift);	// sadly bitwise
-//int				ft_toggle_off(t_game *jeu, int shift);	// didn't work...
 int				ft_toggle_on(int *button);
 int				ft_toggle_off(int *button);
-
 
 /*
 **	Mouse Commands
@@ -517,14 +438,12 @@ int				ft_rot_sprite(t_level *lev, int i);
 int				ft_move_sprite(t_level *lev, int i);
 int				ft_kill_sprite(t_game *jeu, int index);
 
-
 /*
 **	More nList
 */
 
-// Move to lib later
-
 int				ft_print_nlist(t_nlist *lst);
+int				ft_finish_del_spris(t_nlist **lst, t_nlist **tmp, int n);
 int				ft_nlstdel_n_sprite(t_nlist **lst, int n);
 int				ft_nlstadd_secback(t_nlist **lst, void *content);
 
@@ -556,17 +475,22 @@ int				ft_free_level_list(t_nlist **lst);
 **	Quit
 */
 
+int				ft_finish_free_input(t_game *jeu);
 int				ft_free_tinput_contents(t_game *jeu);
 int				ft_free_tlevel_contents(t_level *lev);
-int				ft_free_tgame(t_game *jeu);
+int				ft_finish_quit(t_game *jeu);
+int				ft_quit(t_game *jeu);
 
 /*
-void			ft_clear(t_screen *either);
-int				ft_quit(t_screen *either);
-int				ft_quit_all(t_game *jeu);
-void			ft_clear_imge(t_lmlx *mlx, t_imge *img);
+**	Utils
 */
-int				ft_quit(t_game *jeu);
+
+size_t			ft_sstrlen(const char *s);
+int				ft_sfindchar(char *str, char c);
+char			*ft_strsub(char *s, unsigned int start, size_t len);
+int				ft_ibzero(void *s, size_t n);
+char			*ft_gstrjoin(char **s1, char *s2);
+
 
 /*
 **	Prime Engine Mac and Linux

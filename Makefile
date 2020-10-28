@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/28 05:04:32 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/28 19:44:29 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ FILES	=	main.c \
 			init_structures.c \
 			init_more_structures.c \
 			file_parser.c \
+			utils.c \
 			line_parser.c \
 			input_parser.c \
 			level_parser.c \

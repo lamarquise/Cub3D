@@ -6,30 +6,12 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:37:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 01:19:52 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 17:15:57 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// TO DO:
-
-	// then game management...
-	// multi-threading ? how would that even work ??? I mean i know but
-	// still...
-	// before push, double check all new funcs you added to your lib
-		// durring this project
-
 #include "cub3d.h"
 
-	// TMP for testing
-int		ft_print_file(t_game *jeu)
-{
-	ft_print_strtab((char**)jeu->lev->floor);
-
-	return (1);
-}
-
-	// add to lib ?
-	// to make sure is a .cub file
 int		ft_check_str_end(char *str, char *end)
 {
 	int		sl;
@@ -39,7 +21,7 @@ int		ft_check_str_end(char *str, char *end)
 	if (!str || !end)
 		return (0);
 	a = 0;
-	sl = ft_strlen(str) - 1;	// for the \0
+	sl = ft_strlen(str) - 1;
 	el = ft_strlen(end) - 1;
 	while (el > 0)
 	{
@@ -51,18 +33,31 @@ int		ft_check_str_end(char *str, char *end)
 	return (1);
 }
 
-	// need a check and if there free all (as in structures and contents)
-	// that can be called like whenever
-	// assuming 1 file
+int		ft_run(t_game *jeu, int ac, char **av)
+{
+	int			fd;
 
-//	./cub3d game_files/something.cub --save OR --bonus
-
-	// add ret = and then ret that so know if have to use quit
-
+	if (!jeu || !av)
+		return (0);
+	if (ac == 3)
+	{
+		if (ft_strcmp(av[2], "--save") == 0)
+			jeu->set->save = 1;
+		else if (ft_strcmp(av[2], "--bonus") == 0)
+			jeu->set->bonus = 1;
+		else
+			return (ft_error_msg("usage: <file.cub> <--save> OR <--bonus>\n", \
+					0));
+	}
+	if ((fd = open(av[1], O_RDONLY)) == -1 || !ft_parse_file(fd, jeu) \
+		|| !ft_start_game(jeu))
+		return (ft_error_msg("failed to run\n", 0));
+	close(fd);
+	return (1);
+}
 
 int		main(int ac, char **av)
 {
-	int			fd;
 	t_game		jeu;
 	t_input		file;
 	t_settings	set;
@@ -70,38 +65,20 @@ int		main(int ac, char **av)
 
 	if (ac < 2 || ac > 3 || !ft_check_str_end(av[1], ".cub"))
 		return (ft_error_msg("usage: <file.cub> <--save> OR <--bonus>\n", 0));
-	if (!ft_init_game(&jeu) || !ft_init_input(&file) || !ft_init_settings(&set) \
-		|| !ft_init_mlx(&jeu))
+	if (!ft_init_game(&jeu) || !ft_init_input(&file) \
+		|| !ft_init_settings(&set) || !ft_init_mlx(&jeu))
+	{
+		ft_quit(&jeu);
 		return (ft_error_msg("initialization failed\n", 0));
+	}
 	jeu.file = &file;
 	jeu.set = &set;
 	jeu.me = &me;
-	if (ac == 3)
+	if (!ft_run(&jeu, ac, av))
 	{
-		if (ft_strcmp(av[2], "--save") == 0)
-			jeu.set->save = 1;
-		else if (ft_strcmp(av[2], "--bonus") == 0)
-		{
-			printf("testing --bonus\n");
-			jeu.set->bonus = 1;
-		}
-		else
-			return (ft_error_msg("usage: <file.cub> <--save> OR <--bonus>\n", 0));
+		ft_quit(&jeu);
+		return (0);
 	}
-	if ((fd = open(av[1], O_RDONLY)) == -1 || !ft_parse_file(fd, &jeu))
-		return (ft_error_msg("Bad .cub file\n", 0));
-	printf("file parsed\n");
-	if (!ft_start_game(&jeu))
-		return (ft_error_msg("failed to run\n", 0));
-	close(fd);
 	ft_quit(&jeu);
-
-//	system("leaks Cub3D");
 	return (1);
 }
-
-
-
-
-
-

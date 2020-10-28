@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 19:21:47 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 03:38:36 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 15:48:43 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ int		ft_free_tlmlx(t_game *jeu)
 	if (!jeu->mlx)
 		return (1);
 	if (jeu->mlx->ptr)
-	{
 		free(jeu->mlx->ptr);
-		free(jeu->mlx);
-		jeu->mlx = NULL;
-	}
+	free(jeu->mlx);
+	jeu->mlx = NULL;
 	return (1);
 }
