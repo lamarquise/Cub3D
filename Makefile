@@ -107,9 +107,10 @@ LINUX_FLAGS	= -Wall -Wextra -Werror -O2 -g -I$(INC) -I$(LIBFT_INC) -I$(MLX_LINUX
 #CFLAGS = -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_INC)
 SAN = -g3 -fsanitize=address
 
+#	clang -Wall -Wextra -Werror -O2 -g $(OBJS) $(LINUX_OBJS) ./libft/libft.a -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
 
-ltest:
-	clang -Wall -Wextra -Werror -O2 -g $(OBJS) $(LINUX_OBJS) ./libft/libft.a -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
+ltest: $(LIBFT)
+	clang -Wall -Wextra -Werror -O2 -g $(SRCS) $(LINUX_SRCS) ./libft/libft.a -I./include/ -I./minilibx_linux/ -I./libft/ -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
 
 
 all: $(NAME)
@@ -142,10 +143,10 @@ linux: $(OBJS) $(LINUX_OBJS) $(LIBFT) $(MLX_LINUX)
 	$(CC) -o $(NAME) $(LINUX_FLAGS) $(OBJS) $(LINUX_OBJS) $(LIBFT) $(MLX_LINUX)
 	printf "$(_GREEN)\r\33[2K\r$(NAME) for Linux created  😎\n$(_END)"
 
-$(DIR_OBJ_MAC)%.o: $(DIR_SRC)%.c $(DIR_INC)
-	mkdir -p $(DIR_OBJ)
-	$(CC) -o $@ -c $< $(MAC_FLAGS)
-	printf "$(_CYAN)\r\33[2K\rCompling $@$(_END)"
+#$(DIR_OBJ_MAC)%.o: $(DIR_SRC)%.c $(DIR_INC)
+#	mkdir -p $(DIR_OBJ)
+#	$(CC) -o $@ -c $< $(MAC_FLAGS)
+#	printf "$(_CYAN)\r\33[2K\rCompling $@$(_END)"
 
 $(DIR_OBJ_LINUX)%.o: $(DIR_SRC)%.c $(DIR_INC)
 	mkdir -p $(DIR_OBJ)
