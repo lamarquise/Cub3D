@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/09 13:59:02 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/28 20:51:43 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/28 20:53:59 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,6 @@ DIR_MEMF	=	mem_funcs/
 MEMF	=	ft_calloc.c \
 			ft_memset.c \
 			ft_memcpy.c \
-			ft_memmove.c \
 			ft_memchr.c \
 			ft_memcmp.c \
 			ft_memdel.c \
