@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 20:13:59 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 20:47:32 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ typedef struct	s_game
 	int			sbol;
 	int			bbol;
 	int			fog;
-	int			torch[127];
+	int			torch[65364];
 	t_vect_i	mouse;
 	t_vect_i	grid_pixs;
 	t_vect_i	grid_tl;
