@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 19:21:47 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 19:30:10 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 22:50:47 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ft_free_ttexture_contents(t_game *jeu, t_texture *tex)
 	// timge img
 
 	if (!jeu)
-		return (0);		// 0 might be better
+		return (0);
 	if (!tex)
 		return (1);
 	if (tex->path)

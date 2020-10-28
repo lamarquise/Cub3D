@@ -6,15 +6,31 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 02:07:19 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 21:24:37 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 01:29:12 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		ft_2d_to_1d(int x, int y, int width)
+t_vect_i	ft_fill_vect_i(int x, int y)
 {
-	return (x + y * width);
+	t_vect_i v;
+
+	v.x = x;
+	v.y = y;
+	return (v);
+}
+
+int		ft_expected_size(char **tab, int e)
+{
+	int		i;
+
+	if (!tab)
+		return (0);
+	i = 0;
+	while (tab[i])
+		++i;
+	return (i == e ? 1 : 0);
 }
 
 int		ft_rgb_to_int(int r, int g, int b, int t)
@@ -38,33 +54,26 @@ int		ft_rgb_to_int(int r, int g, int b, int t)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-	// ok so we're saying we've already done the math to translate x,y 2D coords to
-	// 1D table coords
-	// could do x and y rather than pos if wanted cuz have img wid & hei...
-	// leave for now
-//		ft_pix_img
 int		ft_pix_imge(t_imge *img, int pos, int color)
 {
-	if (!img || pos < 0 || pos >= img->last_pix)// last_pix + 1? + y ? not sure, best no
+	if (!img || pos < 0 || pos >= img->last_pix)
 		return (0);
 	(img->img_data)[pos] = color;
 	return (1);
 }
 
-int		ft_draw_col_to_imge(t_imge *img, int start_row, int end_row, int col, int color)
+int		ft_draw_col_to_imge(t_imge *img, t_vect_i row, int col, int color)
 {
 	int		pos;
 
-//	printf("s row: %d, e row: %d, col: %d, color: %d\n", start_row, end_row, col, color);
-
-	if (!img || start_row < 0 || end_row > img->img_hei)
+	if (!img || row.x < 0 || row.y > img->img_hei)
 		return (ft_error_msg("bad draw col inputs\n", 0));
-	while (start_row < end_row)
+	while (row.x < row.y)
 	{
-		pos = col + start_row * img->img_wid;
+		pos = col + row.x * img->img_wid;
 		if (!ft_pix_imge(img, pos, color))
 			return (0);
-		++start_row;
+		++row.x;
 	}
 	return (1);
 }

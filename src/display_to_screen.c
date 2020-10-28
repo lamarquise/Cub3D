@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 01:00:17 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 21:06:13 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 22:48:58 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_display_minimap(t_game *jeu)
 	if (!jeu || !ft_generate_player(jeu))
 		return (0);
 	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
-		jeu->minimap->img_ptr, 0, 0);		// secure ? how
+		jeu->minimap->img_ptr, 0, 0);
 	mlx_put_image_to_window(jeu->mlx->ptr, jeu->win->win_ptr, \
 		jeu->yah->img_ptr, jeu->grid_tl.x, jeu->grid_tl.y);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 16:46:17 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 02:55:51 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 01:41:33 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int		ft_nlstdel_n_sprite(t_nlist **lst, int n)
 	printf("del n sprite test 5\n");
 */	return (1);
 }
+
+	// need it ???
 													// void ????
 int		ft_nlstdel_all_with(t_nlist **lst, int (*del)(void *))
 {
@@ -114,4 +116,34 @@ int		ft_nlstdel_all_with(t_nlist **lst, int (*del)(void *))
 
 	return (1);
 }
+
+
+int		ft_nlstadd_secback(t_nlist **lst, void *content)
+{
+	size_t	i;
+	t_nlist	*tmp;
+	t_nlist	*new;
+
+	i = 0;
+	if (!lst || !content || !(new = ft_nlstnew(content, 0)))
+		return (0);
+	if (!*lst)
+	{
+		*lst = new;
+		new->index = i;
+		return (1);
+	}
+	tmp = *lst;
+	while (tmp->next)
+	{
+		tmp = tmp->next;
+		++i;
+	}
+	tmp->next = new;
+	new->index = ++i;
+	new->next = NULL;
+	return (1);
+}
+
+
 

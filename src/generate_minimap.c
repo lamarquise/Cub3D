@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:01:00 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 18:12:58 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 01:26:04 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		ft_generate_player(t_game *jeu)
 	return (1);
 }
 
-int	ft_generate_minimap(t_game *jeu, t_level *lev)
+int		ft_generate_minimap(t_game *jeu, t_level *lev)
 {
 	if (!jeu || !lev)
 		return (0);
@@ -74,10 +74,10 @@ int	ft_generate_minimap(t_game *jeu, t_level *lev)
 	jeu->grid_tl.y = (jeu->file->res.y - jeu->grid_pixs.y) / 2;
 	if (!(jeu->minimap = ft_create_imge(jeu->mlx, jeu->file->res.x, \
 		jeu->file->res.y)))
-		return (0);	
+		return (0);
 	if (!ft_fill_imge(jeu->minimap, ft_rgb_to_int(0, 0, 0, jeu->fog)))
 		return (0);
-	if (!ft_draw_grid(jeu, lev, jeu->minimap, jeu->grid_tl.x \
+	if (!ft_draw_grid(jeu, jeu->minimap, jeu->grid_tl.x \
 		+ jeu->grid_tl.y * jeu->file->res.x))
 		return (0);
 	return (1);

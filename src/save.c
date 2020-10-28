@@ -6,13 +6,14 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/24 01:22:22 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 15:42:36 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 23:28:13 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_create_file_header(unsigned char *file_header, t_game *jeu, int pad_size)
+void	ft_create_file_header(unsigned char *file_header, t_game *jeu, \
+		int pad_size)
 {
 	int	file_size;
 
@@ -41,27 +42,24 @@ int		ft_screenshot(t_game *jeu)
 {
 	int				fd;
 	unsigned char	padding[3];
-	unsigned char	file_header[14 + 40];
+	unsigned char	header[14 + 40];
 	int				i;
 
 	fd = open("screenshot.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0700);
 	padding[0] = 0;
 	padding[1] = 0;
 	padding[2] = 0;
-	ft_bzero(file_header, 14 + 40);
-	ft_create_file_header(file_header, jeu, (4 - (jeu->file->res.x * 4) % 4) % 4);
-
-	if (!ft_draw_imges(jeu))
-		return (ft_error_msg("failed to draw imges\n", 0));	// free things ?
-
-	write(fd, file_header, 14 + 40);
-	i = jeu->file->res.y - 1;
-	while (i > 0)
+	ft_bzero(header, 14 + 40);
+	ft_create_file_header(header, jeu, (4 - (jeu->file->res.x * 4) % 4) % 4);
+	if (!jeu || fd == -1 || !ft_draw_imges(jeu))
+		return (ft_error_msg("failed to draw imges\n", 0));
+	write(fd, header, 14 + 40);
+	i = jeu->file->res.y;
+	while (--i > 0)
 	{
-		write(fd, (unsigned char*)jeu->fpv->img_data + (i * jeu->file->res.x * 4), \
-			4 * jeu->file->res.x);
+		write(fd, (unsigned char*)jeu->fpv->img_data \
+			+ (i * jeu->file->res.x * 4), 4 * jeu->file->res.x);
 		write(fd, padding, (4 - (jeu->file->res.x * 4) % 4) % 4);
-		--i;
 	}
 	close(fd);
 	ft_putstr_fd("\033[32;1mScreenshot saved as 'screenshot.bmp'.\033[0m\n", 1);

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 21:41:23 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 02:34:14 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,16 +229,20 @@ typedef struct	s_key
 int				ft_check_str_end(char *str, char *end);
 
 /*
+**	Init More Structures
+*/
+
+int				ft_init_settings(t_settings *set);
+int				ft_init_level(t_level *lev);
+int				ft_finish_init_player(t_game *jeu, t_level *lev);
+int				ft_init_player(t_game *jeu, t_level *lev);
+
+/*
 **	Init Structures
 */
-	// init for each level ?
-int				ft_init_level(t_level *lev);
-int				ft_init_player(t_game *jeu, t_level *lev);
-int				ft_init_sprite(t_sprite *spri);
-	// init with file
+
 int				ft_init_input(t_input *file);
-	// init at very start
-int				ft_init_settings(t_settings *set);
+int				ft_init_torch(t_game *jeu);
 int				ft_init_mlx(t_game *jeu);
 int				ft_init_game(t_game *jeu);
 
@@ -259,23 +263,18 @@ int				ft_parse_file(int fd, t_game *jeu);
 
 int				ft_parse_optional_input(t_game *jeu, char **tab);
 int				ft_parse_essencial_input(t_game *jeu, char **tab);
+int				ft_check_input_values(t_game *jeu, char **tab, int *map);
 int				ft_parse_line(t_game *jeu, char *line, t_nlist **floor, int *map);
-//int				ft_parse_line(t_game *jeu, t_input *file, char *line, int *bol);
-//int				ft_parse_line(t_input *file, char *line, int *bol);
 
 /*
 **	Input Parser
 */
 
-int				ft_expected_size(char **tab, int e);
 int				ft_parse_res(char **tab, t_input *file);
-//int				ft_parse_path(t_input *file, char **tab, int value);
-//int				ft_parse_path(char **tab, char **path);
 int				ft_parse_sprite_type_path(t_input *file, char **tab, char id);
-//int				ft_parse_sprite_path(t_input *file, char **tab);
 int				ft_parse_path_to_texture(char **tab, t_texture **tex);
-int				ft_parse_colors(char **tab, t_texture **surface);
-
+int				ft_parse_color(char **nums);
+int				ft_parse_surfaces(char **tab, t_texture **surface);
 
 
 /*
@@ -291,14 +290,14 @@ int				ft_check_floor(t_game *jeu, t_level *lev);
 //int				ft_check_floor(t_game *jeu);
 
 
-
 /*
 **	Level Parsing
 */
-				// move to lib
-int				ft_contains_only(char *src, char *this);
+
 int				ft_get_floor_dimentions(t_level *lev, t_nlist *floor);
+int				ft_fill_floor(t_nlist **floor, t_level *lev, char **new_floor);
 t_level			*ft_create_level(t_nlist **floor);
+int				ft_add_level(t_game *jeu, t_level *lev);
 int				ft_collect_levels(t_game *jeu, t_nlist *floor);
 
 /*
@@ -420,14 +419,14 @@ t_imge			*ft_select_tex(t_game *jeu, int side_seen, t_vect_d ray, \
 int				ft_sizing_minimap_imge(t_game *jeu, t_level *lev);
 int				ft_draw_box(t_imge *img, int s_pos, int size, int color);
 int				ft_fill_imge(t_imge *img, int color);
-int				ft_draw_grid(t_game *jeu, t_level *lev, t_imge *img, int t_left);
-int				ft_fill_rect(t_imge *img, int s_pos, int dimx, int dimy, int color);
+int				ft_draw_grid(t_game *jeu, t_imge *img, int t_left);
+int				ft_fill_rect(t_imge *img, int s_pos, t_vect_i dim, int color);
 
 /*
 **	Create MLX Entities
 */
 
-t_imge			*ft_init_imge();	// norm ???
+t_imge			*ft_init_imge(void);
 t_imge			*ft_create_imge(t_lmlx *mlx, int x, int y);
 t_wind			*ft_create_wind(t_lmlx *mlx, char *name, int x, int y);
 
@@ -438,13 +437,15 @@ t_wind			*ft_create_wind(t_lmlx *mlx, char *name, int x, int y);
 t_texture		*ft_new_ttexture(int value, char *path, t_imge *img);
 int				ft_add_tex_to_nlist(t_nlist **list, int value, char *path, \
 					t_imge *img);
-//t_texture		*ft_new_ttexture(void *path, void *img);
-//int				ft_add_texture(t_game *jeu, void *path, void *img);
+
+/*
+**	Unpacking
+*/
+
 int				ft_get_tex(t_game *jeu, t_imge *img, char *path);
 int				ft_unpack_texture(t_game *jeu, t_texture *tex);
 int				ft_unpack_list_textures(t_game *jeu, t_nlist *list);
 int				ft_unpack_wall_textures(t_game *jeu);
-//int				ft_unpack_textures(t_game *jeu);
 
 /*
 **	Sprite Management
@@ -468,12 +469,11 @@ int				ft_keycodes(t_game *jeu);
 **	Math
 */
 
-int				ft_2d_to_1d(int x, int y, int width);
+t_vect_i		ft_fill_vect_i(int x, int y);
+int				ft_expected_size(char **tab, int e);
 int				ft_rgb_to_int(int r, int g, int b, int t);
 int				ft_pix_imge(t_imge *img, int pos, int color);
-int				ft_draw_col_to_imge(t_imge *img, int start_row, \
-					int end_row, int col, int color);
-
+int				ft_draw_col_to_imge(t_imge *img, t_vect_i row, int col, int color);
 
 /*
 **	Player Movement
@@ -529,7 +529,7 @@ int				ft_kill_sprite(t_game *jeu, int index);
 
 int				ft_print_nlist(t_nlist *lst);
 int				ft_nlstdel_n_sprite(t_nlist **lst, int n);
-
+int				ft_nlstadd_secback(t_nlist **lst, void *content);
 
 /*
 **	Free MLX

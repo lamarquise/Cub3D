@@ -6,13 +6,13 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 00:10:32 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 01:19:34 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 23:05:43 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bresenham.h"
 
-void		ft_init_dir(t_line *d, t_coords *cs)
+void	ft_init_dir(t_line *d, t_coords *cs)
 {
 	d->x = cs->x2 - cs->x1;
 	d->y = cs->y2 - cs->y1;

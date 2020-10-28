@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 03:42:31 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 21:18:23 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 23:15:16 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ t_vect_i	ft_get_wall_texture(t_game *jeu, t_imge *tex_img, double pwd, \
 	return (w_texture);
 }
 
-	// make generic and reuse for sprite sliver calcs
-	// used to calculate the sliver start and sliver end for the line of wall
 t_vect_i	ft_calc_sliver_limits(t_game *jeu, int sliver_hei)
 {
 	t_vect_i	sliver_limits;
@@ -48,40 +46,47 @@ t_vect_i	ft_calc_sliver_limits(t_game *jeu, int sliver_hei)
 
 int			ft_draw_fc(t_game *jeu, t_vect_i sliver_limits, int x)
 {
+	t_vect_i	row;
+
 	if (!jeu)
 		return (0);
-	if (!ft_draw_col_to_imge(jeu->fpv, 0, sliver_limits.x, x, \
-		jeu->file->ceiling->value) || !ft_draw_col_to_imge(jeu->fpv, \
-		sliver_limits.y, jeu->file->res.y, x, jeu->file->floor->value))
+	row.x = 0;
+	row.y = sliver_limits.x;
+	if (!ft_draw_col_to_imge(jeu->fpv, row, x, jeu->file->ceiling->value))
+		return (ft_error_msg("failed to draw ceiling col to img\n", 0));
+	row.x = sliver_limits.y;
+	row.y = jeu->file->res.y;
+	if (!ft_draw_col_to_imge(jeu->fpv, row, x, jeu->file->floor->value))
 		return (ft_error_msg("failed to draw flo or cei col to img\n", 0));
 	return (1);
 }
 
-int			ft_generate_wall_sliver(t_game *jeu, int x, double *pwd, t_vect_d ray)
+int			ft_generate_wall_sliver(t_game *jeu, int x, double *pwd, \
+			t_vect_d ray)
 {
-	t_vect_i	sliver_limits;
+	t_vect_i	sliver_lims;
 	t_vect_i	w_texture;
 	double		tex_pos;
-	t_imge		*tex_img;
+	t_imge		*t_img;
 
 	if ((jeu->side = ft_shoot_ray(jeu, jeu->me->pos, ray, pwd)) == 0)
-		tex_img = (ray.x < 0 ? jeu->file->we->img : jeu->file->ea->img);
+		t_img = (ray.x < 0 ? jeu->file->we->img : jeu->file->ea->img);
 	else
-		tex_img = (ray.y < 0 ? jeu->file->no->img : jeu->file->so->img);
-	sliver_limits = ft_calc_sliver_limits(jeu, (int)(jeu->file->res.y / *pwd));
-	w_texture = ft_get_wall_texture(jeu, tex_img, *pwd, ray);
-	tex_pos = (sliver_limits.x - jeu->file->res.y / 2 + (int)(jeu->file->res.y \
-		/ *pwd) / 2) * (1.0 * tex_img->img_hei / (int)(jeu->file->res.x / *pwd));
+		t_img = (ray.y < 0 ? jeu->file->no->img : jeu->file->so->img);
+	sliver_lims = ft_calc_sliver_limits(jeu, (int)(jeu->file->res.y / *pwd));
+	w_texture = ft_get_wall_texture(jeu, t_img, *pwd, ray);
+	tex_pos = (sliver_lims.x - jeu->file->res.y / 2 + (int)(jeu->file->res.y \
+		/ *pwd) / 2) * (1.0 * t_img->img_hei / (int)(jeu->file->res.x / *pwd));
 	if (!jeu->file->floor->img && !jeu->file->ceiling->img \
-		&& !ft_draw_fc(jeu, sliver_limits, x))
+		&& !ft_draw_fc(jeu, sliver_lims, x))
 		return (0);
-	while (sliver_limits.x < sliver_limits.y)
+	while (sliver_lims.x < sliver_lims.y)
 	{
-		w_texture.y = (int)tex_pos & (tex_img->img_hei - 1);
-		tex_pos += 1.0 * tex_img->img_hei / (int)(jeu->file->res.x / *pwd);
-		ft_pix_imge(jeu->fpv, sliver_limits.x * jeu->fpv->img_wid + x, \
-			tex_img->img_data[tex_img->img_hei * w_texture.y + w_texture.x]);
-		++sliver_limits.x;
+		w_texture.y = (int)tex_pos & (t_img->img_hei - 1);
+		tex_pos += 1.0 * t_img->img_hei / (int)(jeu->file->res.x / *pwd);
+		ft_pix_imge(jeu->fpv, sliver_lims.x * jeu->fpv->img_wid + x, \
+			t_img->img_data[t_img->img_hei * w_texture.y + w_texture.x]);
+		++sliver_lims.x;
 	}
 	return (1);
 }

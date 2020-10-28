@@ -6,11 +6,9 @@
 /*   By: tlamart <tlamart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 18:18:14 by tlamart           #+#    #+#             */
-/*   Updated: 2020/09/26 04:24:01 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 23:05:32 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-	// leave as voids for now
 
 #include "bresenham.h"
 

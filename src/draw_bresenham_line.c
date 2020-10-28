@@ -6,12 +6,9 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 00:22:14 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/09/26 01:44:46 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 23:06:26 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-	// all ret void for now...
 
 #include "bresenham.h"
 

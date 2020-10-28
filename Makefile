@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/27 19:53:12 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/28 01:49:40 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,14 @@ CC		=	clang
 
 FILES	=	main.c \
 			init_structures.c \
+			init_more_structures.c \
 			file_parser.c \
 			line_parser.c \
 			input_parser.c \
 			level_parser.c \
 			floor_management.c \
 			texture_management.c \
+			unpacking.c \
 			create_mlx_entities.c \
 			save.c \
 			game_engine.c \
@@ -33,6 +35,7 @@ FILES	=	main.c \
 			rayshooting.c \
 			floorcasting.c \
 			spritecasting.c \
+			sprite_order.c \
 			sprite_management.c \
 			sprite_behavior.c \
 			player_rotation.c \

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:01:00 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 18:50:30 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 01:32:05 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,20 @@ int		ft_draw_crosshair(t_game *jeu, t_vect_i thic, t_vect_i len)
 		return (0);
 	if (!ft_fill_imge(jeu->crosshair, ft_rgb_to_int(0, 0, 0, 255)))
 		return (ft_error_msg("failed to fill image with blank\n", 0));
-	if (!ft_fill_rect(jeu->crosshair, \
-		(jeu->crosshair->img_wid - thic.x) / 2, thic.x, len.y, WHITE))
+	if (!ft_fill_rect(jeu->crosshair, (jeu->crosshair->img_wid - thic.x) \
+		/ 2, ft_fill_vect_i(thic.x, len.y), WHITE))
 		return (0);
 	if (!ft_fill_rect(jeu->crosshair, \
 		(jeu->crosshair->img_hei - thic.y) / 2 \
-		* jeu->crosshair->img_wid, len.x, thic.y, WHITE))
+		* jeu->crosshair->img_wid, ft_fill_vect_i(len.x, thic.y), WHITE))
 		return (0);
 	if (!ft_fill_rect(jeu->crosshair, (jeu->crosshair->img_wid - thic.x) / 2 + \
 		((jeu->crosshair->img_hei - thic.y) / 2 + thic.y) \
-		* jeu->crosshair->img_wid, thic.x, len.y, WHITE))
+		* jeu->crosshair->img_wid, ft_fill_vect_i(thic.x, len.y), WHITE))
 		return (0);
 	if (!ft_fill_rect(jeu->crosshair, (jeu->crosshair->img_hei - thic.y) / 2 * \
 		jeu->crosshair->img_wid + ((jeu->crosshair->img_wid - thic.x) / 2 \
-		+ thic.x), len.x, thic.y, WHITE))
+		+ thic.x), ft_fill_vect_i(len.x, thic.y), WHITE))
 		return (0);
 	return (1);
 }

@@ -6,26 +6,11 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 19:30:56 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 04:09:56 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 01:44:55 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub3d.h"
-
-	// move
-
-int     ft_expected_size(char **tab, int e)
-{
-	int		i;
-
-	i = 0;
-	if (!tab)
-		return (0);
-	while (tab[i])
-		++i;
-	return (i == e ? 1 : 0);
-}
 
 int		ft_parse_res(char **tab, t_input *file)
 {
@@ -50,10 +35,8 @@ int		ft_parse_res(char **tab, t_input *file)
 int		ft_parse_sprite_type_path(t_input *file, char **tab, char id)
 {
 	char	*path;
-	t_nlist *new;
 
 	path = NULL;
-	new = NULL;
 	if (!file || !tab)
 		return (0);
 	if (id == 'S')
@@ -81,49 +64,53 @@ int		ft_parse_path_to_texture(char **tab, t_texture **tex)
 		return (ft_error_msg("path wrong tab size\n", 0));
 	if (*tex)
 		return (ft_error_msg("already a texture\n", 0));
-	if (!ft_check_str_end(tab[1], ".xpm"))		// or png eventually
+	if (!ft_check_str_end(tab[1], ".xpm"))
 		return (ft_error_msg("not an .xpm file\n", 0));
 	if (!(*tex = ft_new_ttexture(0, ft_strdup(tab[1]), NULL)))
 		return (ft_error_msg("failed to create a ttex\n", 0));
 	return (1);
 }
 
-	// split in 2 ?
-int		ft_parse_colors(char **tab, t_texture **surface)
+int		ft_parse_color(char **nums)
 {
 	int		r;
 	int		g;
 	int		b;
-	char	**nums;
+	int		color;
 
-	if (!tab || !surface)
-		return (0);
-	if (*surface || !ft_expected_size(tab, 2) || !(nums = ft_split(tab[1], ",")))
-		return (ft_error_msg("already a surface or  wrong tab size\n", 0));
+	if (!nums)
+		return (-1);
+	if (!ft_str_isdigit(nums[0]) || !ft_str_isdigit(nums[1]) \
+		|| !ft_str_isdigit(nums[2]))
+		return (ft_error_msg("color in file isn't a number\n", -1));
+	r = ft_atoi(nums[0]);
+	g = ft_atoi(nums[1]);
+	b = ft_atoi(nums[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		return (ft_error_msg("color inputs not btw 0 and 255 inclusive\n", -1));
+	color = ft_rgb_to_int(r, g, b, 0);
+	return (color);
+}
+
+int		ft_parse_surfaces(char **tab, t_texture **surf)
+{
+	char	**nums;
+	int		color;
+
+	if (!tab || !surf || *surf || !ft_expected_size(tab, 2) \
+		|| !(nums = ft_split(tab[1], ",")))
+		return (ft_error_msg("already a surf or  wrong tab size\n", 0));
 	if (ft_expected_size(nums, 3))
 	{
-		if (!ft_str_isdigit(nums[0]) || !ft_str_isdigit(nums[1]) \
-			|| !ft_str_isdigit(nums[2]))
-		{
-			ft_free_strtab(nums);
-			return (ft_error_msg("color in file isn't a number\n", 0));
-		}
-		r = ft_atoi(nums[0]);
-		g = ft_atoi(nums[1]);
-		b = ft_atoi(nums[2]);
-		if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		{
-			ft_free_strtab(nums);
-			return (ft_error_msg("color inputs not btw 0 and 255 inclusive\n", 0));
-		}
-		if (!(*surface = ft_new_ttexture(-1, NULL, NULL)))
+		if ((color = ft_parse_color(nums)) == -1 \
+			|| !(*surf = ft_new_ttexture(-1, NULL, NULL)))
 		{
 			ft_free_strtab(nums);
 			return (ft_error_msg("failed to create a ttex\n", 0));
 		}
-		(*surface)->value = ft_rgb_to_int(r, g, b, 0);
+		(*surf)->value = color;
 	}
-	else if (ft_expected_size(nums, 1) && !ft_parse_path_to_texture(tab, surface))
+	else if (ft_expected_size(nums, 1) && !ft_parse_path_to_texture(tab, surf))
 	{
 		ft_free_strtab(nums);
 		return (ft_error_msg("failed to parse path to texture\n", 0));
@@ -131,4 +118,3 @@ int		ft_parse_colors(char **tab, t_texture **surface)
 	ft_free_strtab(nums);
 	return (1);
 }
-

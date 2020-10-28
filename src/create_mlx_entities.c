@@ -6,13 +6,13 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:25:56 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 18:40:54 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/27 23:20:05 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_imge		*ft_init_imge()
+t_imge	*ft_init_imge(void)
 {
 	t_imge	*new;
 
@@ -25,7 +25,7 @@ t_imge		*ft_init_imge()
 	return (new);
 }
 
-t_imge      *ft_create_imge(t_lmlx *mlx, int x, int y)
+t_imge	*ft_create_imge(t_lmlx *mlx, int x, int y)
 {
 	t_imge	*new;
 

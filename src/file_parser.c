@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:46:53 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 17:12:45 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 01:17:15 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,17 @@ int		ft_parse_file(int fd, t_game *jeu)
 	}
 	if (!ft_nlstdel_all(&floor))
 		return (ft_error_msg("failed to del nlst floor\n", 0));
+	if (!jeu->set->bonus && jeu->n_of_levels > 1)
+		return (ft_error_msg("not bonus, bad file, too many levels\n", 0));
 	if (!ft_unpack_wall_textures(jeu))
-		return (ft_error_msg("failed to unpack wall textures in file parser\n", 0));
+		return (ft_error_msg("failed to unpack wall tex in file parser\n", 0));
 	if (!ft_unpack_list_textures(jeu, jeu->file->spri_type_texs))
-		return (ft_error_msg("failed to unpack sprite textures in file parser\n", 0));
+		return (ft_error_msg("failed to unpack sprite tex file parser\n", 0));
 	if (jeu->set->bonus && jeu->file->floor && jeu->file->floor->path \
 		&& !ft_unpack_texture(jeu, jeu->file->floor))
-		return (ft_error_msg("failed to unpack floor texture in file parser\n", 0));
+		return (ft_error_msg("failed to unpack floor tex file parser\n", 0));
 	if (jeu->set->bonus && jeu->file->ceiling && jeu->file->ceiling->path \
 		&& !ft_unpack_texture(jeu, jeu->file->ceiling))
-		return (ft_error_msg("failed to unpack ceiling texture in file parser\n", 0));
+		return (ft_error_msg("failed to unpack ceiling tex file parser\n", 0));
 	return (1);
 }
