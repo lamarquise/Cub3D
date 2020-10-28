@@ -109,6 +109,10 @@ LINUX_FLAGS	= -Wall -Wextra -Werror -O2 -g -I$(INC) -I$(LIBFT_INC) -I$(MLX_LINUX
 SAN = -g3 -fsanitize=address
 
 
+ltest:
+	clang -Wall -Wextra -Werror -O2 -g $(OBJS) $(LINUX_OBJS) ./libft/libft.a -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
+
+
 all: $(NAME)
 
 $(LIBFT): $(DIR_LIBFT)libft.h
