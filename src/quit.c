@@ -6,13 +6,12 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 19:21:47 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 01:14:51 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 05:02:40 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-			// _contents except i do actually free it
 int		ft_free_tinput_contents(t_game *jeu)
 {
 	if (!jeu)
@@ -22,7 +21,7 @@ int		ft_free_tinput_contents(t_game *jeu)
 	if (jeu->file->no && !ft_free_ttexture_contents(jeu, jeu->file->no))
 		return (ft_error_msg("failed to free NO ttex in file\n", 0));
 	free(jeu->file->no);
-	jeu->file->no = NULL;	// i think that's right	
+	jeu->file->no = NULL;
 	if (jeu->file->so && !ft_free_ttexture_contents(jeu, jeu->file->so))
 		return (ft_error_msg("failed to free SO ttex in file\n", 0));
 	free(jeu->file->so);
@@ -39,7 +38,6 @@ int		ft_free_tinput_contents(t_game *jeu)
 	if (jeu->file->spri_type_texs && !ft_free_texture_list(jeu, \
 		&jeu->file->spri_type_texs))
 		return (ft_error_msg("failed to free spri tex list in file\n", 0));
-	// already null ?
 
 	if (jeu->file->floor && !ft_free_ttexture_contents(jeu, jeu->file->floor))
 		return (ft_error_msg("failed to free floor ttex in file\n", 0));
@@ -49,8 +47,6 @@ int		ft_free_tinput_contents(t_game *jeu)
 		return (ft_error_msg("failed to free Ceiling ttex in file\n", 0));
 	free(jeu->file->ceiling);
 	jeu->file->ceiling = NULL;
-
-//	free(jeu->file);	// can't be freed
 	jeu->file = NULL;
 
 	return (1);
@@ -59,21 +55,18 @@ int		ft_free_tinput_contents(t_game *jeu)
 int		ft_free_tlevel_contents(t_level *lev)
 {
 	if (!lev)
-		return (1);	// 1 ?	// or 0 cuz we are supposed to have checked before if exists
+		return (1);
 	if (lev->floor && !ft_free_strtab(lev->floor))
 		return (ft_error_msg("failed to free floor in lev\n", 0));
 	lev->floor = NULL;
-	
 	if (lev->spris_tab && !ft_free_tsprite_tab(lev->spris_tab, lev->n_spris))
 		return (ft_error_msg("failed to free spris tab and spris instances in lev\n", 0));
 		// does freeing the tab destroy the sprite intsances ?
 		// could just nlstdel all the spri list after that...
 	lev->spris_tab = NULL;
-
-	if (lev->spris_list && !ft_nlstdel_all(&lev->spris_list))
+	if (lev->spris_list && !ft_free_sprites_list(&lev->spris_list))
 		return (ft_error_msg("failed to del spris list in lev\n", 0));	
 	lev->spris_list = NULL;
-
 	return (1);
 }
 
@@ -86,7 +79,7 @@ int			ft_quit(t_game *jeu)
 
 	if (jeu->file && !ft_free_tinput_contents(jeu))
 		return (ft_error_msg("failed to free file in jeu\n", 0));
-	jeu->file = NULL;	// useful ?
+//	jeu->file = NULL;	// already done
 
 	if (jeu->level_list && !ft_free_level_list(&jeu->level_list))
 		return (ft_error_msg("failed to free level list in jeu\n", 0));

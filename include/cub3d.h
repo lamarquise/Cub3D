@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 02:34:14 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 05:02:43 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,14 +281,11 @@ int				ft_parse_surfaces(char **tab, t_texture **surface);
 **	Floor Management
 */
 
-//void			ft_get_floor_dimentions(t_game *jeu, t_nlist *floor);
-//int				ft_copy_floor(t_game *jeu, t_nlist *floor);
 int				ft_g(char c, char s);
 int				ft_check_around(t_level *lev, int x, int y, char s);
+int				ft_found_sprite(t_game *jeu, t_level *lev, t_vect_i p);
+int				ft_found_not_wall(t_game *jeu, t_level *lev, t_vect_i p, int s);
 int				ft_check_floor(t_game *jeu, t_level *lev);
-//int				ft_check_around(t_game *jeu, int x, int y);
-//int				ft_check_floor(t_game *jeu);
-
 
 /*
 **	Level Parsing
@@ -552,6 +549,7 @@ int				ft_free_tsprite_tab(t_sprite *spris, int n);
 */
 
 int				ft_free_texture_list(t_game *jeu, t_nlist **lst);
+int				ft_free_sprites_list(t_nlist **lst);
 int				ft_free_level_list(t_nlist **lst);
 
 /*
