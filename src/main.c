@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:37:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 00:37:51 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 14:20:15 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ int		main(int ac, char **av)
 	t_player	me;
 
 	if (ac < 2 || ac > 3 || !ft_check_str_end(av[1], ".cub"))
-		return (ft_error_msg("usage: <file.cub> <--save> OR <--bonus>\n", 0));
+		return (ft_error_msg("Usage: <file.cub> <--save> OR <--bonus>\n", 0));
 	if (!ft_init_game(&jeu) || !ft_init_input(&file) \
 		|| !ft_init_settings(&set) || !ft_init_mlx(&jeu))
 	{
 		ft_quit(&jeu);
-		return (ft_error_msg("initialization failed\n", 0));
+		return (ft_error_msg("Error\nInitialization failed\n", 0));
 	}
 	jeu.file = &file;
 	jeu.set = &set;
@@ -77,7 +77,7 @@ int		main(int ac, char **av)
 	if (!ft_run(&jeu, ac, av))
 	{
 		ft_quit(&jeu);
-		return (0);
+		return (ft_error_msg("Error\n", 0));
 	}
 	ft_quit(&jeu);
 	return (1);

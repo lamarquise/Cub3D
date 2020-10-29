@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 00:10:32 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 23:26:21 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 14:24:14 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,15 @@ int		ft_bresenham(t_imge *img, t_coords cs, int color)
 {
 	t_line	d;
 	int		tmp;
+
+	if (cs.x1 < 0)
+		cs.x1 = 0;
+	if (cs.y1 < 0)
+		cs.y1 = 0;
+	if (cs.x2 < 0)
+		cs.x2 = 0;
+	if (cs.y2 < 0)
+		cs.y2 = 0;
 
 	if (cs.x2 - cs.x1 < 0)
 	{
