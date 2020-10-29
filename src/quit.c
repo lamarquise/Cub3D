@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 19:21:47 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 23:57:45 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 09:44:43 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int		ft_free_tlevel_contents(t_level *lev)
 		return (1);
 	if (lev->floor && !ft_free_strtab(lev->floor))
 		return (ft_error_msg("failed to free floor in lev\n", 0));
-	free(lev->floor);
 	lev->floor = NULL;
 	if (lev->spris_tab && !ft_free_tsprite_tab(lev->spris_tab, lev->n_spris))
 		return (ft_error_msg("failed to free spris tab in lev\n", 0));

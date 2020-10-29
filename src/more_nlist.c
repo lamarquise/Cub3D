@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 16:46:17 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 18:49:55 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 10:41:21 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		ft_nlstdel_n_sprite(t_nlist **lst, int n)
 	if (!*lst)
 		return (1);
 	if (n == 0)
-	{
+(*tmp)->next = elem->next;	{
 		tmp = (*lst)->next;
 		ft_free_tsprite_contents((t_sprite*)(*lst)->content);
 		free((*lst)->content);

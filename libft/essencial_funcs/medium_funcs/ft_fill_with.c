@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 19:53:39 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/09/19 04:45:57 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 09:51:26 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_fill_with(char this, int len)
 {
-	char    *ret;
+	char	*ret;
 	int		i;
 
 	if (!this || len < 1)

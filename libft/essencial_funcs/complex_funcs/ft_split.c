@@ -6,7 +6,7 @@
 /*   By: erlazo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:20:01 by erlazo            #+#    #+#             */
-/*   Updated: 2020/10/29 09:27:21 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 09:55:24 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,6 @@ static int		wl(char *s, int start, char *set)
 	return (a + 1);
 }
 
-
-
-	// 2 loops 
-/*
-char			**ft_split(char const *s, char *set)
-{
-	char	**ret;
-
-
-	
-
-
-
-	return (ret);	
-}
-*/
-
-#include <stdio.h>
-
-
 char			**ft_split(char const *s, char *set)
 {
 	int		a;
@@ -93,16 +73,11 @@ char			**ft_split(char const *s, char *set)
 	int		d;
 	char	**ret;
 
-	if (!s || !ft_check_set(set))
-		return (NULL);
 	a = 0;
 	b = 0;
-
-	printf("splite mal size: %d\n", ws((char*)s, set));
-
-	if (!(ret = (char**)malloc(sizeof(char*) * ws((char*)s, set))))
+	if (!s || !ft_check_set(set) \
+		|| !(ret = (char**)ft_memalloc(sizeof(char*) * ws((char*)s, set))))
 		return (NULL);
-//	ret[ws((char*)s, set)] = 0;
 	while ((char)s[a])
 	{
 		if ((char)s[a] && (ft_findchar(set, (char)s[a])) >= 0)
@@ -111,19 +86,11 @@ char			**ft_split(char const *s, char *set)
 		{
 			d = 0;
 			if (!(ret[b] = ft_memalloc(sizeof(char) * wl((char*)s, a, set))))
-			{
-//				ft_free_strtab(ret);
-				a = 0;
-				while (a < b)
-					free(ret[a++]);
-				free(ret);
-				return (NULL);
-			}
+				return (ft_free_strtab(ret) ? NULL : NULL);
 			while ((char)s[a] && (ft_findchar(set, (char)s[a])) == -1)
 				ret[b][d++] = s[a++];
 			ret[b++][d] = '\0';
 		}
 	}
-	ret[b] = 0;
 	return (ret);
 }

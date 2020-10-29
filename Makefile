@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/29 00:44:07 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/29 10:41:11 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -178,14 +178,6 @@ fclean: oclean
 simple: ofclean all
 
 re: fclean all
-
-#test: all
-#	gcc $(CFLAGS) -L. -lftprintf ./main.c -o test
-#	echo "$(_CYAN)Test ready  😬$(_END)"
-
-testl: $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC)
-	$(CC) -o $@ $(MAC_FLAGS) $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC) -g
-	echo "$(_CYAN)Valgrind Test ready  😬$(_END)"
 
 tests: $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC)
 	$(CC) -o $@ $(MAC_FLAGS) $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC) $(SAN)

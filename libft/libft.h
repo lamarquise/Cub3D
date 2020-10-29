@@ -6,7 +6,7 @@
 /*   By: erlazo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 14:05:41 by erlazo            #+#    #+#             */
-/*   Updated: 2020/10/07 23:28:29 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 10:00:39 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,8 @@ typedef struct	s_list
 **	In total there are 92 functions
 */
 
-
 /*
-**
 **	Essencial Functions 39
-**
 */
 
 /*
@@ -106,9 +103,7 @@ t_list			*ft_lstgen(char *s, char c);
 void			ft_lstrev(t_list **lst);
 
 /*
-**
 **	Other Functions 53
-**
 */
 
 /*
@@ -183,7 +178,7 @@ void			ft_putnbrnl(int nb);
 **	nList Functions 6
 */
 
-t_nlist			*ft_nlstnew(void* content, int index);
+t_nlist			*ft_nlstnew(void *content, int index);
 int				ft_nlstadd_front(t_nlist **lst, t_nlist *new);
 int				ft_nlstadd_back(t_nlist **lst, t_nlist *new);
 int				ft_nlstdel_all(t_nlist **lst);
