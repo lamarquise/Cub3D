@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:31:38 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 20:47:25 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 23:50:13 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,7 @@ int	ft_init_mlx(t_game *jeu)
 		return (0);
 	return (1);
 }
-/*
-int	ft_further_init_torch(t_game)
-{
-	if (!jeu)
-		return (0);
 
-	jeu->torch[0].x = K_W; 
-	jeu->torch[1].x = K_A;
-	jeu->torch[2].x = K_S;
-	jeu->torch[3].x = K_D;
-	jeu->torch[4].x = K_M;
-	jeu->torch[5].x = K_N;
-	jeu->torch[6].x = K_Z;
-	jeu->torch[7].x = K_X;
-	jeu->torch[8].x = K_ESC;
-	jeu->torch[9].x = K_AR_L;
-	jeu->torch[10].x = K_AR_R;
-	jeu->torch[11].x = K_AR_U;
-	jeu->torch[12].x = K_AR_L;
-	return (1);
-}
-*/
 int	ft_init_torch(t_game *jeu)
 {
 	int		i;

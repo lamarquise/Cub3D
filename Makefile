@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/28 22:16:23 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/29 00:44:07 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,7 +109,7 @@ SAN = -g3 -fsanitize=address
 
 #	clang -Wall -Wextra -Werror -O2 -g $(OBJS) $(LINUX_OBJS) ./libft/libft.a -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
 
-ltest: $(LIBFT)
+ltest: $(LIBFT) $(MLX)
 	clang -Wall -Wextra -Werror -O2 -g $(SRCS) $(LINUX_SRCS) ./libft/libft.a -I./include/ -I./minilibx_linux/ -I./libft/ -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
 
 

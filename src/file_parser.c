@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:46:53 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 20:13:55 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/28 23:37:23 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int		ft_get_file_lines(int fd, t_game *jeu, t_nlist **floor)
 //		printf("\n");
 //		line = NULL;
 	}
+	ft_scott_free(&line, 0);
 //	printf("end get file lines\n");
 //	ft_print_nlist(*floor);
-	free(line);
 	if (!*floor || jeu->sbol < 511)
 		return (ft_error_msg("incorrect file\n", 0));
 	return (1);

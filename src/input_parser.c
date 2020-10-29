@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 19:30:56 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 18:57:23 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 09:13:19 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ int		ft_parse_sprite_type_path(t_input *file, char **tab, char id)
 
 int		ft_parse_path_to_texture(char **tab, t_texture **tex)
 {
+	char *path;
+
+	path = NULL;
 	if (!tab || !tex)
 		return (0);
 	if (!ft_expected_size(tab, 2))
@@ -66,8 +69,13 @@ int		ft_parse_path_to_texture(char **tab, t_texture **tex)
 		return (ft_error_msg("already a texture\n", 0));
 	if (!ft_check_str_end(tab[1], ".xpm"))
 		return (ft_error_msg("not an .xpm file\n", 0));
-	if (!(*tex = ft_new_ttexture(0, ft_strdup(tab[1]), NULL)))
+	if (!(path = ft_strdup(tab[1])))
+		return (0);
+	if (!(*tex = ft_new_ttexture(0, path, NULL)))
+	{
+		free(path);
 		return (ft_error_msg("failed to create a ttex\n", 0));
+	}
 	return (1);
 }
 

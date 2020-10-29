@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 20:47:32 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 00:35:08 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 
 # include <math.h>
 
-	// no idea if this works
-	// seems to just work for Mac ??? Cool !!!
 # if defined(__APPLE__)
 #  include <key_macos.h>
 # else
 #  include <key_linux.h>
 # endif
+
+	// could but dif .h's in the if condition
 
 # include "bresenham.h"
 # include "mymlx.h"
