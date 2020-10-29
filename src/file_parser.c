@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:46:53 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 23:37:23 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 13:45:28 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,9 @@ int		ft_get_file_lines(int fd, t_game *jeu, t_nlist **floor)
 			ft_scott_free(&line, 0);
 			return (ft_error_msg("parse line failed\n", 0));
 		}
-//		printf("line: |%s|\n", line);
-//		printf("in get lines\n");
-//		ft_print_nlist(*floor);
 		ft_scott_free(&line, 0);
-//		printf("\n");
-//		line = NULL;
 	}
 	ft_scott_free(&line, 0);
-//	printf("end get file lines\n");
-//	ft_print_nlist(*floor);
 	if (!*floor || jeu->sbol < 511)
 		return (ft_error_msg("incorrect file\n", 0));
 	return (1);
@@ -82,12 +75,8 @@ int		ft_parse_file(int fd, t_game *jeu)
 		ft_nlstdel_all(&floor);
 		return (ft_error_msg("file reader failed\n", 0));
 	}
-//	printf("after collect levels\n");
-//	ft_print_nlist(floor);
 	if (!ft_nlstdel_all(&floor))
 		return (ft_error_msg("failed to del nlst floor\n", 0));
-//	printf("after del all\n");
-//	ft_print_nlist(floor);
 	if (!jeu->set->bonus && jeu->n_of_levels > 1)
 		return (ft_error_msg("not bonus, bad file, too many levels\n", 0));
 	if (!ft_unpack_wall_textures(jeu))

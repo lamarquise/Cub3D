@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 02:11:49 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 00:35:47 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 13:44:48 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		ft_game_engine(t_game *jeu)
 	mlx_hook(jeu->win->win_ptr, 2, (1L << 0), &ft_keypress, jeu);
 	mlx_hook(jeu->win->win_ptr, 3, (1L << 1), &ft_keyrelease, jeu);
 	mlx_hook(jeu->win->win_ptr, 4, (1L << 2), &ft_mouse_press, jeu);
-	mlx_hook(jeu->win->win_ptr, 6, (1L << 6), &ft_mouse_move, jeu);	// could be (1L << 8)
+	mlx_hook(jeu->win->win_ptr, 6, (1L << 6), &ft_mouse_move, jeu);
 	mlx_hook(jeu->win->win_ptr, 17, (1L << 17), &ft_quit, jeu);
 	mlx_loop_hook(jeu->mlx->ptr, ft_keycodes, jeu);
 	mlx_loop(jeu->mlx->ptr);

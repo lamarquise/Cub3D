@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 00:35:08 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 13:53:21 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-
-	// REMOVE !!!!!
-# include <stdio.h>
-
 # include <fcntl.h>
-
 # include <math.h>
 
 # if defined(__APPLE__)
@@ -29,12 +24,10 @@
 #  include <key_linux.h>
 # endif
 
-	// could but dif .h's in the if condition
-
 # include "bresenham.h"
 # include "mymlx.h"
 # include "libft.h"
-# include "mlx.h"		// or "mlx.h" ?
+# include "mlx.h"
 
 # define RES	0x02
 # define TNO    0x04
@@ -148,7 +141,7 @@ typedef struct	s_settings
 typedef struct	s_game
 {
 	t_input		*file;
-	t_nlist		*level_list; 
+	t_nlist		*level_list;
 	t_level		*lev;
 	int			n_of_levels;
 	int			cur_level;
@@ -210,7 +203,8 @@ int				ft_parse_file(int fd, t_game *jeu);
 int				ft_parse_optional_input(t_game *jeu, char **tab);
 int				ft_parse_essencial_input(t_game *jeu, char **tab);
 int				ft_check_input_values(t_game *jeu, char **tab, int *map);
-int				ft_parse_line(t_game *jeu, char *line, t_nlist **floor, int *map);
+int				ft_parse_line(t_game *jeu, char *line, t_nlist **floor, \
+				int *map);
 
 /*
 **	Input Parser
@@ -221,7 +215,6 @@ int				ft_parse_sprite_type_path(t_input *file, char **tab, char id);
 int				ft_parse_path_to_texture(char **tab, t_texture **tex);
 int				ft_parse_color(char **nums);
 int				ft_parse_surfaces(char **tab, t_texture **surface);
-
 
 /*
 **	Floor Management
@@ -260,7 +253,7 @@ int				ft_display_minimap(t_game *jeu);
 int				ft_display_crosshair(t_game *jeu);
 int				ft_draw_imges(t_game *jeu);
 int				ft_redraw(t_game *jeu);
-int             ft_casting(t_game *jeu);
+int				ft_casting(t_game *jeu);
 
 /*
 **	Save
@@ -292,8 +285,9 @@ int				ft_generate_minimap(t_game *jeu, t_level *lev);
 t_vect_i		ft_get_wall_texture(t_game *jeu, t_imge *tex_img, double pwd, \
 				t_vect_d ray);
 t_vect_i		ft_calc_sliver_limits(t_game *jeu, int sliver_hei);
-int				ft_generate_wall_sliver(t_game *jeu, int x, double *pwd, t_vect_d ray);
-int             ft_draw_fc(t_game *jeu, t_vect_i sliver_limits, int x);
+int				ft_generate_wall_sliver(t_game *jeu, int x, double *pwd, \
+				t_vect_d ray);
+int				ft_draw_fc(t_game *jeu, t_vect_i sliver_limits, int x);
 int				ft_raycasting(t_game *jeu, double *z_buffer);
 
 /*
@@ -303,7 +297,8 @@ int				ft_raycasting(t_game *jeu, double *z_buffer);
 t_vect_d		ft_calc_delta_dist(t_vect_d ray);
 int				ft_dda(t_vect_i *map, t_vect_i *step, t_vect_d *side_dist, \
 				t_vect_d *delta_dist);
-int				ft_shoot_ray(t_game *jeu, t_vect_d p_pos, t_vect_d ray, double *pwd);
+int				ft_shoot_ray(t_game *jeu, t_vect_d p_pos, t_vect_d ray, \
+				double *pwd);
 
 /*
 **	Floorcasting
@@ -329,7 +324,8 @@ int				ft_calc_sprite_order(t_game *jeu, int *spri_ord);
 
 t_vect_d		ft_calc_sprite_transform(t_game *jeu, int i, int *spri_ord);
 int				ft_calc_sprite_screen_x(t_game *jeu, t_vect_d *tran);
-t_vect_t        ft_calc_draw_dims(t_game *jeu, t_vect_t *spri_dims, t_vect_d *tran);
+t_vect_t		ft_calc_draw_dims(t_game *jeu, t_vect_t *spri_dims, \
+				t_vect_d *tran);
 void			ft_draw_sprite(t_game *jeu, t_vect_t *spri_dims, \
 				double *z_buffer, t_vect_d *transform);
 int				ft_spritecaster(t_game *jeu, double *z_buffer);
@@ -377,7 +373,6 @@ t_sprite		*ft_new_tsprite(t_texture *tex, int x, int y, char c);
 int				ft_lstadd_sprite_instance(t_game *jeu, int x, int y, char c);
 int				ft_create_spris_tab(t_level *lev);
 
-
 /*
 **	Keyhooks
 */
@@ -395,7 +390,8 @@ t_vect_i		ft_fill_vect_i(int x, int y);
 int				ft_expected_size(char **tab, int e);
 int				ft_rgb_to_int(int r, int g, int b, int t);
 int				ft_pix_imge(t_imge *img, int pos, int color);
-int				ft_draw_col_to_imge(t_imge *img, t_vect_i row, int col, int color);
+int				ft_draw_col_to_imge(t_imge *img, t_vect_i row, int col, \
+				int color);
 
 /*
 **	Player Movement
@@ -426,7 +422,7 @@ int				ft_toggle_off(int *button);
 
 int				ft_mouse_move(int x, int y, t_game *jeu);
 int				ft_mouse_press(int button, int x, int y, t_game *jeu);
-int     		ft_fire(t_game *jeu, t_vect_t map_step, t_vect_d delta_dist, \
+int				ft_fire(t_game *jeu, t_vect_t map_step, t_vect_d delta_dist, \
 				t_vect_d side_dist);
 int				ft_shoot_something(t_game *jeu);
 
@@ -491,7 +487,6 @@ char			*ft_strsub(char *s, unsigned int start, size_t len);
 int				ft_ibzero(void *s, size_t n);
 char			*ft_gstrjoin(char **s1, char *s2);
 
-
 /*
 **	Prime Engine Mac and Linux
 */
@@ -499,8 +494,3 @@ char			*ft_gstrjoin(char **s1, char *s2);
 int				ft_prime_engine(t_game *jeu);
 
 #endif
-
-
-
-
-

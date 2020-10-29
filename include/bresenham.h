@@ -6,22 +6,15 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 00:38:51 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/26 23:58:29 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 13:54:14 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BRESENHAM_H
 # define BRESENHAM_H
 
-//# include "mlx.h"		// do we need this ???
-
 # include "mymlx.h"
-
-# include "cub3d.h"		// for now...
-
-
-// include some version of my mlx functions...
-
+# include "cub3d.h"
 
 typedef struct	s_coords
 {
@@ -39,18 +32,6 @@ typedef struct	s_line
 }				t_line;
 
 /*
-// Temporary solution to see if this works...	// It did not...
-typedef struct	s_imge
-{
-	void	*img_ptr;
-	int		*img_data;
-	int		img_wid;
-	int		img_hei;
-	int		last_pix;
-}				t_imge;
-*/
-
-/*
 **	Not Bresenham
 */
 
@@ -59,7 +40,6 @@ int				ft_hor_right(t_imge *img, t_coords cs, int color);
 int				ft_vert_down(t_imge *img, t_coords cs, int color);
 int				ft_hor_left(t_imge *img, t_coords cs, int color);
 int				ft_notbresenham(t_imge *img, t_coords cs, int color);
-
 
 /*
 **	Bresenham

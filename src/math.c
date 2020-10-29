@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 02:07:19 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 14:59:27 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 13:44:01 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_vect_i	ft_fill_vect_i(int x, int y)
 	return (v);
 }
 
-int		ft_expected_size(char **tab, int e)
+int			ft_expected_size(char **tab, int e)
 {
 	int		i;
 
@@ -33,7 +33,7 @@ int		ft_expected_size(char **tab, int e)
 	return (i == e ? 1 : 0);
 }
 
-int		ft_rgb_to_int(int r, int g, int b, int t)
+int			ft_rgb_to_int(int r, int g, int b, int t)
 {
 	if (r > 255)
 		r = 255;
@@ -54,7 +54,7 @@ int		ft_rgb_to_int(int r, int g, int b, int t)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-int		ft_pix_imge(t_imge *img, int pos, int color)
+int			ft_pix_imge(t_imge *img, int pos, int color)
 {
 	if (!img || pos < 0 || pos >= img->last_pix)
 		return (0);
@@ -62,7 +62,7 @@ int		ft_pix_imge(t_imge *img, int pos, int color)
 	return (1);
 }
 
-int		ft_draw_col_to_imge(t_imge *img, t_vect_i row, int col, int color)
+int			ft_draw_col_to_imge(t_imge *img, t_vect_i row, int col, int color)
 {
 	int		pos;
 
