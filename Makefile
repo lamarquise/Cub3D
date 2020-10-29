@@ -99,14 +99,16 @@ INCS = $(addprefix $(DIR_INC),$(IFILES))
 #celia has -02 -g for all of them...
 FRAME = -framework OpenGL -framework AppKit
 MAC_FLAGS	= -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_MAC_INC) $(FRAME)
-LINUX_FLAGS	= -Wall -Wextra -Werror -O2 -g -I$(INC) -I$(LIBFT_INC) -I$(MLX_LINUX_INC)
+LINUX_FLAGS	= -Wall -Wextra -Werror -O2 -g
+
 #CFLAGS = -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_INC)
 SAN = -g3 -fsanitize=address
+MORE_L_FLAGS = -lm -lX11 -lbsd -lXext
+#ALL_INCS = -I$(INC) -I$(LIBFT_INC) -I$(MLX_LINUX_INC)
+ALL_INCS = -I$(INC) -I$(LIBFT_INC)
 
 #	clang -Wall -Wextra -Werror -O2 -g $(OBJS) $(LINUX_OBJS) ./libft/libft.a -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
 
-#ltest: $(LIBFT) $(MLX)
-#	clang -Wall -Wextra -Werror -O2 -g $(SRCS) $(LINUX_SRCS) ./libft/libft.a -I./include/ -I./minilibx_linux/ -I./libft/ -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
 
 
 all: $(NAME)
@@ -126,8 +128,11 @@ $(MLX_LINUX):
 	make
 	echo "$(_CYAN)\r\33[2K\rMaking Mlx 🙄$(_END)"
 
-$(NAME): $(OBJS) $(LINUX_OBJS) $(LIBFT) $(MLX_LINUX)
-	$(CC) -o $(NAME) $(LINUX_FLAGS) $(OBJS) $(LINUX_OBJS) $(LIBFT) $(MLX_LINUX)
+ltest: $(LIBFT) $(MLX)
+	clang -Wall -Wextra -Werror -O2 -g $(SRCS) $(LINUX_SRCS) ./libft/libft.a -I./include/ -I./minilibx_linux/ -I./libft/ -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
+
+$(NAME): $(LIBFT) $(OBJS) $(LINUX_OBJS) $(MLX_LINUX)
+	$(CC) -o $(NAME) $(LINUX_FLAGS) $(OBJS) $(LINUX_OBJS) -I$(LIBFT_INC) -I$(INC) $(DIR_LIBFT)$(LIBFT_NAME) -I$(MLX_LINUX_INC) $(MORE_L_FLAGS) $(MLX_LINUX)
 	printf "$(_GREEN)\r\33[2K\r$(NAME) for Linux created  😎\n$(_END)"
 
 mac: $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC)
@@ -145,7 +150,7 @@ linux: $(OBJS) $(LINUX_OBJS) $(LIBFT) $(MLX_LINUX)
 
 $(DIR_OBJ_LINUX)%.o: $(DIR_SRC)%.c $(DIR_INC)
 	mkdir -p $(DIR_OBJ)
-	$(CC) -o $@ -c $< $(LINUX_FLAGS)
+	$(CC) -c $< $(LINUX_FLAGS) $(ALL_INCS) -I$(MLX_LINUX_INC) -o $@
 	printf "$(_CYAN)\r\33[2K\rCompling $@$(_END)"
 
 #omac: 
@@ -182,7 +187,7 @@ tclean: ofclean
 	rm -rf testl.dSYM tests.dSYM test tests testl
 	echo "$(_RED)Test files deleted  😱$(_END)"
 
-.PHONY: all clean fclean re $(LIBFT)
+.PHONY: all clean fclean re
 
 ##################
 ##    COLORS    ##

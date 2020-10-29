@@ -34,7 +34,7 @@
 # include "bresenham.h"
 # include "mymlx.h"
 # include "libft.h"
-# include <mlx.h>		// or "mlx.h" ?
+# include "mlx.h"		// or "mlx.h" ?
 
 # define RES	0x02
 # define TNO    0x04
