@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/29 11:19:29 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/29 12:38:32 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -138,10 +138,6 @@ $(NAME): $(LIBFT) $(OBJS) $(LINUX_OBJS) $(MLX_LINUX)
 mac: $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC)
 	$(CC) -o $(NAME) $(MAC_FLAGS) $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC)
 	printf "$(_GREEN)\r\33[2K\r$(NAME) for Mac created  😎\n$(_END)"
-
-linux: $(OBJS) $(LINUX_OBJS) $(LIBFT) $(MLX_LINUX)
-	$(CC) -o $(NAME) $(LINUX_FLAGS) $(OBJS) $(LINUX_OBJS) $(LIBFT) $(MLX_LINUX)
-	printf "$(_GREEN)\r\33[2K\r$(NAME) for Linux created  😎\n$(_END)"
 
 #$(DIR_OBJ_MAC)%.o: $(DIR_SRC)%.c $(DIR_INC)
 #	mkdir -p $(DIR_OBJ)
