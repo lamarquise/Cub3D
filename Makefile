@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/29 10:41:11 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/29 11:13:47 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,9 +62,7 @@ IFILES =	cub3d.h \
 			mymlx.h \
 			key_linux.h \
 			key_macos.h \
-# can add mlx.h if doing dynamic lib...			
 
-#put in a lib folder ???
 DIR_MLX_MAC = ./minilibx_mac/
 MLX_MAC = $(DIR_MLX_MAC)libmlx.a
 MLX_MAC_INC = $(DIR_MLX_MAC)
@@ -73,8 +71,6 @@ DIR_MLX_LINUX = ./minilibx_linux/
 MLX_LINUX = $(DIR_MLX_LINUX)libmlx.a
 MLX_LINUX_INC = $(DIR_MLX_LINUX)
 
-# can easily be chaned to a local folder when submit
-#DIR_LIBFT	=	~/Programming/42/libft/
 DIR_LIBFT	=	./libft/
 LIBFT_INC	=	$(DIR_LIBFT)
 LIBFT_NAME	=	libft.a
@@ -115,9 +111,8 @@ ltest: $(LIBFT) $(MLX)
 
 all: $(NAME)
 
-$(LIBFT): $(DIR_LIBFT)libft.h
+$(LIBFT): 
 	make -C $(DIR_LIBFT) $(LIB_NAME)
-#	make -C $(DIR_LIBFT)	better ?
 
 $(MLX):
 	make
@@ -187,7 +182,7 @@ tclean: ofclean
 	rm -rf testl.dSYM tests.dSYM test tests testl
 	echo "$(_RED)Test files deleted  😱$(_END)"
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re $(LIBFT)
 
 ##################
 ##    COLORS    ##
