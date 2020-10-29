@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:57:12 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 14:08:09 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 15:13:01 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		ft_parse_essencial_input(t_game *jeu, char **tab)
 	return (ret);
 }
 
-int		ft_check_input_values(t_game *jeu, char **tab, int *map)
+int		ft_check_input_values(t_game *jeu, char *line, char **tab, int *map)
 {
 	if (!jeu || !tab || !map)
 		return (0);
@@ -94,6 +94,8 @@ int		ft_check_input_values(t_game *jeu, char **tab, int *map)
 	}
 	else
 		*map = 1;
+	if (!*map && (*line && *tab && **tab && tab[0][0] != line[0]))
+		return (0);
 	return (1);
 }
 
@@ -103,14 +105,14 @@ int		ft_parse_line(t_game *jeu, char *line, t_nlist **floor, int *map)
 
 	if (!jeu || !line || !floor || !map || !(tab = ft_split(line, " ")))
 		return (0);
-	if (ft_strlen(line) > 1 && ft_expected_size(tab, 0))
+	if (ft_strlen(line) > 0 && ft_expected_size(tab, 0))
 	{
 		ft_free_strtab(tab);
 		return (ft_error_msg("parse line bad line\n", 0));
 	}
 	if (!*map && !ft_expected_size(tab, 0))
 	{
-		if (!ft_check_input_values(jeu, tab, map))
+		if (!ft_check_input_values(jeu, line, tab, map))
 		{
 			ft_free_strtab(tab);
 			return (0);

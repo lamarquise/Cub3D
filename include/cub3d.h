@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 13:53:21 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 15:08:58 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,8 @@ int				ft_parse_file(int fd, t_game *jeu);
 
 int				ft_parse_optional_input(t_game *jeu, char **tab);
 int				ft_parse_essencial_input(t_game *jeu, char **tab);
-int				ft_check_input_values(t_game *jeu, char **tab, int *map);
+int				ft_check_input_values(t_game *jeu, char *line, char **tab, \
+				int *map);
 int				ft_parse_line(t_game *jeu, char *line, t_nlist **floor, \
 				int *map);
 

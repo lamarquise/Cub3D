@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/29 12:38:32 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/29 15:23:38 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,15 +117,15 @@ $(LIBFT):
 	make -C $(DIR_LIBFT) $(LIB_NAME)
 
 $(MLX):
-	make
+	make 
 	echo "$(_CYAN)\r\33[2K\rMaking Mlx 🙄$(_END)"
 
 $(MLX_MAC):
-	make
+	make -C $(DIR_MLX_MAC)
 	echo "$(_CYAN)\r\33[2K\rMaking Mlx 🙄$(_END)"
 
 $(MLX_LINUX):
-	make
+	make -C $(DIR_MLX_LINUX)
 	echo "$(_CYAN)\r\33[2K\rMaking Mlx 🙄$(_END)"
 
 ltest: $(LIBFT) $(MLX)
@@ -158,9 +158,11 @@ bonus: $(NAME)
 clean:
 	make -C $(DIR_LIBFT) $@
 	rm -rf $(DIR_OBJ)
+	rm -f screenshot.bmp
 
 oclean:
 	rm -rf $(DIR_OBJ)
+	rm -f screenshot.bmp
 
 ofclean: oclean
 	rm -f $(NAME)
@@ -168,6 +170,8 @@ ofclean: oclean
 
 fclean: oclean
 	make -C $(DIR_LIBFT) $@
+	make -C $(DIR_MLX_MAC) clean
+	make -C $(DIR_MLX_LINUX) clean
 	rm -f $(NAME)
 	echo "$(_RED)$(NAME) Deleted  😱$(_END)"
 

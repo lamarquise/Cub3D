@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:37:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 14:20:15 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 14:37:41 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int		ft_run(t_game *jeu, int ac, char **av)
 		else if (ft_strcmp(av[2], "--bonus") == 0)
 			jeu->set->bonus = 1;
 		else
-			return (ft_error_msg("usage: <file.cub> <--save> OR <--bonus>\n", \
+			return (ft_error_msg("Usage: <file.cub> <--save> OR <--bonus>\n", \
 					0));
 	}
 	if ((fd = open(av[1], O_RDONLY)) == -1 || !ft_parse_file(fd, jeu) \
 		|| !ft_start_game(jeu))
-		return (ft_error_msg("failed to run\n", 0));
+		return (ft_error_msg("Error\nFailed to run\n", 0));
 	close(fd);
 	return (1);
 }
