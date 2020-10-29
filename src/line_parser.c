@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:57:12 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 09:27:23 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 14:08:09 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,17 @@ int		ft_parse_more_essencial(t_game *jeu, char **tab)
 		ret = (ft_parse_sprite_type_path(jeu->file, tab, 'S') > 0 ? 6 : 0);
 	}
 	else if (!(jeu->sbol & CFL) && !ft_strcmp(tab[0], "F"))
+	{
 		ret = (ft_parse_surfaces(tab, &jeu->file->floor) > 0 ? 7 : 0);
+		if (!jeu->set->bonus && jeu->file->floor->path)
+			return (ft_error_msg("Textured floor but not bonus\n", 0));
+	}
 	else if (!(jeu->sbol & CCE) && !ft_strcmp(tab[0], "C"))
+	{
 		ret = (ft_parse_surfaces(tab, &jeu->file->ceiling) > 0 ? 8 : 0);
+		if (!jeu->set->bonus && jeu->file->ceiling->path)
+			return (ft_error_msg("Textured ceiling but not bonus\n", 0));
+	}
 	return (ret);
 }
 
