@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/24 01:22:22 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/27 23:28:13 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/29 15:31:38 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ int		ft_screenshot(t_game *jeu)
 	int				i;
 
 	fd = open("screenshot.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0700);
+	if (!jeu || fd == -1 || !ft_draw_imges(jeu))
+		return (ft_error_msg("failed to draw imges\n", 0));
 	padding[0] = 0;
 	padding[1] = 0;
 	padding[2] = 0;
 	ft_bzero(header, 14 + 40);
 	ft_create_file_header(header, jeu, (4 - (jeu->file->res.x * 4) % 4) % 4);
-	if (!jeu || fd == -1 || !ft_draw_imges(jeu))
-		return (ft_error_msg("failed to draw imges\n", 0));
 	write(fd, header, 14 + 40);
 	i = jeu->file->res.y;
 	while (--i > 0)
