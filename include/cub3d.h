@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 15:08:58 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/30 23:10:31 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,9 @@ int				ft_casting(t_game *jeu);
 void			ft_create_file_header(unsigned char *file_header, \
 				t_game *jeu, int pad_size);
 int				ft_screenshot(t_game *jeu);
+
+int				ft_save_bmp(t_game *jeu);
+
 
 /*
 **	Generate

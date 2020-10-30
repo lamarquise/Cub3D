@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/29 15:23:38 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/30 23:08:17 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ FILES	=	main.c \
 			free_lists.c \
 			free_mlx.c \
 			quit.c \
+			test_bmp_write.c \
 
 MFILES	=	prime_engine_mac.c \
 
