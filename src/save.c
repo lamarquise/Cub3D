@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/24 01:22:22 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/31 22:48:47 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 23:10:50 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		ft_screenshot(t_game *jeu)
 	ft_create_file_header(header, jeu, (4 - (jeu->file->res.x * 4) % 4) % 4);
 	write(fd, header, 14 + 40);
 	i = jeu->file->res.y;
-	while (--i > 0)
+	while (--i >= 0)
 	{
 		write(fd, (unsigned char*)jeu->fpv->img_data \
 			+ (i * jeu->file->res.x * 4), 4 * jeu->file->res.x);
