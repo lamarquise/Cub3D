@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/31 23:08:33 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 23:18:47 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
-
-
-// Remove this
-# include <stdio.h>
-
 
 # if defined(__APPLE__)
 #  include <key_macos.h>

@@ -6,7 +6,7 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/31 23:08:12 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/31 23:23:36 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,6 @@ DIR_OBJ =	obj/
 DIR_OBJ_MAC =	obj/
 DIR_OBJ_LINUX =	obj/
 
-
 DIR_INC	=	./include/
 INC		=	$(DIR_INC)
 OBJ_NAME = $(FILES:.c=.o)
@@ -96,20 +95,13 @@ MAC_OBJS = $(addprefix $(DIR_OBJ),$(MAC_OBJ_NAME))
 LINUX_OBJS = $(addprefix $(DIR_OBJ),$(LINUX_OBJ_NAME))
 INCS = $(addprefix $(DIR_INC),$(IFILES))
 
-#celia has -02 -g for all of them...
 FRAME = -framework OpenGL -framework AppKit
 MAC_FLAGS	= -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_MAC_INC) $(FRAME)
 LINUX_FLAGS	= -Wall -Wextra -Werror -O2 -g
 
-#CFLAGS = -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_INC) -I$(MLX_INC)
 SAN = -g3 -fsanitize=address
 MORE_L_FLAGS = -lm -lX11 -lbsd -lXext
-#ALL_INCS = -I$(INC) -I$(LIBFT_INC) -I$(MLX_LINUX_INC)
 ALL_INCS = -I$(INC) -I$(LIBFT_INC)
-
-#	clang -Wall -Wextra -Werror -O2 -g $(OBJS) $(LINUX_OBJS) ./libft/libft.a -lm -lXext -lX11 -lbsd ./minilibx_linux/libmlx.a -o Cub3D
-
-
 
 all: $(NAME)
 
@@ -139,19 +131,10 @@ mac: $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC)
 	$(CC) -o $(NAME) $(MAC_FLAGS) $(OBJS) $(MAC_OBJS) $(LIBFT) $(MLX_MAC)
 	printf "$(_GREEN)\r\33[2K\r$(NAME) for Mac created  😎\n$(_END)"
 
-#$(DIR_OBJ_MAC)%.o: $(DIR_SRC)%.c $(DIR_INC)
-#	mkdir -p $(DIR_OBJ)
-#	$(CC) -o $@ -c $< $(MAC_FLAGS)
-#	printf "$(_CYAN)\r\33[2K\rCompling $@$(_END)"
-
 $(DIR_OBJ_LINUX)%.o: $(DIR_SRC)%.c $(DIR_INC)
 	mkdir -p $(DIR_OBJ)
 	$(CC) -c $< $(LINUX_FLAGS) $(ALL_INCS) -I$(MLX_LINUX_INC) -o $@
 	printf "$(_CYAN)\r\33[2K\rCompling $@$(_END)"
-
-#omac: 
-
-#olinux:
 
 bonus: $(NAME)
 
