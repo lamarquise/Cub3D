@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/24 02:09:19 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 23:46:31 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 16:57:21 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int			ft_kill_sprite(t_game *jeu, int index)
 {
 	if (!jeu)
 		return (0);
+	if (!jeu->set->bonus)
+		return (1);
 	if (index == jeu->lev->key_index)
 	{
 		jeu->me->key = 1;

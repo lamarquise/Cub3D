@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:39:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/30 23:10:31 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 22:48:59 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
+
+
+// Remove this
+# include <stdio.h>
+
 
 # if defined(__APPLE__)
 #  include <key_macos.h>
@@ -168,6 +173,7 @@ typedef struct	s_game
 **	Main
 */
 
+int				ft_try_open(char *file);
 int				ft_check_str_end(char *str, char *end);
 int				ft_run(t_game *jeu, int ac, char **av);
 
@@ -266,6 +272,7 @@ int				ft_screenshot(t_game *jeu);
 
 int				ft_save_bmp(t_game *jeu);
 
+int				ft_screen_shot(t_game *jeu);
 
 /*
 **	Generate

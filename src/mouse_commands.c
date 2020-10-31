@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 23:37:52 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 04:03:54 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 16:59:14 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int		ft_shoot_something(t_game *jeu)
 
 	if (!jeu)
 		return (0);
+	if (!jeu->set->bonus)
+		return (1);
 	map_step.a.x = (int)jeu->me->pos.x;
 	map_step.a.y = (int)jeu->me->pos.y;
 	delta_dist = ft_calc_delta_dist(jeu->me->dir);

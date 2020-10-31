@@ -6,11 +6,11 @@
 #    By: erlazo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 15:37:26 by erlazo            #+#    #+#              #
-#    Updated: 2020/10/30 23:08:17 by ericlazo         ###   ########.fr        #
+#    Updated: 2020/10/31 22:30:23 by ericlazo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 	=	Cub3D
+NAME 	=	cub3D
 CC		=	clang
 
 FILES	=	main.c \
@@ -52,7 +52,8 @@ FILES	=	main.c \
 			free_lists.c \
 			free_mlx.c \
 			quit.c \
-			test_bmp_write.c \
+			screen_shot.c \
+#			test_bmp_write.c \
 
 MFILES	=	prime_engine_mac.c \
 

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 19:30:56 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 14:42:15 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 22:50:51 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int		ft_parse_sprite_type_path(t_input *file, char **tab, char id)
 		id = 50 + file->n_spri_types;
 		++file->n_spri_types;
 	}
-	if (!ft_expected_size(tab, 2) || !ft_check_str_end(tab[1], ".xpm"))
+	if (!ft_expected_size(tab, 2) || !ft_check_str_end(tab[1], ".xpm") \
+		|| !ft_try_open(tab[1]))
 		return (ft_error_msg("bad .xpm file\n", 0));
 	if (!(path = ft_strdup(tab[1])))
 		return (ft_error_msg("path dup failed\n", 0));
@@ -67,8 +68,8 @@ int		ft_parse_path_to_texture(char **tab, t_texture **tex)
 		return (ft_error_msg("path wrong tab size\n", 0));
 	if (*tex)
 		return (ft_error_msg("already a texture\n", 0));
-	if (!ft_check_str_end(tab[1], ".xpm"))
-		return (ft_error_msg("not an .xpm file\n", 0));
+	if (!ft_check_str_end(tab[1], ".xpm") || !ft_try_open(tab[1]))
+		return (ft_error_msg("bad .xpm file\n", 0));
 	if (!(path = ft_strdup(tab[1])))
 		return (0);
 	if (!(*tex = ft_new_ttexture(0, path, NULL)))
@@ -123,6 +124,8 @@ int		ft_parse_surfaces(char **tab, t_texture **surf)
 		ft_free_strtab(nums);
 		return (ft_error_msg("failed to parse path to texture\n", 0));
 	}
+	else
+		return (ft_free_strtab(nums) ? 0 : 0);
 	ft_free_strtab(nums);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 21:04:04 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/30 23:10:25 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/30 23:21:52 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static int		write_bmp_data(int file, t_imge *img, int pad)
 	}
 	return (1);
 }
+
+	// yea so this shit does not work...
 
 int		ft_save_bmp(t_game *jeu)
 {

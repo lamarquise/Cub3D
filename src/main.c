@@ -6,11 +6,21 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:37:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 14:37:41 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 21:30:54 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int		ft_try_open(char *file)
+{
+	int ret;
+
+	if ((ret = open(file, O_RDONLY)) == -1)
+		return (0);
+	close(ret);
+	return (1);
+}
 
 int		ft_check_str_end(char *str, char *end)
 {

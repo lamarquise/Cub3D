@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 02:11:49 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 13:44:48 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 22:48:54 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int		ft_start_game(t_game *jeu)
 		return (ft_error_msg("failed to set level\n", 0));
 	if (jeu->set->save && !ft_screenshot(jeu))
 		return (ft_error_msg("failed to take screenshot\n", 0));
+//	if (jeu->set->save && !ft_screen_shot(jeu))
+//		return (ft_error_msg("failed to take screenshot\n", 0));
 	else if (!ft_game_engine(jeu))
 		return (ft_error_msg("engine failed\n", 0));
 	return (1);

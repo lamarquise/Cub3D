@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/24 01:22:22 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 15:31:38 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 22:48:47 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int		ft_screenshot(t_game *jeu)
 	unsigned char	padding[3];
 	unsigned char	header[14 + 40];
 	int				i;
-
-	fd = open("screenshot.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0700);
+												// was 0700
+	fd = open("screenshot.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (!jeu || fd == -1 || !ft_draw_imges(jeu))
 		return (ft_error_msg("failed to draw imges\n", 0));
 	padding[0] = 0;

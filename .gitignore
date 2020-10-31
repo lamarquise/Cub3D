@@ -6,3 +6,6 @@ testl
 testl.dSYM
 tests
 .Makefile.swp
+invalid_maps/
+textures/xpm/
+textures/BASIC/

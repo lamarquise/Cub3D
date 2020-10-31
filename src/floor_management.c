@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 19:21:14 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 23:42:26 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/10/31 22:15:53 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ int		ft_found_not_wall(t_game *jeu, t_level *lev, t_vect_i p, int s)
 {
 	if (!jeu || !jeu->lev)
 		return (0);
-	if ((ft_findchar("NSEW", lev->floor[p.y][p.x])) != -1)
+	if (lev->floor[p.y][p.x] == '0')
+		return (1);
+	else if ((ft_findchar("NSEW", lev->floor[p.y][p.x])) != -1)
 	{
 		if (lev->player_sorient)
 			return (ft_error_msg("too many player starts\n", 0));
@@ -95,7 +97,7 @@ int		ft_check_floor(t_game *jeu, t_level *lev)
 		x = -1;
 		while (lev->floor[y][++x])
 		{
-			if ((ft_findchar("01 ", lev->floor[y][x])) == -1 \
+			if ((ft_findchar("1 ", lev->floor[y][x])) == -1 \
 				&& (!ft_found_not_wall(jeu, lev, ft_fill_vect_i(x, y), \
 				jeu->file->n_spri_types + 49)
 				|| !ft_check_around(lev, x, y, jeu->file->n_spri_types + 49)))
