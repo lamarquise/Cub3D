@@ -1,0 +1,21 @@
+R 800 800
+NO textures/wall_1.xpm
+SO textures/wall_2.xpm
+WE textures/wall_3.xpm
+EA textures/wall_4.xpm
+
+X textures/sprite_3.xpm
+S textures/sprite_2.xpm
+S textures/sprite_1.xpm
+
+Y textures/sprite_3.xpm
+
+C 0,0,140
+F 0,140,0
+
+11111111111
+100010010Y1
+10301021001
+10111001001
+100E0003X01
+11111111111
