@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 19:30:56 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/31 22:50:51 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/11/01 17:20:19 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int		ft_parse_surfaces(char **tab, t_texture **surf)
 		ft_free_strtab(nums);
 		return (ft_error_msg("failed to parse path to texture\n", 0));
 	}
-	else
+	else if (!ft_expected_size(nums, 1) && !ft_expected_size(nums, 3))
 		return (ft_free_strtab(nums) ? 0 : 0);
 	ft_free_strtab(nums);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:46:53 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 15:06:32 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/11/01 17:31:24 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,23 @@ int		ft_get_file_lines(int fd, t_game *jeu, t_nlist **floor)
 	return (1);
 }
 
+int		ft_unpack_floors(t_game *jeu)
+{
+	if (!jeu || !jeu->file->floor || !jeu->file->ceiling)
+		return (0);
+	if ((jeu->file->floor->path && !jeu->file->ceiling->path)
+		|| (!jeu->file->floor->path && jeu->file->ceiling->path))
+		return (ft_error_msg("floor AND ceiling must be tex or color\n", 0));
+	if (jeu->set->bonus && jeu->file->floor && jeu->file->floor->path \
+		&& jeu->file->ceiling && jeu->file->ceiling->path \
+		&& !ft_unpack_texture(jeu, jeu->file->floor))
+		return (ft_error_msg("failed to unpack floor tex file parser\n", 0));
+	if (jeu->set->bonus && jeu->file->ceiling && jeu->file->ceiling->path \
+		&& !ft_unpack_texture(jeu, jeu->file->ceiling))
+		return (ft_error_msg("failed to unpack ceiling tex file parser\n", 0));
+	return (1);
+}
+
 int		ft_parse_file(int fd, t_game *jeu)
 {
 	t_nlist		*floor;
@@ -83,11 +100,7 @@ int		ft_parse_file(int fd, t_game *jeu)
 		return (ft_error_msg("failed to unpack wall tex in file parser\n", 0));
 	if (!ft_unpack_list_textures(jeu, jeu->file->spri_type_texs))
 		return (ft_error_msg("failed to unpack sprite tex file parser\n", 0));
-	if (jeu->set->bonus && jeu->file->floor && jeu->file->floor->path \
-		&& !ft_unpack_texture(jeu, jeu->file->floor))
+	if (!ft_unpack_floors(jeu))
 		return (ft_error_msg("failed to unpack floor tex file parser\n", 0));
-	if (jeu->set->bonus && jeu->file->ceiling && jeu->file->ceiling->path \
-		&& !ft_unpack_texture(jeu, jeu->file->ceiling))
-		return (ft_error_msg("failed to unpack ceiling tex file parser\n", 0));
 	return (1);
 }
