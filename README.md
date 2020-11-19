@@ -5,10 +5,7 @@ Cub3D is a full and self contained program, it is set up to work on MacOS
 only at the moment.
 
 
-The Makefile recompiles the libmlx and the libft as needed.
-
-Currently using the non dynamic version of the mlx because the dynamic
-version fucked things up for an unknown reason.
+The Makefile recompiles the libmlx, either for mac or linux and the libft as needed.
 
 
 Have a list of the libft functions used in this project
@@ -24,12 +21,24 @@ contains only
 print nlist
 
 
+Complies on Linux with make
+Complies on mac with make mac
+
+#####In bonus version:
+Can have as many sprite textures as you want, adding them as:
+S texture/path
+Each new one adds one to the possible map indicators of sprite possitions.
+Meaning, if there are 2 sprite texture types, S and S, you can place 2 or 3
+anywhere on the map and the corresponding sprite will be produced.
+Similarly, X tex/path is for the eXit and Y tex/path is for the key.
+X and Y can then be placed on any level, though only one on each, at most,
+they aren't necessary.
+
 Wall Textures:
 North is different colored stone wall
 South is mossy gray stone wall
 West is grey stone bricks
 East is red bricks
-
 
 W: Move up
 S: Move down
@@ -38,7 +47,9 @@ D: Move right
 
 ->: Rotate right
 <-: Rotate left
-
+Arrow up: shoot
+Left mouse click: shoot
+Moving the mouse rotates the player left and right
 
 M: Map on
 N: Map off
@@ -48,6 +59,8 @@ X: Zoom out
 
 ESC: Quit
 
+
+####The rest may be outdated...
 
 #### Explanation of shooting
 It's very similar to the raycaster, a ray is shot strait forward from the player
