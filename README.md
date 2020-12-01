@@ -24,7 +24,7 @@ print nlist
 Complies on Linux with make
 Complies on mac with make mac
 
-#####In bonus version:
+##### In bonus version:
 Can have as many sprite textures as you want, adding them as:
 S texture/path
 Each new one adds one to the possible map indicators of sprite possitions.
@@ -60,7 +60,7 @@ X: Zoom out
 ESC: Quit
 
 
-####The rest may be outdated...
+#### The rest may be outdated...
 
 #### Explanation of shooting
 It's very similar to the raycaster, a ray is shot strait forward from the player
