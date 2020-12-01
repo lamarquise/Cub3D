@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:46:53 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/11/01 17:31:24 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/12/01 18:43:31 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ int		ft_get_nl(char **line, int fd)
 
 int		ft_get_file_lines(int fd, t_game *jeu, t_nlist **floor)
 {
-	int		i;
 	int		map;
 	int		ret;
 	char	*line;
 
-	i = 0;
 	map = 0;
 	line = NULL;
 	ret = 1;

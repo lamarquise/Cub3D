@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 03:42:31 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/28 15:28:37 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/12/01 18:48:14 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int			ft_shoot_ray(t_game *jeu, t_vect_d p_pos, t_vect_d ray, double *pwd)
 	t_vect_i	step;
 	int			side;
 
+	side = 0;
 	map.x = (int)p_pos.x;
 	map.y = (int)p_pos.y;
 	delta_dist = ft_calc_delta_dist(ray);

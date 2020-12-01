@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:01:00 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/29 14:23:08 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/12/01 18:45:18 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,11 @@
 
 int		ft_generate_sight_lines(t_game *jeu)
 {
-	int			bres_spos;
 	t_coords	left;
 	t_coords	right;
 
 	if (!jeu)
 		return (0);
-	bres_spos = (jeu->me->pos.x * jeu->grid_box_size) + \
-				(int)(jeu->me->pos.y * jeu->grid_box_size) * jeu->yah->img_wid;
 	left.x1 = jeu->me->pos.x * jeu->grid_box_size;
 	left.y1 = jeu->me->pos.y * jeu->grid_box_size;
 	left.x2 = (jeu->me->pos.x + jeu->me->dir.x * jeu->me->zoom_factor \

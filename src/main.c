@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 15:37:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2020/10/31 21:30:54 by ericlazo         ###   ########.fr       */
+/*   Updated: 2020/12/01 18:42:48 by ericlazo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ int		ft_check_str_end(char *str, char *end)
 {
 	int		sl;
 	int		el;
-	int		a;
 
 	if (!str || !end)
 		return (0);
-	a = 0;
 	sl = ft_strlen(str) - 1;
 	el = ft_strlen(end) - 1;
 	while (el > 0)
